@@ -2,103 +2,65 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Sparkles, 
-  Shield, 
-  Clock, 
-  Phone, 
-  Star, 
-  CheckCircle, 
-  Users, 
-  Calendar,
-  MapPin,
-  LogIn,
-  Briefcase,
-  Home,
-  UserCheck,
-  Building,
-  Bug,
-  Car
-} from 'lucide-react';
-
+import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car } from 'lucide-react';
 const Index = () => {
   const navigate = useNavigate();
-
-  const services = [
-    {
-      icon: Sparkles,
-      title: "Cleaning Services",
-      description: "Professional deep cleaning, office cleaning, carpet and window cleaning services",
-      features: ["Deep House Cleaning", "Office Cleaning", "Carpet Cleaning", "Window Cleaning"]
-    },
-    {
-      icon: Home,
-      title: "Home Maintenance", 
-      description: "Expert plumbing, electrical, painting and general repair services",
-      features: ["Plumbing Repairs", "Electrical Work", "Painting", "General Repairs"]
-    },
-    {
-      icon: UserCheck,
-      title: "Trained Maids",
-      description: "Reliable and professional maid services for your home",
-      features: ["Daily Maid Service", "Weekly Service", "Part-time", "Live-in Options"]
-    },
-    {
-      icon: Building,
-      title: "Facility Management",
-      description: "Complete building maintenance and property management solutions",
-      features: ["Building Maintenance", "Security Services", "Landscaping", "Property Management"]
-    },
-    {
-      icon: Bug,
-      title: "Fumigation Services",
-      description: "Professional pest control and fumigation for residential and commercial properties",
-      features: ["Residential Fumigation", "Commercial Service", "Pest Control", "Termite Treatment"]
-    },
-    {
-      icon: Car,
-      title: "Mobile Car Detailing",
-      description: "Professional mobile car detailing and full valet services at your location",
-      features: ["Full Car Wash", "Interior Detailing", "Wax & Polish", "Mobile Service"]
-    }
-  ];
-
-  const whyChooseUs = [
-    {
-      icon: Shield,
-      title: "Trusted & Insured",
-      description: "All our services are fully insured and our staff are background-checked"
-    },
-    {
-      icon: Clock,
-      title: "Punctual Service",
-      description: "We arrive on time and complete work within the agreed timeframe"
-    },
-    {
-      icon: Star,
-      title: "Premium Quality",
-      description: "Using professional-grade equipment and eco-friendly products"
-    },
-    {
-      icon: Users,
-      title: "Expert Team",
-      description: "Trained professionals with years of experience in their respective fields"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background">
+  const services = [{
+    icon: Sparkles,
+    title: "Cleaning Services",
+    description: "Professional deep cleaning, office cleaning, carpet and window cleaning services",
+    features: ["Deep House Cleaning", "Office Cleaning", "Carpet Cleaning", "Window Cleaning"]
+  }, {
+    icon: Home,
+    title: "Home Maintenance",
+    description: "Expert plumbing, electrical, painting and general repair services",
+    features: ["Plumbing Repairs", "Electrical Work", "Painting", "General Repairs"]
+  }, {
+    icon: UserCheck,
+    title: "Trained Maids",
+    description: "Reliable and professional maid services for your home",
+    features: ["Daily Maid Service", "Weekly Service", "Part-time", "Live-in Options"]
+  }, {
+    icon: Building,
+    title: "Facility Management",
+    description: "Complete building maintenance and property management solutions",
+    features: ["Building Maintenance", "Security Services", "Landscaping", "Property Management"]
+  }, {
+    icon: Bug,
+    title: "Fumigation Services",
+    description: "Professional pest control and fumigation for residential and commercial properties",
+    features: ["Residential Fumigation", "Commercial Service", "Pest Control", "Termite Treatment"]
+  }, {
+    icon: Car,
+    title: "Mobile Car Detailing",
+    description: "Professional mobile car detailing and full valet services at your location",
+    features: ["Full Car Wash", "Interior Detailing", "Wax & Polish", "Mobile Service"]
+  }];
+  const whyChooseUs = [{
+    icon: Shield,
+    title: "Trusted & Insured",
+    description: "All our services are fully insured and our staff are background-checked"
+  }, {
+    icon: Clock,
+    title: "Punctual Service",
+    description: "We arrive on time and complete work within the agreed timeframe"
+  }, {
+    icon: Star,
+    title: "Premium Quality",
+    description: "Using professional-grade equipment and eco-friendly products"
+  }, {
+    icon: Users,
+    title: "Expert Team",
+    description: "Trained professionals with years of experience in their respective fields"
+  }];
+  return <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <img 
-                src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" 
-                alt="WeWash Zambia Logo" 
-                className="h-8 w-auto sm:h-10"
-              />
-              <span className="ml-2 text-xl sm:text-2xl font-bold text-wewash-blue">Zambia</span>
+              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-8 w-auto sm:h-10 object-cover" />
+              
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="whatsapp" size="sm" className="hidden sm:flex">
@@ -127,20 +89,11 @@ const Index = () => {
             trained maids, facility management, and fumigation services in Zambia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="secondary" 
-              size="mobile" 
-              onClick={() => navigate('/booking')}
-              className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white shadow-gold"
-            >
+            <Button variant="secondary" size="mobile" onClick={() => navigate('/booking')} className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white shadow-gold">
               <Calendar className="mr-2 h-5 w-5" />
               Book a Service
             </Button>
-            <Button 
-              variant="outline" 
-              size="mobile"
-              className="border-white text-white hover:bg-white hover:text-wewash-blue"
-            >
+            <Button variant="outline" size="mobile" className="border-white text-white hover:bg-white hover:text-wewash-blue">
               <Phone className="mr-2 h-5 w-5" />
               WhatsApp Support
             </Button>
@@ -164,8 +117,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="shadow-elegant hover:shadow-primary transition-all duration-300 transform hover:scale-105 border-0">
+            {services.map((service, index) => <Card key={index} className="shadow-elegant hover:shadow-primary transition-all duration-300 transform hover:scale-105 border-0">
                 <CardHeader className="text-center pb-4">
                   <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
                     <service.icon className="h-8 w-8 text-white" />
@@ -177,16 +129,13 @@ const Index = () => {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                    {service.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
                         <CheckCircle className="h-4 w-4 text-wewash-blue mr-2 flex-shrink-0" />
                         {feature}
-                      </li>
-                    ))}
+                      </li>)}
                   </ul>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -204,15 +153,13 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {whyChooseUs.map((reason, index) => (
-              <div key={index} className="text-center">
+            {whyChooseUs.map((reason, index) => <div key={index} className="text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-6">
                   <reason.icon className="h-8 w-8 text-wewash-gold-dark" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3">{reason.title}</h3>
                 <p className="text-muted-foreground">{reason.description}</p>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -228,20 +175,11 @@ const Index = () => {
             for premium cleaning and property services.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="secondary" 
-              size="mobile"
-              onClick={() => navigate('/booking')}
-              className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white"
-            >
+            <Button variant="secondary" size="mobile" onClick={() => navigate('/booking')} className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white">
               <Calendar className="mr-2 h-5 w-5" />
               Book Your Service Now
             </Button>
-            <Button 
-              variant="outline" 
-              size="mobile"
-              className="border-white text-white hover:bg-white hover:text-wewash-blue"
-            >
+            <Button variant="outline" size="mobile" className="border-white text-white hover:bg-white hover:text-wewash-blue">
               <Phone className="mr-2 h-5 w-5" />
               Get Free Quote
             </Button>
@@ -255,11 +193,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center mb-4">
-                <img 
-                  src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" 
-                  alt="WeWash Zambia Logo" 
-                  className="h-12 w-auto"
-                />
+                <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto" />
                 <span className="ml-2 text-2xl font-bold text-wewash-gold">Zambia</span>
               </div>
               <p className="text-background/80 mb-4">
@@ -288,12 +222,7 @@ const Index = () => {
                   <Phone className="mr-2 h-4 w-4" />
                   WhatsApp Support
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full border-background/20 text-background hover:bg-background hover:text-foreground"
-                  onClick={() => navigate('/login')}
-                >
+                <Button variant="outline" size="sm" className="w-full border-background/20 text-background hover:bg-background hover:text-foreground" onClick={() => navigate('/login')}>
                   <LogIn className="mr-2 h-4 w-4" />
                   Client Login
                 </Button>
@@ -305,8 +234,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
