@@ -17,7 +17,8 @@ import {
   Home,
   UserCheck,
   Building,
-  Bug
+  Bug,
+  Car
 } from 'lucide-react';
 
 const Index = () => {
@@ -53,6 +54,12 @@ const Index = () => {
       title: "Fumigation Services",
       description: "Professional pest control and fumigation for residential and commercial properties",
       features: ["Residential Fumigation", "Commercial Service", "Pest Control", "Termite Treatment"]
+    },
+    {
+      icon: Car,
+      title: "Mobile Car Detailing",
+      description: "Professional mobile car detailing and full valet services at your location",
+      features: ["Full Car Wash", "Interior Detailing", "Wax & Polish", "Mobile Service"]
     }
   ];
 
