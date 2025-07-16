@@ -9,32 +9,53 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 210 30% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 30% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 210 30% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Royal Blue Primary */
+    --primary: 225 73% 57%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 225 73% 47%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Gold Accent */
+    --secondary: 45 93% 58%;
+    --secondary-foreground: 210 30% 8%;
+    --secondary-hover: 45 93% 48%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 93% 58%;
+    --accent-foreground: 210 30% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 225 73% 57%;
+
+    /* Custom WeWash colors */
+    --wewash-blue: 225 73% 57%;
+    --wewash-blue-dark: 225 73% 47%;
+    --wewash-blue-light: 225 73% 67%;
+    --wewash-gold: 45 93% 58%;
+    --wewash-gold-dark: 45 93% 48%;
+    --wewash-gold-light: 45 93% 68%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--wewash-blue)), hsl(var(--wewash-blue-dark)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--wewash-gold)), hsl(var(--wewash-gold-dark)));
+    
+    /* Shadows */
+    --shadow-primary: 0 4px 14px hsl(var(--wewash-blue) / 0.15);
+    --shadow-gold: 0 4px 14px hsl(var(--wewash-gold) / 0.15);
+    --shadow-elegant: 0 8px 30px hsl(225 73% 57% / 0.12);
 
     --radius: 0.5rem;
 
