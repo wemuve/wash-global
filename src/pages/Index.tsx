@@ -194,7 +194,8 @@ const Index = () => {
             <div>
               <div className="flex items-center mb-4">
                 <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto" />
-                <span className="ml-2 text-2xl font-bold text-wewash-gold">Zambia</span>
+                <span className="ml-2 text-2xl font-bold text-wewash-gold">
+              </span>
               </div>
               <p className="text-white/80 mb-4">
                 Elite Cleaning and Property Services - Your trusted partner for premium 
