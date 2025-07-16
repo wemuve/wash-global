@@ -55,11 +55,11 @@ const Index = () => {
   }];
   return <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <nav className="sticky top-0 z-50 bg-wewash-blue backdrop-blur supports-[backdrop-filter]:bg-wewash-blue/95 border-b border-wewash-blue-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto sm:h-16 object-contain opacity-90 bg-white/10 rounded-lg p-1" />
+              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto sm:h-16 object-contain opacity-90 bg-gray-600/80 rounded-lg p-1" />
               
             </div>
             <div className="flex items-center space-x-4">
@@ -67,7 +67,7 @@ const Index = () => {
                 <Phone className="mr-2 h-4 w-4" />
                 WhatsApp Support
               </Button>
-              <Button variant="outline" onClick={() => navigate('/login')} size="sm">
+              <Button variant="outline" onClick={() => navigate('/login')} size="sm" className="border-white text-white hover:bg-white hover:text-wewash-blue">
                 <LogIn className="mr-2 h-4 w-4" />
                 Log In
               </Button>
@@ -188,7 +188,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground text-background py-12 px-4">
+      <footer className="bg-wewash-blue text-white py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -196,18 +196,18 @@ const Index = () => {
                 <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto" />
                 <span className="ml-2 text-2xl font-bold text-wewash-gold">Zambia</span>
               </div>
-              <p className="text-background/80 mb-4">
+              <p className="text-white/80 mb-4">
                 Elite Cleaning and Property Services - Your trusted partner for premium 
                 cleaning and maintenance solutions in Zambia.
               </p>
-              <div className="flex items-center text-background/80">
+              <div className="flex items-center text-white/80">
                 <MapPin className="h-4 w-4 mr-2" />
                 Lusaka, Zambia
               </div>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Our Services</h4>
-              <ul className="space-y-2 text-background/80">
+              <ul className="space-y-2 text-white/80">
                 <li>Professional Cleaning</li>
                 <li>Home Maintenance</li>
                 <li>Trained Maids</li>
@@ -222,14 +222,14 @@ const Index = () => {
                   <Phone className="mr-2 h-4 w-4" />
                   WhatsApp Support
                 </Button>
-                <Button variant="outline" size="sm" className="w-full border-background/20 text-background hover:bg-background hover:text-foreground" onClick={() => navigate('/login')}>
+                <Button variant="outline" size="sm" className="w-full border-white/20 text-white hover:bg-white hover:text-wewash-blue" onClick={() => navigate('/login')}>
                   <LogIn className="mr-2 h-4 w-4" />
                   Client Login
                 </Button>
               </div>
             </div>
           </div>
-          <div className="border-t border-background/20 mt-8 pt-8 text-center text-background/60">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
             <p>&copy; 2024 WeWash Zambia. All rights reserved.</p>
           </div>
         </div>
