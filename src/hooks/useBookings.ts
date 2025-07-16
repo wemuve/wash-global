@@ -16,6 +16,17 @@ export interface Booking {
   status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
   special_instructions?: string | null;
   assigned_team?: string | null;
+  // Vehicle information for car detailing services
+  vehicle_make?: string | null;
+  vehicle_model?: string | null;
+  vehicle_year?: number | null;
+  vehicle_type?: string | null;
+  vehicle_color?: string | null;
+  license_plate?: string | null;
+  vehicle_notes?: string | null;
+  parking_details?: string | null;
+  water_available?: boolean | null;
+  electricity_available?: boolean | null;
   created_at: string;
   updated_at: string;
   services?: {
@@ -50,6 +61,17 @@ interface CreateBookingData {
   scheduled_time: string;
   total_amount: number;
   special_instructions?: string;
+  // Vehicle information for car detailing services
+  vehicle_make?: string;
+  vehicle_model?: string;
+  vehicle_year?: number;
+  vehicle_type?: string;
+  vehicle_color?: string;
+  license_plate?: string;
+  vehicle_notes?: string;
+  parking_details?: string;
+  water_available?: boolean;
+  electricity_available?: boolean;
 }
 
 export const useBookings = () => {

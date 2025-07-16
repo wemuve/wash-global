@@ -27,6 +27,17 @@ interface BookingData {
   email: string;
   phone: string;
   specialInstructions: string;
+  // Vehicle information for car detailing services
+  vehicleMake: string;
+  vehicleModel: string;
+  vehicleYear: string;
+  vehicleType: string;
+  vehicleColor: string;
+  licensePlate: string;
+  vehicleNotes: string;
+  parkingDetails: string;
+  waterAvailable: boolean;
+  electricityAvailable: boolean;
 }
 
 const Booking = () => {
@@ -41,7 +52,18 @@ const Booking = () => {
     name: '',
     email: '',
     phone: '',
-    specialInstructions: ''
+    specialInstructions: '',
+    // Vehicle information for car detailing services
+    vehicleMake: '',
+    vehicleModel: '',
+    vehicleYear: '',
+    vehicleType: '',
+    vehicleColor: '',
+    licensePlate: '',
+    vehicleNotes: '',
+    parkingDetails: '',
+    waterAvailable: true,
+    electricityAvailable: true
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -70,8 +92,13 @@ const Booking = () => {
 
   const timeSlots = ['8:00 AM', '10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM'];
 
+  // Check if the selected service category is car detailing
+  const selectedCategory = categories.find(c => c.id === bookingData.serviceCategory);
+  const isCarDetailing = selectedCategory?.name === 'Mobile Car Detailing';
+  const totalSteps = isCarDetailing ? 6 : 5;
+
   const handleNext = () => {
-    if (step < 5) setStep(step + 1);
+    if (step < totalSteps) setStep(step + 1);
   };
 
   const handlePrevious = () => {
@@ -96,6 +123,19 @@ const Booking = () => {
         scheduled_time: bookingData.time,
         total_amount: totalAmount,
         special_instructions: bookingData.specialInstructions || undefined,
+        // Include vehicle information if it's a car detailing service
+        ...(isCarDetailing && {
+          vehicle_make: bookingData.vehicleMake || undefined,
+          vehicle_model: bookingData.vehicleModel || undefined,
+          vehicle_year: bookingData.vehicleYear ? parseInt(bookingData.vehicleYear) : undefined,
+          vehicle_type: bookingData.vehicleType || undefined,
+          vehicle_color: bookingData.vehicleColor || undefined,
+          license_plate: bookingData.licensePlate || undefined,
+          vehicle_notes: bookingData.vehicleNotes || undefined,
+          parking_details: bookingData.parkingDetails || undefined,
+          water_available: bookingData.waterAvailable,
+          electricity_available: bookingData.electricityAvailable,
+        })
       });
       
       if (result.success) {
@@ -296,6 +336,143 @@ const Booking = () => {
         );
 
       case 4:
+        // Vehicle Information step (only for car detailing)
+        if (isCarDetailing) {
+          return (
+            <div className="space-y-4">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h4 className="font-medium text-blue-900 mb-2">🚗 Vehicle Information</h4>
+                <p className="text-sm text-blue-700">Please provide details about your vehicle for our mobile car detailing service.</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="vehicleMake">Vehicle Make *</Label>
+                  <Input
+                    id="vehicleMake"
+                    placeholder="e.g., Toyota, BMW"
+                    value={bookingData.vehicleMake}
+                    onChange={(e) => setBookingData({...bookingData, vehicleMake: e.target.value})}
+                    className="h-12"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="vehicleModel">Vehicle Model *</Label>
+                  <Input
+                    id="vehicleModel"
+                    placeholder="e.g., Camry, X5"
+                    value={bookingData.vehicleModel}
+                    onChange={(e) => setBookingData({...bookingData, vehicleModel: e.target.value})}
+                    className="h-12"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="vehicleYear">Year</Label>
+                  <Input
+                    id="vehicleYear"
+                    placeholder="e.g., 2020"
+                    value={bookingData.vehicleYear}
+                    onChange={(e) => setBookingData({...bookingData, vehicleYear: e.target.value})}
+                    className="h-12"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="vehicleType">Vehicle Type</Label>
+                  <Select value={bookingData.vehicleType} onValueChange={(value) => 
+                    setBookingData({...bookingData, vehicleType: value})
+                  }>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="sedan">Sedan</SelectItem>
+                      <SelectItem value="suv">SUV</SelectItem>
+                      <SelectItem value="hatchback">Hatchback</SelectItem>
+                      <SelectItem value="truck">Truck</SelectItem>
+                      <SelectItem value="coupe">Coupe</SelectItem>
+                      <SelectItem value="wagon">Station Wagon</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="vehicleColor">Vehicle Color</Label>
+                  <Input
+                    id="vehicleColor"
+                    placeholder="e.g., White, Black"
+                    value={bookingData.vehicleColor}
+                    onChange={(e) => setBookingData({...bookingData, vehicleColor: e.target.value})}
+                    className="h-12"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="licensePlate">License Plate</Label>
+                  <Input
+                    id="licensePlate"
+                    placeholder="e.g., ABC 123"
+                    value={bookingData.licensePlate}
+                    onChange={(e) => setBookingData({...bookingData, licensePlate: e.target.value})}
+                    className="h-12"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="parkingDetails">Parking Details & Access Instructions</Label>
+                <Textarea
+                  id="parkingDetails"
+                  placeholder="Where should we park? Any gates, security, or access instructions..."
+                  value={bookingData.parkingDetails}
+                  onChange={(e) => setBookingData({...bookingData, parkingDetails: e.target.value})}
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-3">
+                <Label>Utilities Available</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="waterAvailable"
+                      checked={bookingData.waterAvailable}
+                      onChange={(e) => setBookingData({...bookingData, waterAvailable: e.target.checked})}
+                      className="rounded"
+                    />
+                    <Label htmlFor="waterAvailable" className="text-sm">Water source available</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="electricityAvailable"
+                      checked={bookingData.electricityAvailable}
+                      onChange={(e) => setBookingData({...bookingData, electricityAvailable: e.target.checked})}
+                      className="rounded"
+                    />
+                    <Label htmlFor="electricityAvailable" className="text-sm">Electricity available</Label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="vehicleNotes">Additional Vehicle Notes</Label>
+                <Textarea
+                  id="vehicleNotes"
+                  placeholder="Any special conditions, damages, or requirements we should know about..."
+                  value={bookingData.vehicleNotes}
+                  onChange={(e) => setBookingData({...bookingData, vehicleNotes: e.target.value})}
+                  rows={3}
+                />
+              </div>
+            </div>
+          );
+        }
+        // Fall through to special instructions for non-car detailing
         return (
           <div className="space-y-4">
             <div>
@@ -312,6 +489,24 @@ const Booking = () => {
         );
 
       case 5:
+        // Special Instructions step for car detailing OR Review step for regular services
+        if (isCarDetailing) {
+          return (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="specialInstructions">Special Instructions (Optional)</Label>
+                <Textarea
+                  id="specialInstructions"
+                  placeholder="Any special requests or instructions for our car detailing team..."
+                  value={bookingData.specialInstructions}
+                  onChange={(e) => setBookingData({...bookingData, specialInstructions: e.target.value})}
+                  rows={4}
+                />
+              </div>
+            </div>
+          );
+        }
+        // Fall through to review for non-car detailing
         const selectedService = services.find(s => s.id === bookingData.specificService);
         const selectedPackage = packages.find(p => p.id === bookingData.packageTier);
         const selectedCategory = categories.find(c => c.id === bookingData.serviceCategory);
@@ -341,6 +536,49 @@ const Booking = () => {
             </div>
           </div>
         );
+
+      case 6:
+        // Review step for car detailing
+        if (isCarDetailing) {
+          const selectedService = services.find(s => s.id === bookingData.specificService);
+          const selectedPackage = packages.find(p => p.id === bookingData.packageTier);
+          const selectedCategory = categories.find(c => c.id === bookingData.serviceCategory);
+          
+          return (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold">Review Your Car Detailing Booking</h3>
+              <div className="space-y-4 p-4 bg-muted rounded-lg">
+                <div>
+                  <span className="font-medium">Service:</span> {selectedCategory?.name} - {selectedService?.name}
+                </div>
+                <div>
+                  <span className="font-medium">Package:</span> {selectedPackage?.name || 'Standard'}
+                </div>
+                <div>
+                  <span className="font-medium">Date & Time:</span> {bookingData.date ? format(bookingData.date, "PPP") : ''} at {bookingData.time}
+                </div>
+                <div>
+                  <span className="font-medium">Location:</span> {bookingData.location}
+                </div>
+                <div>
+                  <span className="font-medium">Contact:</span> {bookingData.name} ({bookingData.email}, {bookingData.phone})
+                </div>
+                <div>
+                  <span className="font-medium">Vehicle:</span> {bookingData.vehicleMake} {bookingData.vehicleModel} ({bookingData.vehicleYear}) - {bookingData.vehicleColor}
+                </div>
+                {bookingData.licensePlate && (
+                  <div>
+                    <span className="font-medium">License Plate:</span> {bookingData.licensePlate}
+                  </div>
+                )}
+                <div>
+                  <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+        return null;
 
       default:
         return null;
@@ -376,7 +614,7 @@ const Booking = () => {
         {/* Progress indicator */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-2">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {Array.from({ length: totalSteps }, (_, i) => i + 1).map((i) => (
               <React.Fragment key={i}>
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
@@ -384,7 +622,7 @@ const Booking = () => {
                 )}>
                   {i < step ? <CheckCircle className="w-4 h-4" /> : i}
                 </div>
-                {i < 5 && <div className={cn("w-8 h-0.5", i < step ? "bg-wewash-blue" : "bg-muted")} />}
+                {i < totalSteps && <div className={cn("w-8 h-0.5", i < step ? "bg-wewash-blue" : "bg-muted")} />}
               </React.Fragment>
             ))}
           </div>
@@ -393,11 +631,12 @@ const Booking = () => {
         <Card className="shadow-elegant">
           <CardHeader>
             <CardTitle>
-              Step {step} of 5: {
+              Step {step} of {totalSteps}: {
                 step === 1 ? 'Service Selection' : 
                 step === 2 ? 'Date & Time' : 
                 step === 3 ? 'Contact Details' : 
-                step === 4 ? 'Special Instructions' :
+                step === 4 ? (isCarDetailing ? 'Vehicle Information' : 'Special Instructions') :
+                step === 5 ? (isCarDetailing ? 'Special Instructions' : 'Review & Submit') :
                 'Review & Submit'
               }
             </CardTitle>
@@ -405,7 +644,8 @@ const Booking = () => {
               {step === 1 ? 'Choose your service and package' : 
                step === 2 ? 'Select your preferred date and time' : 
                step === 3 ? 'Provide your contact information' : 
-               step === 4 ? 'Add any special instructions' :
+               step === 4 ? (isCarDetailing ? 'Enter your vehicle details' : 'Add any special instructions') :
+               step === 5 ? (isCarDetailing ? 'Add any special instructions' : 'Review your booking details before submitting') :
                'Review your booking details before submitting'}
             </CardDescription>
           </CardHeader>
@@ -423,7 +663,7 @@ const Booking = () => {
                 Previous
               </Button>
 
-              {step < 5 ? (
+              {step < totalSteps ? (
                 <Button
                   variant="premium"
                   onClick={handleNext}
@@ -437,11 +677,12 @@ const Booking = () => {
                 <Button
                   variant="secondary"
                   onClick={handleSubmit}
-                  disabled={!canProceed()}
+                  disabled={!canProceed() || isSubmitting}
                   size="mobile"
                 >
+                  {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                   Submit Booking
-                  <CheckCircle className="ml-2 h-4 w-4" />
+                  {!isSubmitting && <CheckCircle className="ml-2 h-4 w-4" />}
                 </Button>
               )}
             </div>

@@ -59,8 +59,11 @@ export type Database = {
           customer_address: string
           customer_name: string
           customer_phone: string
+          electricity_available: boolean | null
           id: string
+          license_plate: string | null
           package_id: string | null
+          parking_details: string | null
           scheduled_date: string
           scheduled_time: string
           service_id: string
@@ -69,6 +72,13 @@ export type Database = {
           total_amount: number
           updated_at: string
           user_id: string
+          vehicle_color: string | null
+          vehicle_make: string | null
+          vehicle_model: string | null
+          vehicle_notes: string | null
+          vehicle_type: string | null
+          vehicle_year: number | null
+          water_available: boolean | null
         }
         Insert: {
           assigned_team?: string | null
@@ -76,8 +86,11 @@ export type Database = {
           customer_address: string
           customer_name: string
           customer_phone: string
+          electricity_available?: boolean | null
           id?: string
+          license_plate?: string | null
           package_id?: string | null
+          parking_details?: string | null
           scheduled_date: string
           scheduled_time: string
           service_id: string
@@ -86,6 +99,13 @@ export type Database = {
           total_amount: number
           updated_at?: string
           user_id: string
+          vehicle_color?: string | null
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_notes?: string | null
+          vehicle_type?: string | null
+          vehicle_year?: number | null
+          water_available?: boolean | null
         }
         Update: {
           assigned_team?: string | null
@@ -93,8 +113,11 @@ export type Database = {
           customer_address?: string
           customer_name?: string
           customer_phone?: string
+          electricity_available?: boolean | null
           id?: string
+          license_plate?: string | null
           package_id?: string | null
+          parking_details?: string | null
           scheduled_date?: string
           scheduled_time?: string
           service_id?: string
@@ -103,6 +126,13 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           user_id?: string
+          vehicle_color?: string | null
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_notes?: string | null
+          vehicle_type?: string | null
+          vehicle_year?: number | null
+          water_available?: boolean | null
         }
         Relationships: [
           {
