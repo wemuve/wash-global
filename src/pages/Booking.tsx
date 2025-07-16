@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,10 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
-import { CalendarIcon, CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CalendarIcon, CheckCircle, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { useServices } from '@/hooks/useServices';
+import { useBookings } from '@/hooks/useBookings';
 
 interface BookingData {
   serviceCategory: string;
@@ -22,6 +26,7 @@ interface BookingData {
   name: string;
   email: string;
   phone: string;
+  specialInstructions: string;
 }
 
 const Booking = () => {
@@ -35,49 +40,87 @@ const Booking = () => {
     location: '',
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    specialInstructions: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
+  const { categories, services, packages, loading, getServicesByCategory, getServicePrice } = useServices();
+  const { createBooking } = useBookings();
 
-  const serviceCategories = {
-    'cleaning': 'Cleaning Services',
-    'maintenance': 'Home Maintenance',
-    'maids': 'Trained Maids',
-    'facility': 'Facility Management',
-    'fumigation': 'Fumigation Services'
-  };
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
-  const specificServices = {
-    cleaning: ['Deep House Cleaning', 'Office Cleaning', 'Carpet Cleaning', 'Window Cleaning'],
-    maintenance: ['Plumbing Repairs', 'Electrical Work', 'Painting', 'General Repairs'],
-    maids: ['Daily Maid Service', 'Weekly Maid Service', 'Part-time Maid', 'Live-in Maid'],
-    facility: ['Building Maintenance', 'Security Services', 'Landscaping', 'Property Management'],
-    fumigation: ['Residential Fumigation', 'Commercial Fumigation', 'Pest Control', 'Termite Treatment']
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-wewash-blue-light/10 to-wewash-gold-light/10 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>Loading services...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const packageTiers = ['Standard', 'Premium', 'VIP'];
   const timeSlots = ['8:00 AM', '10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM'];
 
   const handleNext = () => {
-    if (step < 4) setStep(step + 1);
+    if (step < 5) setStep(step + 1);
   };
 
   const handlePrevious = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = () => {
-    // Mock booking submission
-    const bookingId = 'BK' + Date.now().toString().slice(-6);
-    localStorage.setItem('lastBooking', JSON.stringify({ ...bookingData, id: bookingId }));
+  const handleSubmit = async () => {
+    if (!user || !bookingData.date) return;
     
-    toast({
-      title: "Booking Submitted Successfully!",
-      description: `Your booking reference is ${bookingId}`,
-    });
+    setIsSubmitting(true);
     
-    navigate('/booking-confirmation');
+    try {
+      const totalAmount = getServicePrice(bookingData.specificService, bookingData.packageTier || undefined);
+      
+      const result = await createBooking({
+        service_id: bookingData.specificService,
+        package_id: bookingData.packageTier || undefined,
+        customer_name: bookingData.name,
+        customer_phone: bookingData.phone,
+        customer_address: bookingData.location,
+        scheduled_date: format(bookingData.date, 'yyyy-MM-dd'),
+        scheduled_time: bookingData.time,
+        total_amount: totalAmount,
+        special_instructions: bookingData.specialInstructions || undefined,
+      });
+      
+      if (result.success) {
+        toast({
+          title: "Booking Submitted Successfully!",
+          description: `Your booking has been created and is pending confirmation.`,
+        });
+        
+        navigate('/booking-confirmation');
+      } else {
+        toast({
+          title: "Booking Failed",
+          description: result.error || "An error occurred while creating your booking",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Booking Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStep = () => {
@@ -94,8 +137,10 @@ const Booking = () => {
                   <SelectValue placeholder="Choose a service category" />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(serviceCategories).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>{value}</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.icon} {category.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -111,8 +156,10 @@ const Booking = () => {
                     <SelectValue placeholder="Choose specific service" />
                   </SelectTrigger>
                   <SelectContent>
-                    {specificServices[bookingData.serviceCategory as keyof typeof specificServices]?.map((service) => (
-                      <SelectItem key={service} value={service}>{service}</SelectItem>
+                    {getServicesByCategory(bookingData.serviceCategory).map((service) => (
+                      <SelectItem key={service.id} value={service.id}>
+                        {service.name} - K{service.base_price}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -120,7 +167,7 @@ const Booking = () => {
             )}
 
             <div>
-              <Label htmlFor="packageTier">Select Package Tier</Label>
+              <Label htmlFor="packageTier">Select Package Tier (Optional)</Label>
               <Select value={bookingData.packageTier} onValueChange={(value) => 
                 setBookingData({...bookingData, packageTier: value})
               }>
@@ -128,12 +175,24 @@ const Booking = () => {
                   <SelectValue placeholder="Choose package tier" />
                 </SelectTrigger>
                 <SelectContent>
-                  {packageTiers.map((tier) => (
-                    <SelectItem key={tier} value={tier}>{tier}</SelectItem>
+                  <SelectItem value="">No Package (Standard Price)</SelectItem>
+                  {packages.map((pkg) => (
+                    <SelectItem key={pkg.id} value={pkg.id}>
+                      {pkg.name} (+{Math.round((pkg.price_multiplier - 1) * 100)}%)
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
+
+            {bookingData.specificService && (
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="text-sm font-medium mb-2">Estimated Price:</div>
+                <div className="text-2xl font-bold text-wewash-blue">
+                  K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
+                </div>
+              </div>
+            )}
           </div>
         );
 
@@ -238,14 +297,34 @@ const Booking = () => {
 
       case 4:
         return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="specialInstructions">Special Instructions (Optional)</Label>
+              <Textarea
+                id="specialInstructions"
+                placeholder="Any special requests or instructions for our team..."
+                value={bookingData.specialInstructions}
+                onChange={(e) => setBookingData({...bookingData, specialInstructions: e.target.value})}
+                rows={4}
+              />
+            </div>
+          </div>
+        );
+
+      case 5:
+        const selectedService = services.find(s => s.id === bookingData.specificService);
+        const selectedPackage = packages.find(p => p.id === bookingData.packageTier);
+        const selectedCategory = categories.find(c => c.id === bookingData.serviceCategory);
+        
+        return (
           <div className="space-y-6">
             <h3 className="text-lg font-semibold">Review Your Booking</h3>
             <div className="space-y-4 p-4 bg-muted rounded-lg">
               <div>
-                <span className="font-medium">Service:</span> {serviceCategories[bookingData.serviceCategory as keyof typeof serviceCategories]} - {bookingData.specificService}
+                <span className="font-medium">Service:</span> {selectedCategory?.name} - {selectedService?.name}
               </div>
               <div>
-                <span className="font-medium">Package:</span> {bookingData.packageTier}
+                <span className="font-medium">Package:</span> {selectedPackage?.name || 'Standard'}
               </div>
               <div>
                 <span className="font-medium">Date & Time:</span> {bookingData.date ? format(bookingData.date, "PPP") : ''} at {bookingData.time}
@@ -255,6 +334,9 @@ const Booking = () => {
               </div>
               <div>
                 <span className="font-medium">Contact:</span> {bookingData.name} ({bookingData.email}, {bookingData.phone})
+              </div>
+              <div>
+                <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
               </div>
             </div>
           </div>
@@ -268,12 +350,14 @@ const Booking = () => {
   const canProceed = () => {
     switch (step) {
       case 1:
-        return bookingData.serviceCategory && bookingData.specificService && bookingData.packageTier;
+        return bookingData.serviceCategory && bookingData.specificService;
       case 2:
         return bookingData.date && bookingData.time;
       case 3:
         return bookingData.location && bookingData.name && bookingData.email && bookingData.phone;
       case 4:
+        return true;
+      case 5:
         return true;
       default:
         return false;
@@ -292,7 +376,7 @@ const Booking = () => {
         {/* Progress indicator */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-2">
-            {[1, 2, 3, 4].map((i) => (
+            {[1, 2, 3, 4, 5].map((i) => (
               <React.Fragment key={i}>
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
@@ -300,7 +384,7 @@ const Booking = () => {
                 )}>
                   {i < step ? <CheckCircle className="w-4 h-4" /> : i}
                 </div>
-                {i < 4 && <div className={cn("w-8 h-0.5", i < step ? "bg-wewash-blue" : "bg-muted")} />}
+                {i < 5 && <div className={cn("w-8 h-0.5", i < step ? "bg-wewash-blue" : "bg-muted")} />}
               </React.Fragment>
             ))}
           </div>
@@ -309,10 +393,11 @@ const Booking = () => {
         <Card className="shadow-elegant">
           <CardHeader>
             <CardTitle>
-              Step {step} of 4: {
+              Step {step} of 5: {
                 step === 1 ? 'Service Selection' : 
                 step === 2 ? 'Date & Time' : 
                 step === 3 ? 'Contact Details' : 
+                step === 4 ? 'Special Instructions' :
                 'Review & Submit'
               }
             </CardTitle>
@@ -320,6 +405,7 @@ const Booking = () => {
               {step === 1 ? 'Choose your service and package' : 
                step === 2 ? 'Select your preferred date and time' : 
                step === 3 ? 'Provide your contact information' : 
+               step === 4 ? 'Add any special instructions' :
                'Review your booking details before submitting'}
             </CardDescription>
           </CardHeader>
@@ -337,7 +423,7 @@ const Booking = () => {
                 Previous
               </Button>
 
-              {step < 4 ? (
+              {step < 5 ? (
                 <Button
                   variant="premium"
                   onClick={handleNext}

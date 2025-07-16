@@ -1,56 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Eye, EyeOff, LogIn, UserPlus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const { login, signUp, isAuthenticated, user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated && user && !loading) {
+      if (user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/client-dashboard');
+      }
+    }
+  }, [isAuthenticated, user, loading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
-      if (success) {
-        toast({
-          title: "Welcome to WeWash Zambia!",
-          description: "You have successfully logged in.",
-        });
+      if (isSignUp) {
+        const result = await signUp(email, password, fullName);
         
-        // Redirect based on user role (mock logic)
-        if (email === 'admin@wewash.zm') {
-          navigate('/admin');
+        if (result.success) {
+          toast({
+            title: "Registration successful",
+            description: "Please check your email to verify your account.",
+          });
+          setIsSignUp(false);
+          setEmail('');
+          setPassword('');
+          setFullName('');
         } else {
-          navigate('/client-dashboard');
+          toast({
+            title: "Registration failed",
+            description: result.error || "An error occurred during registration",
+            variant: "destructive",
+          });
         }
       } else {
-        toast({
-          title: "Login Failed",
-          description: "Invalid email or password. Please try again.",
-          variant: "destructive",
-        });
+        const result = await login(email, password);
+        
+        if (result.success) {
+          toast({
+            title: "Welcome to WeWash Zambia!",
+            description: "You have successfully logged in.",
+          });
+        } else {
+          toast({
+            title: "Login failed",
+            description: result.error || "Invalid email or password",
+            variant: "destructive",
+          });
+        }
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "An error occurred during login.",
+        title: isSignUp ? "Registration failed" : "Login failed",
+        description: "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp);
+    setEmail('');
+    setPassword('');
+    setFullName('');
   };
 
   return (
@@ -64,13 +99,33 @@ const Login = () => {
 
         <Card className="shadow-elegant border-0">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-semibold text-foreground">Welcome Back</CardTitle>
+            <CardTitle className="text-2xl font-semibold text-foreground">
+              {isSignUp ? 'Create Account' : 'Welcome Back'}
+            </CardTitle>
             <CardDescription>
-              Sign in to your WeWash account to manage your services
+              {isSignUp 
+                ? 'Sign up for WeWash account to start using our services'
+                : 'Sign in to your WeWash account to manage your services'
+              }
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {isSignUp && (
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    className="h-12"
+                  />
+                </div>
+              )}
+              
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -119,23 +174,38 @@ const Login = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                <LogIn className="mr-2 h-5 w-5" />
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isSignUp ? (
+                  <UserPlus className="mr-2 h-5 w-5" />
+                ) : (
+                  <LogIn className="mr-2 h-5 w-5" />
+                )}
+                {isLoading 
+                  ? (isSignUp ? 'Creating Account...' : 'Signing In...') 
+                  : (isSignUp ? 'Create Account' : 'Sign In')
+                }
               </Button>
             </form>
 
-            <div className="mt-6">
-              <Button variant="link" className="w-full text-sm text-muted-foreground">
-                Forgot your password?
+            <div className="mt-6 text-center">
+              <Button 
+                variant="link" 
+                onClick={toggleMode}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                {isSignUp 
+                  ? 'Already have an account? Sign in' 
+                  : "Don't have an account? Sign up"
+                }
               </Button>
             </div>
 
-            {/* Demo credentials */}
-            <div className="mt-4 p-3 bg-muted rounded-lg text-sm">
-              <p className="font-medium mb-2">Demo Credentials:</p>
-              <p>Admin: admin@wewash.zm / admin</p>
-              <p>Client: client@example.com / client</p>
-            </div>
+            {!isSignUp && (
+              <div className="mt-4">
+                <Button variant="link" className="w-full text-sm text-muted-foreground">
+                  Forgot your password?
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
 

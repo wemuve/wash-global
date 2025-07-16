@@ -1,17 +1,33 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
-interface User {
+interface Profile {
+  id: string;
+  user_id: string;
+  full_name: string;
+  phone?: string;
+  address?: string;
+  role: 'client' | 'admin';
+  created_at: string;
+  updated_at: string;
+}
+
+interface AuthUser {
   id: string;
   email: string;
   role: 'client' | 'admin';
   name: string;
+  profile?: Profile;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,38 +45,102 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock authentication - in real app this would connect to Supabase
-    if (email === 'admin@wewash.zm' && password === 'admin') {
-      setUser({
-        id: '1',
-        email: 'admin@wewash.zm',
-        role: 'admin',
-        name: 'Admin User'
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+        
+        if (session?.user) {
+          // Fetch user profile
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
+          
+          setUser({
+            id: session.user.id,
+            email: session.user.email || '',
+            role: profile?.role || 'client',
+            name: profile?.full_name || session.user.email || '',
+            profile: profile || undefined
+          });
+        } else {
+          setUser(null);
+        }
+        
+        setLoading(false);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (!session) {
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
-      return true;
-    } else if (email === 'client@example.com' && password === 'client') {
-      setUser({
-        id: '2',
-        email: 'client@example.com',
-        role: 'client',
-        name: 'John Doe'
-      });
-      return true;
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: 'An unexpected error occurred' };
     }
-    return false;
   };
 
-  const logout = () => {
-    setUser(null);
+  const signUp = async (email: string, password: string, fullName: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: fullName,
+          },
+        },
+      });
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: 'An unexpected error occurred' };
+    }
+  };
+
+  const logout = async (): Promise<void> => {
+    await supabase.auth.signOut();
   };
 
   const value = {
     user,
-    isAuthenticated: !!user,
+    isAuthenticated: !!user && !!session,
+    loading,
     login,
+    signUp,
     logout,
   };
 
