@@ -93,7 +93,12 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-wewash-blue">WeWash Zambia</h1>
+              <img 
+                src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" 
+                alt="WeWash Zambia Logo" 
+                className="h-8 w-auto sm:h-10"
+              />
+              <span className="ml-2 text-xl sm:text-2xl font-bold text-wewash-blue">Zambia</span>
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="whatsapp" size="sm" className="hidden sm:flex">
@@ -249,7 +254,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-bold text-wewash-gold mb-4">WeWash Zambia</h3>
+              <div className="flex items-center mb-4">
+                <img 
+                  src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" 
+                  alt="WeWash Zambia Logo" 
+                  className="h-12 w-auto"
+                />
+                <span className="ml-2 text-2xl font-bold text-wewash-gold">Zambia</span>
+              </div>
               <p className="text-background/80 mb-4">
                 Elite Cleaning and Property Services - Your trusted partner for premium 
                 cleaning and maintenance solutions in Zambia.
