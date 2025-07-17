@@ -228,20 +228,8 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
               
               <div>
-                <h3 className="text-xl font-semibold mb-4">LUSAKA</h3>
-                <div className="space-y-2 text-muted-foreground">
-                  <div className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    <span>Lusaka Central, Zambia</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-4 w-4 mr-2" />
-                    <span>+260 768 671 420</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span>contact@wewashzm.com</span>
-                  </div>
-                </div>
+                
+                
               </div>
             </div>
           </div>
@@ -302,7 +290,7 @@ const Index = () => {
           </div>
 
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>CVR: ZM001234 &copy; 2024 WeWash Zambia. All rights reserved.</p>
+            <p> © 2024 WeWash Zambia. All rights reserved.</p>
           </div>
         </div>
       </footer>
