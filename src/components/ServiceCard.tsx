@@ -52,9 +52,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <CardContent className="p-4 md:p-6">
         <div className="space-y-3">
           {services.map((service, index) => (
-            <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-b-0">
+            <div key={index} className="py-2 border-b border-border last:border-b-0">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm md:text-base text-foreground truncate">
+                <p className="font-medium text-sm md:text-base text-foreground">
                   {service.name}
                 </p>
                 {service.description && (
@@ -62,11 +62,6 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
                     {service.description}
                   </p>
                 )}
-              </div>
-              <div className="ml-3 text-right">
-                <span className="text-primary font-bold text-sm md:text-base">
-                  {service.price}
-                </span>
               </div>
             </div>
           ))}
