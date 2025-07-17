@@ -83,23 +83,17 @@ const Booking = () => {
     setDebugInfo(prev => [...prev.slice(-9), debugMessage]); // Keep last 10 messages
   };
 
-  // Enhanced authentication and data loading monitoring
+  // Enhanced authentication and data loading monitoring - Allow guests for B2B bookings
   useEffect(() => {
     addDebugInfo(`Authentication check - isAuthenticated: ${isAuthenticated}, user: ${user ? 'present' : 'null'}`);
     
-    if (!isAuthenticated) {
-      addDebugInfo('User not authenticated, redirecting to login');
-      navigate('/login');
-      return;
-    }
-
     addDebugInfo(`Services loading: ${loading}, error: ${error || 'none'}`);
     addDebugInfo(`Data loaded - Categories: ${categories.length}, Services: ${services.length}, Packages: ${packages.length}`);
     
     if (error) {
       addDebugInfo(`Service loading error: ${error}`);
     }
-  }, [isAuthenticated, user, navigate, loading, error, categories.length, services.length, packages.length]);
+  }, [isAuthenticated, user, loading, error, categories.length, services.length, packages.length]);
 
   // Enhanced loading state with timeout handling
   if (loading) {
@@ -210,6 +204,13 @@ const Booking = () => {
 
   const handleNext = () => {
     addDebugInfo(`Moving from step ${step} to ${step + 1}`);
+    
+    // Handle facility management WhatsApp redirect
+    if (step === 1 && bookingData.serviceCategory === 'whatsapp-facility') {
+      window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about facility management services.', '_blank');
+      return;
+    }
+    
     if (step < totalSteps) setStep(step + 1);
   };
 
@@ -221,8 +222,8 @@ const Booking = () => {
   const handleSubmit = async () => {
     addDebugInfo('Submit booking attempt started');
     
-    if (!user || !bookingData.date) {
-      addDebugInfo(`Submit validation failed - user: ${user ? 'present' : 'null'}, date: ${bookingData.date ? 'present' : 'null'}`);
+    if (!bookingData.date) {
+      addDebugInfo(`Submit validation failed - date: ${bookingData.date ? 'present' : 'null'}`);
       return;
     }
     
@@ -242,6 +243,7 @@ const Booking = () => {
         scheduled_time: bookingData.time,
         total_amount: totalAmount,
         special_instructions: bookingData.specialInstructions || undefined,
+        ...(user && { user_id: user.id }), // Only include user_id if user is logged in
         // Include vehicle information if it's a car detailing service
         ...(isCarDetailing && {
           vehicle_make: bookingData.vehicleMake || undefined,
@@ -308,16 +310,26 @@ const Booking = () => {
                   <SelectValue placeholder="Choose a service category" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.icon} {category.name}
-                    </SelectItem>
-                  ))}
+                  {categories.map((category) => {
+                    // For Facility Management, show special option
+                    if (category.name === 'Facility Management') {
+                      return (
+                        <SelectItem key={category.id} value="whatsapp-facility">
+                          {category.name} - Contact WhatsApp Support
+                        </SelectItem>
+                      );
+                    }
+                    return (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
 
-            {bookingData.serviceCategory && (
+            {bookingData.serviceCategory && bookingData.serviceCategory !== 'whatsapp-facility' && (
               <div>
                 <Label htmlFor="specificService">Select Specific Service</Label>
                 <Select value={bookingData.specificService} onValueChange={(value) => 
@@ -334,6 +346,21 @@ const Booking = () => {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+            )}
+
+            {bookingData.serviceCategory === 'whatsapp-facility' && (
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="text-center space-y-4">
+                  <p className="text-lg font-medium">Facility Management Services</p>
+                  <p className="text-muted-foreground">For facility management services, please contact our WhatsApp support for personalized consultation and quotes.</p>
+                  <Button 
+                    onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about facility management services.', '_blank')}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    Contact WhatsApp Support
+                  </Button>
+                </div>
               </div>
             )}
 
@@ -719,11 +746,11 @@ const Booking = () => {
   const canProceed = () => {
     switch (step) {
       case 1:
-        return bookingData.serviceCategory && bookingData.specificService;
+        return bookingData.serviceCategory && (bookingData.specificService || bookingData.serviceCategory === 'whatsapp-facility');
       case 2:
         return bookingData.date && bookingData.time;
       case 3:
-        return bookingData.location && bookingData.name && bookingData.email && bookingData.phone;
+        return bookingData.location && bookingData.name && bookingData.phone;
       case 4:
         return true;
       case 5:
@@ -796,20 +823,18 @@ const Booking = () => {
 
               {step < totalSteps ? (
                 <Button
-                  variant="premium"
                   onClick={handleNext}
                   disabled={!canProceed()}
-                  size="mobile"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2"
                 >
-                  Next
+                  {bookingData.serviceCategory === 'whatsapp-facility' ? 'Contact WhatsApp Support' : 'Next'}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
                 <Button
-                  variant="secondary"
                   onClick={handleSubmit}
                   disabled={!canProceed() || isSubmitting}
-                  size="mobile"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2"
                 >
                   {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                   Submit Booking
