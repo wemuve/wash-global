@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
-
 interface ServiceCardProps {
   title: string;
   image: string;
@@ -13,15 +12,13 @@ interface ServiceCardProps {
   }>;
   onBook?: () => void;
 }
-
-export const ServiceCard: React.FC<ServiceCardProps> = ({ 
-  title, 
-  image, 
-  services, 
-  onBook 
+export const ServiceCard: React.FC<ServiceCardProps> = ({
+  title,
+  image,
+  services,
+  onBook
 }) => {
   const navigate = useNavigate();
-
   const handleBookService = () => {
     if (onBook) {
       onBook();
@@ -29,15 +26,12 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       navigate('/booking');
     }
   };
-
-  return (
-    <Card className="service-card group overflow-hidden hover:shadow-lg transition-all duration-300">
+  return <Card className="service-card group overflow-hidden hover:shadow-lg transition-all duration-300">
       {/* Service Image */}
       <div className="aspect-[4/3] relative overflow-hidden">
-        <div 
-          className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" 
-          style={{ backgroundImage: `url(${image})` }}
-        />
+        <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+        backgroundImage: `url(${image})`
+      }} />
         <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
         
         {/* Service Title Overlay */}
@@ -50,36 +44,14 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {/* Service Details */}
       <CardContent className="p-4 md:p-6">
-        <div className="space-y-3">
-          {services.map((service, index) => (
-            <div key={index} className="py-2 border-b border-border last:border-b-0">
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm md:text-base text-foreground">
-                  {service.name}
-                </p>
-                {service.description && (
-                  <p className="text-xs md:text-sm text-muted-foreground mt-1">
-                    {service.description}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        
 
         {/* Action Buttons */}
         <div className="mt-6 space-y-3">
-          <Button 
-            onClick={handleBookService}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
+          <Button onClick={handleBookService} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
             Book Service
           </Button>
-          <Button 
-            variant="outline" 
-            className="w-full"
-            onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about ' + title + ' services.', '_blank')}
-          >
+          <Button variant="outline" className="w-full" onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about ' + title + ' services.', '_blank')}>
             WhatsApp Inquiry
           </Button>
         </div>
@@ -89,6 +61,5 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           * Pricing varies based on size, dirt level, distance, and specific client needs
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
