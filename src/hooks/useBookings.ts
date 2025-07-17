@@ -170,6 +170,29 @@ export const useBookings = () => {
 
       if (insertError) throw insertError;
 
+      // Trigger n8n webhook for booking confirmation
+      try {
+        const webhookResponse = await supabase.functions.invoke('booking-webhook', {
+          body: {
+            booking_id: data.id,
+            customer_name: data.customer_name,
+            customer_phone: data.customer_phone,
+            customer_email: user?.email || '',
+            service_name: data.services?.name || 'Service',
+            scheduled_date: data.scheduled_date,
+            scheduled_time: data.scheduled_time,
+            total_amount: data.total_amount,
+            // You can set your n8n webhook URL here or pass it from environment
+            n8n_webhook_url: 'YOUR_N8N_WEBHOOK_URL_HERE' // Replace with actual n8n webhook URL
+          }
+        });
+        
+        console.log('Webhook triggered:', webhookResponse);
+      } catch (webhookError) {
+        console.error('Webhook error (non-blocking):', webhookError);
+        // Don't fail the booking if webhook fails
+      }
+
       // Refresh bookings list only if user is logged in
       if (user) {
         await fetchBookings();
