@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -345,7 +346,7 @@ const Booking = () => {
                   <SelectValue placeholder="Choose package tier" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No Package (Standard Price)</SelectItem>
+                  <SelectItem value="none">No Package (Standard Price)</SelectItem>
                   {packages.map((pkg) => (
                     <SelectItem key={pkg.id} value={pkg.id}>
                       {pkg.name} (+{Math.round((pkg.price_multiplier - 1) * 100)}%)
@@ -359,7 +360,7 @@ const Booking = () => {
               <div className="p-4 bg-muted rounded-lg">
                 <div className="text-sm font-medium mb-2">Estimated Price:</div>
                 <div className="text-2xl font-bold text-wewash-blue">
-                  K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
+                  K{getServicePrice(bookingData.specificService, bookingData.packageTier === 'none' ? undefined : bookingData.packageTier || undefined).toFixed(2)}
                 </div>
               </div>
             )}
@@ -661,7 +662,7 @@ const Booking = () => {
                 <span className="font-medium">Contact:</span> {bookingData.name} ({bookingData.email}, {bookingData.phone})
               </div>
               <div>
-                <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
+                <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier === 'none' ? undefined : bookingData.packageTier || undefined).toFixed(2)}
               </div>
             </div>
           </div>
@@ -702,7 +703,7 @@ const Booking = () => {
                   </div>
                 )}
                 <div>
-                  <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier || undefined).toFixed(2)}
+                  <span className="font-medium">Total Amount:</span> K{getServicePrice(bookingData.specificService, bookingData.packageTier === 'none' ? undefined : bookingData.packageTier || undefined).toFixed(2)}
                 </div>
               </div>
             </div>
