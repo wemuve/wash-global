@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car } from 'lucide-react';
+import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car, UserPlus } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
 import cleaningServicesImage from '@/assets/cleaning-services.jpg';
 import homeMaintenanceImage from '@/assets/home-maintenance.jpg';
@@ -12,6 +13,7 @@ import fumigationServicesImage from '@/assets/fumigation-services.jpg';
 import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
 const Index = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
   const services = [{
     icon: Sparkles,
     title: "Cleaning Services",
@@ -67,7 +69,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <span>+260 7686 71420</span>
+              <span>+260 768 671 420</span>
             </div>
             <div className="flex items-center gap-2">
               <span>Contact@wewashzm.com
@@ -84,22 +86,67 @@ const Index = () => {
             <div className="flex items-center">
               <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
             </div>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <a href="#" className="text-foreground hover:text-primary font-medium transition-colors">Home</a>
               <a href="#services" className="text-foreground hover:text-primary font-medium transition-colors">Services</a>
               <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
+              
+              {/* Authentication buttons */}
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-muted-foreground">Welcome, {user?.email}</span>
+                  <Button 
+                    onClick={() => logout()}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Button>
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Button>
+                </div>
+              )}
+              
               <Button 
-                onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
                 className="bg-green-600 hover:bg-green-700 text-white"
               >
-                Whatsapp Support
+                WhatsApp Inquiry
               </Button>
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center space-x-2">
+              {!isAuthenticated && (
+                <Button 
+                  onClick={() => navigate('/login')}
+                  variant="outline"
+                  size="sm"
+                >
+                  <LogIn className="h-3 w-3 mr-1" />
+                  Login
+                </Button>
+              )}
               <Button 
-                onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
                 className="bg-green-600 hover:bg-green-700 text-white"
+                size="sm"
               >
                 WhatsApp
               </Button>
@@ -120,10 +167,10 @@ const Index = () => {
           </h1>
           <div className="mt-12 space-y-4">
             <Button 
-              onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
               className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4"
             >
-              Whatsapp Support
+              WhatsApp Inquiry
             </Button>
             <Button 
               onClick={() => navigate('/booking')}
@@ -256,7 +303,7 @@ const Index = () => {
                   </div>
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span>+260 7686 71420</span>
+                    <span>+260 768 671 420</span>
                   </div>
                   <div className="flex items-center">
                     <span>contact@wewashzm.com</span>
@@ -289,7 +336,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <Phone className="h-4 w-4 mr-2" />
-                  <span>+260 7686 71420</span>
+                  <span>+260 768 671 420</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <span>contact@wewashzm.com</span>
@@ -316,8 +363,11 @@ const Index = () => {
           </div>
 
           <div className="text-center">
-            <Button onClick={() => navigate('/booking')} className="btn-palmgren mb-8">
-              Whatsapp Support
+            <Button 
+              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+              className="btn-palmgren mb-8"
+            >
+              WhatsApp Inquiry
             </Button>
           </div>
 

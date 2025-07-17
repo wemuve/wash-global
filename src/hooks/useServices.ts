@@ -47,16 +47,23 @@ export const useServices = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
+      console.log('🔍 SERVICES DEBUG: Starting data fetch...');
       
       // Fetch categories
+      console.log('🔍 SERVICES DEBUG: Fetching categories...');
       const { data: categoriesData, error: categoriesError } = await supabase
         .from('service_categories')
         .select('*')
         .order('name');
 
-      if (categoriesError) throw categoriesError;
+      if (categoriesError) {
+        console.error('🔍 SERVICES DEBUG: Categories error:', categoriesError);
+        throw categoriesError;
+      }
+      console.log('🔍 SERVICES DEBUG: Categories fetched:', categoriesData?.length || 0);
 
       // Fetch services with categories
+      console.log('🔍 SERVICES DEBUG: Fetching services...');
       const { data: servicesData, error: servicesError } = await supabase
         .from('services')
         .select(`
@@ -66,23 +73,36 @@ export const useServices = () => {
         .eq('is_active', true)
         .order('name');
 
-      if (servicesError) throw servicesError;
+      if (servicesError) {
+        console.error('🔍 SERVICES DEBUG: Services error:', servicesError);
+        throw servicesError;
+      }
+      console.log('🔍 SERVICES DEBUG: Services fetched:', servicesData?.length || 0);
 
       // Fetch packages
+      console.log('🔍 SERVICES DEBUG: Fetching packages...');
       const { data: packagesData, error: packagesError } = await supabase
         .from('package_tiers')
         .select('*')
         .eq('is_active', true)
         .order('price_multiplier');
 
-      if (packagesError) throw packagesError;
+      if (packagesError) {
+        console.error('🔍 SERVICES DEBUG: Packages error:', packagesError);
+        throw packagesError;
+      }
+      console.log('🔍 SERVICES DEBUG: Packages fetched:', packagesData?.length || 0);
 
       setCategories(categoriesData || []);
       setServices(servicesData || []);
       setPackages(packagesData || []);
       setError(null);
+      
+      console.log('🔍 SERVICES DEBUG: Data fetch completed successfully');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+      console.error('🔍 SERVICES DEBUG: Fetch error:', errorMessage);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

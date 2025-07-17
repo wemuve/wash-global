@@ -207,7 +207,7 @@ const Booking = () => {
     
     // Handle facility management WhatsApp redirect
     if (step === 1 && bookingData.serviceCategory === 'whatsapp-facility') {
-      window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about facility management services.', '_blank');
+      window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about facility management services.', '_blank');
       return;
     }
     
@@ -355,7 +355,7 @@ const Booking = () => {
                   <p className="text-lg font-medium">Facility Management Services</p>
                   <p className="text-muted-foreground">For facility management services, please contact our WhatsApp support for personalized consultation and quotes.</p>
                   <Button 
-                    onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about facility management services.', '_blank')}
+                    onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about facility management services.', '_blank')}
                     className="bg-green-600 hover:bg-green-700 text-white"
                   >
                     Contact WhatsApp Support
