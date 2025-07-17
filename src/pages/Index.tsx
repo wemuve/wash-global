@@ -82,7 +82,7 @@ const Index = () => {
         <div className="container-palmgren">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
+              <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-foreground hover:text-primary font-medium transition-colors">Home</a>
@@ -258,7 +258,7 @@ const Index = () => {
       <footer id="contact" className="section-spacing bg-palmgren-gray border-t">
         <div className="container-palmgren">
           <div className="text-center mb-12">
-            <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia" className="h-16 mx-auto mb-6" />
+            <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Zambia" className="h-16 mx-auto mb-6" />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Professional cleaning and property services in Zambia. 
               Contact us for an obligation-free quote.
