@@ -89,14 +89,19 @@ const Index = () => {
               <a href="#services" className="text-foreground hover:text-primary font-medium transition-colors">Services</a>
               <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
-              <Button onClick={() => navigate('/login')} className="btn-palmgren">
-                <LogIn className="mr-2 h-4 w-4" />
-                Login
+              <Button 
+                onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                Whatsapp Support
               </Button>
             </div>
             <div className="md:hidden">
-              <Button variant="outline" onClick={() => navigate('/login')}>
-                <LogIn className="h-4 w-4" />
+              <Button 
+                onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                WhatsApp
               </Button>
             </div>
           </div>
@@ -113,9 +118,18 @@ const Index = () => {
             PROFESSIONAL CLEANING TO<br />
             <span className="text-blue-200">HOME SERVICES & FACILITY MANA</span>
           </h1>
-          <div className="mt-12">
-            <Button onClick={() => navigate('/booking')} className="btn-palmgren text-lg px-12 py-6">
+          <div className="mt-12 space-y-4">
+            <Button 
+              onClick={() => window.open('https://wa.me/26068671420?text=Hello, I would like to inquire about your services.', '_blank')}
+              className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4"
+            >
               Whatsapp Support
+            </Button>
+            <Button 
+              onClick={() => navigate('/booking')}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-12 py-6"
+            >
+              Book Service Online
             </Button>
           </div>
         </div>

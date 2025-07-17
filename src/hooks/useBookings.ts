@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export interface Booking {
   id: string;
-  user_id: string;
+  user_id?: string | null;
   service_id: string;
   package_id?: string | null;
   customer_name: string;
@@ -61,6 +61,7 @@ interface CreateBookingData {
   scheduled_time: string;
   total_amount: number;
   special_instructions?: string;
+  user_id?: string; // Optional for guest bookings
   // Vehicle information for car detailing services
   vehicle_make?: string;
   vehicle_model?: string;
@@ -138,16 +139,13 @@ export const useBookings = () => {
   };
 
   const createBooking = async (bookingData: CreateBookingData): Promise<{ success: boolean; error?: string; booking?: Booking }> => {
-    if (!user) {
-      return { success: false, error: 'User not authenticated' };
-    }
-
     try {
       const { data, error: insertError } = await supabase
         .from('bookings')
         .insert({
           ...bookingData,
-          user_id: user.id,
+          // Use provided user_id or current user's id, or null for guest bookings
+          user_id: bookingData.user_id || user?.id || null,
         })
         .select(`
           *,
@@ -172,8 +170,10 @@ export const useBookings = () => {
 
       if (insertError) throw insertError;
 
-      // Refresh bookings list
-      await fetchBookings();
+      // Refresh bookings list only if user is logged in
+      if (user) {
+        await fetchBookings();
+      }
 
       return { success: true, booking: data as any };
     } catch (err) {

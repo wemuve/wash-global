@@ -71,7 +71,7 @@ export type Database = {
           status: Database["public"]["Enums"]["booking_status"]
           total_amount: number
           updated_at: string
-          user_id: string
+          user_id: string | null
           vehicle_color: string | null
           vehicle_make: string | null
           vehicle_model: string | null
@@ -98,7 +98,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["booking_status"]
           total_amount: number
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           vehicle_color?: string | null
           vehicle_make?: string | null
           vehicle_model?: string | null
@@ -125,7 +125,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["booking_status"]
           total_amount?: number
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           vehicle_color?: string | null
           vehicle_make?: string | null
           vehicle_model?: string | null
