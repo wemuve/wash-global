@@ -855,8 +855,8 @@ const Booking = () => {
           </Button>
         </div>
 
-        {/* Debug Panel (only visible in development or when there are issues) */}
-        {(process.env.NODE_ENV === 'development' || error || debugInfo.length > 5) && (
+        {/* Debug Panel (only visible in development or when there are errors) */}
+        {(process.env.NODE_ENV === 'development' || error) && (
           <Card className="mt-6 border-yellow-200 bg-yellow-50">
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
