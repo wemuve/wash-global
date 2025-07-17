@@ -64,22 +64,23 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				wewash: {
-					blue: 'hsl(var(--wewash-blue))',
-					'blue-dark': 'hsl(var(--wewash-blue-dark))',
-					'blue-light': 'hsl(var(--wewash-blue-light))',
-					gold: 'hsl(var(--wewash-gold))',
-					'gold-dark': 'hsl(var(--wewash-gold-dark))',
-					'gold-light': 'hsl(var(--wewash-gold-light))'
+				palmgren: {
+					blue: 'hsl(var(--palmgren-blue))',
+					'blue-dark': 'hsl(var(--palmgren-blue-dark))',
+					'blue-light': 'hsl(var(--palmgren-blue-light))',
+					navy: 'hsl(var(--palmgren-navy))',
+					gray: 'hsl(var(--palmgren-gray))',
+					'dark-gray': 'hsl(var(--palmgren-dark-gray))'
 				}
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-gold': 'var(--gradient-gold)'
+				'gradient-header': 'var(--gradient-header)',
+				'gradient-subtle': 'var(--gradient-subtle)'
 			},
 			boxShadow: {
-				'primary': 'var(--shadow-primary)',
-				'gold': 'var(--shadow-gold)',
+				'card': 'var(--shadow-card)',
+				'button': 'var(--shadow-button)',
 				'elegant': 'var(--shadow-elegant)'
 			},
 			fontFamily: {

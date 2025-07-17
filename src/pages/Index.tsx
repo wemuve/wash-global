@@ -54,184 +54,298 @@ const Index = () => {
     description: "Trained professionals with years of experience in their respective fields"
   }];
   return <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-wewash-blue backdrop-blur supports-[backdrop-filter]:bg-wewash-blue/95 border-b border-wewash-blue-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Palmgren-style Header with Contact Info */}
+      <div className="header-gradient text-white py-3">
+        <div className="container-palmgren">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4" />
+              <span>+260 XXX XXX XXX</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>kontakt@wewash.zm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b">
+        <div className="container-palmgren">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto sm:h-16 object-contain opacity-90 bg-gray-600/80 rounded-lg p-1" />
-              
+              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
             </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="whatsapp" size="sm" className="hidden sm:flex">
-                <Phone className="mr-2 h-4 w-4" />
-                WhatsApp Support
-              </Button>
-              <Button variant="outline" onClick={() => navigate('/login')} size="sm" className="border-white text-white hover:bg-white hover:text-wewash-blue">
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#" className="text-foreground hover:text-primary font-medium transition-colors">Home</a>
+              <a href="#services" className="text-foreground hover:text-primary font-medium transition-colors">Services</a>
+              <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
+              <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
+              <Button 
+                onClick={() => navigate('/login')} 
+                className="btn-palmgren"
+              >
                 <LogIn className="mr-2 h-4 w-4" />
-                Log In
+                Login
+              </Button>
+            </div>
+            <div className="md:hidden">
+              <Button variant="outline" onClick={() => navigate('/login')}>
+                <LogIn className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-wewash-blue via-wewash-blue-dark to-wewash-blue-light text-white py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-wewash-blue/90 to-wewash-blue-dark/90"></div>
-        <div className="relative max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Elite Cleaning and 
-            <span className="text-wewash-gold"> Property Services</span>
+      {/* Hero Section - Palmgren style with large image and CTA */}
+      <section className="relative min-h-[70vh] flex items-center justify-center">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"%3E%3Crect fill="%23f3f4f6" width="1200" height="800"/%3E%3C/svg%3E")'
+          }}
+        />
+        <div className="relative container-palmgren text-center text-white">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            PROFESSIONAL CLEANING TO<br />
+            <span className="text-blue-200">COMPETITIVE PRICES</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-            Premium multi-service company offering professional cleaning, home maintenance, 
-            trained maids, facility management, and fumigation services in Zambia.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="mobile" onClick={() => navigate('/booking')} className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white shadow-gold">
-              <Calendar className="mr-2 h-5 w-5" />
-              Book a Service
+          <div className="mt-12">
+            <Button 
+              onClick={() => navigate('/booking')} 
+              className="btn-palmgren text-lg px-12 py-6"
+            >
+              GET AN OBLIGATION-FREE QUOTE
             </Button>
-            <Button variant="outline" size="mobile" className="border-white text-white hover:bg-white hover:text-wewash-blue">
-              <Phone className="mr-2 h-5 w-5" />
-              WhatsApp Support
-            </Button>
-          </div>
-        </div>
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-10 w-32 h-32 bg-wewash-gold/20 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Premium Services
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive solutions for all your cleaning and property maintenance needs
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => <Card key={index} className="shadow-elegant hover:shadow-primary transition-all duration-300 transform hover:scale-105 border-0">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-                    <service.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl text-foreground">{service.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                        <CheckCircle className="h-4 w-4 text-wewash-blue mr-2 flex-shrink-0" />
-                        {feature}
-                      </li>)}
-                  </ul>
-                </CardContent>
-              </Card>)}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose WeWash Zambia?
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Experience the difference with our professional, reliable, and premium services
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {whyChooseUs.map((reason, index) => <div key={index} className="text-center">
-                <div className="mx-auto w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mb-6">
-                  <reason.icon className="h-8 w-8 text-wewash-gold-dark" />
+      {/* Services Section - Palmgren style image cards */}
+      <section id="services" className="section-spacing bg-gradient-subtle">
+        <div className="container-palmgren">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Cleaning Services */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ECleaning Service%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    CLEANING SERVICES
+                  </Button>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">{reason.title}</h3>
-                <p className="text-muted-foreground">{reason.description}</p>
-              </div>)}
+              </div>
+            </div>
+
+            {/* Home Maintenance */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EHome Maintenance%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    HOME MAINTENANCE
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Trained Maids */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ETrained Maids%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    TRAINED MAIDS
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Facility Management */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EFacility Management%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    FACILITY MANAGEMENT
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Fumigation Services */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EFumigation%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    FUMIGATION SERVICES
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Car Detailing */}
+            <div className="service-card group">
+              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                <div 
+                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                  style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ECar Detailing%3C/text%3E%3C/svg%3E")'
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <Button className="btn-palmgren w-full">
+                    MOBILE CAR DETAILING
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-wewash-blue to-wewash-blue-dark text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Experience Premium Service?
+      {/* Company Info Section - like Palmgren */}
+      <section className="section-spacing">
+        <div className="container-palmgren text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">
+            CHOOSE WEWASH AS YOUR REGULAR<br />
+            BUSINESS PARTNER
           </h2>
-          <p className="text-xl mb-8 text-white/90">
-            Book your service today and discover why WeWash Zambia is the trusted choice 
-            for premium cleaning and property services.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="mobile" onClick={() => navigate('/booking')} className="bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white">
-              <Calendar className="mr-2 h-5 w-5" />
-              Book Your Service Now
-            </Button>
-            <Button variant="outline" size="mobile" className="border-white text-white hover:bg-white hover:text-wewash-blue">
-              <Phone className="mr-2 h-5 w-5" />
-              Get Free Quote
-            </Button>
+          <div className="max-w-4xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              WeWash Zambia is a professional cleaning and property service company based in Lusaka. 
+              We offer comprehensive solutions for residential and commercial properties, delivering 
+              exceptional quality at competitive prices.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">LUSAKA</h3>
+                <div className="space-y-2 text-muted-foreground">
+                  <div className="flex items-center">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    <span>Lusaka Central, Zambia</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Phone className="h-4 w-4 mr-2" />
+                    <span>+260 XXX XXX XXX</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span>kontakt@wewash.zm</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-4">COVERAGE AREA</h3>
+                <div className="space-y-2 text-muted-foreground">
+                  <div className="flex items-center">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    <span>Greater Lusaka Area</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Phone className="h-4 w-4 mr-2" />
+                    <span>+260 XXX XXX XXX</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span>kontakt@wewash.zm</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-wewash-blue text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto" />
-                <span className="ml-2 text-2xl font-bold text-wewash-gold">
-              </span>
-              </div>
-              <p className="text-white/80 mb-4">
-                Elite Cleaning and Property Services - Your trusted partner for premium 
-                cleaning and maintenance solutions in Zambia.
-              </p>
-              <div className="flex items-center text-white/80">
-                <MapPin className="h-4 w-4 mr-2" />
-                Lusaka, Zambia
+      {/* Footer - Palmgren style simple footer */}
+      <footer id="contact" className="section-spacing bg-palmgren-gray border-t">
+        <div className="container-palmgren">
+          <div className="text-center mb-12">
+            <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia" className="h-16 mx-auto mb-6" />
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Professional cleaning and property services in Zambia. 
+              Contact us for an obligation-free quote.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-bold text-foreground mb-4">LUSAKA</h3>
+              <div className="space-y-2 text-muted-foreground">
+                <div className="flex items-center justify-center md:justify-start">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  <span>Lusaka Central, Zambia</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start">
+                  <Phone className="h-4 w-4 mr-2" />
+                  <span>+260 XXX XXX XXX</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start">
+                  <span>kontakt@wewash.zm</span>
+                </div>
               </div>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Our Services</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>Professional Cleaning</li>
-                <li>Home Maintenance</li>
-                <li>Trained Maids</li>
-                <li>Facility Management</li>
-                <li>Fumigation Services</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-              <div className="space-y-3">
-                <Button variant="whatsapp" size="sm" className="w-full">
-                  <Phone className="mr-2 h-4 w-4" />
-                  WhatsApp Support
-                </Button>
-                <Button variant="outline" size="sm" className="w-full border-white/20 text-white hover:bg-white hover:text-wewash-blue" onClick={() => navigate('/login')}>
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Client Login
-                </Button>
+            
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-bold text-foreground mb-4">COVERAGE AREA</h3>
+              <div className="space-y-2 text-muted-foreground">
+                <div className="flex items-center justify-center md:justify-start">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  <span>Greater Lusaka Area</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start">
+                  <Phone className="h-4 w-4 mr-2" />
+                  <span>+260 XXX XXX XXX</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start">
+                  <span>kontakt@wewash.zm</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
-            <p>&copy; 2024 WeWash Zambia. All rights reserved.</p>
+
+          <div className="text-center">
+            <Button 
+              onClick={() => navigate('/booking')} 
+              className="btn-palmgren mb-8"
+            >
+              GET AN OBLIGATION-FREE QUOTE
+            </Button>
+          </div>
+
+          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
+            <p>CVR: ZM001234 &copy; 2024 WeWash Zambia. All rights reserved.</p>
           </div>
         </div>
       </footer>

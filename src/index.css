@@ -2,60 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Palmgren-inspired design system - Clean Scandinavian style
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 210 30% 8%;
+    --foreground: 210 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 30% 8%;
+    --card-foreground: 210 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 30% 8%;
+    --popover-foreground: 210 20% 15%;
 
-    /* Royal Blue Primary */
-    --primary: 225 73% 57%;
+    /* Palmgren Blue - Clean professional blue */
+    --primary: 205 100% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 225 73% 47%;
+    --primary-hover: 205 100% 38%;
+    --primary-light: 205 100% 52%;
 
-    /* Gold Accent */
-    --secondary: 45 93% 58%;
-    --secondary-foreground: 210 30% 8%;
-    --secondary-hover: 45 93% 48%;
+    /* Clean Gray Accent */
+    --secondary: 210 8% 96%;
+    --secondary-foreground: 210 20% 15%;
+    --secondary-hover: 210 8% 90%;
 
-    --muted: 220 13% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 8% 96%;
+    --muted-foreground: 210 15% 45%;
 
-    --accent: 45 93% 58%;
-    --accent-foreground: 210 30% 8%;
+    --accent: 205 100% 45%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 225 73% 57%;
+    --border: 210 12% 88%;
+    --input: 210 12% 88%;
+    --ring: 205 100% 45%;
 
-    /* Custom WeWash colors */
-    --wewash-blue: 225 73% 57%;
-    --wewash-blue-dark: 225 73% 47%;
-    --wewash-blue-light: 225 73% 67%;
-    --wewash-gold: 45 93% 58%;
-    --wewash-gold-dark: 45 93% 48%;
-    --wewash-gold-light: 45 93% 68%;
+    /* Palmgren color palette */
+    --palmgren-blue: 205 100% 45%;
+    --palmgren-blue-dark: 205 100% 38%;
+    --palmgren-blue-light: 205 100% 52%;
+    --palmgren-navy: 215 25% 27%;
+    --palmgren-gray: 210 8% 96%;
+    --palmgren-dark-gray: 210 15% 45%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--wewash-blue)), hsl(var(--wewash-blue-dark)));
-    --gradient-gold: linear-gradient(135deg, hsl(var(--wewash-gold)), hsl(var(--wewash-gold-dark)));
+    /* Gradients - Clean blue gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--palmgren-blue)), hsl(var(--palmgren-blue-light)));
+    --gradient-header: linear-gradient(135deg, hsl(var(--palmgren-navy)), hsl(var(--palmgren-blue)));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 8% 98%));
     
-    /* Shadows */
-    --shadow-primary: 0 4px 14px hsl(var(--wewash-blue) / 0.15);
-    --shadow-gold: 0 4px 14px hsl(var(--wewash-gold) / 0.15);
-    --shadow-elegant: 0 8px 30px hsl(225 73% 57% / 0.12);
+    /* Shadows - Clean, minimal shadows */
+    --shadow-card: 0 2px 8px hsl(210 15% 45% / 0.08);
+    --shadow-button: 0 4px 12px hsl(var(--palmgren-blue) / 0.2);
+    --shadow-elegant: 0 8px 30px hsl(210 15% 45% / 0.1);
 
     --radius: 0.5rem;
 
@@ -121,6 +123,66 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Palmgren-style headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-foreground;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl leading-tight;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl leading-snug;
+  }
+}
+
+@layer components {
+  /* Palmgren-style button variants */
+  .btn-palmgren {
+    @apply inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-medium transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-button);
+  }
+
+  .btn-palmgren:hover {
+    background: hsl(var(--primary-hover));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px hsl(var(--palmgren-blue) / 0.3);
+  }
+
+  /* Service card styling */
+  .service-card {
+    @apply relative overflow-hidden rounded-lg bg-white shadow-card;
+    box-shadow: var(--shadow-card);
+  }
+
+  .service-card:hover {
+    @apply transform -translate-y-1;
+    box-shadow: var(--shadow-elegant);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Header gradient like Palmgren */
+  .header-gradient {
+    background: var(--gradient-header);
+  }
+
+  /* Section spacing like Palmgren */
+  .section-spacing {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  /* Container with Palmgren-style max width and padding */
+  .container-palmgren {
+    @apply mx-auto max-w-7xl px-6 lg:px-8;
   }
 }
