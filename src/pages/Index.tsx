@@ -67,10 +67,11 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <span>+260 XXX XXX XXX</span>
+              <span>+260 7686 71420</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>kontakt@wewash.zm</span>
+              <span>Contact@wewashzm.com
+            </span>
             </div>
           </div>
         </div>
@@ -88,10 +89,7 @@ const Index = () => {
               <a href="#services" className="text-foreground hover:text-primary font-medium transition-colors">Services</a>
               <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
-              <Button 
-                onClick={() => navigate('/login')} 
-                className="btn-palmgren"
-              >
+              <Button onClick={() => navigate('/login')} className="btn-palmgren">
                 <LogIn className="mr-2 h-4 w-4" />
                 Login
               </Button>
@@ -107,22 +105,16 @@ const Index = () => {
 
       {/* Hero Section - Palmgren style with large image and CTA */}
       <section className="relative min-h-[70vh] flex items-center justify-center">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url(${heroImage})`
-          }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url(${heroImage})`
+      }} />
         <div className="relative container-palmgren text-center text-white">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             PROFESSIONAL CLEANING TO<br />
-            <span className="text-blue-200">COMPETITIVE PRICES</span>
+            <span className="text-blue-200">HOME SERVICES & FACILITY MANA</span>
           </h1>
           <div className="mt-12">
-            <Button 
-              onClick={() => navigate('/booking')} 
-              className="btn-palmgren text-lg px-12 py-6"
-            >
+            <Button onClick={() => navigate('/booking')} className="btn-palmgren text-lg px-12 py-6">
               Whatsapp Support
             </Button>
           </div>
@@ -136,12 +128,9 @@ const Index = () => {
             {/* Cleaning Services */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${cleaningServicesImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${cleaningServicesImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -154,12 +143,9 @@ const Index = () => {
             {/* Home Maintenance */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${homeMaintenanceImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${homeMaintenanceImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -172,12 +158,9 @@ const Index = () => {
             {/* Trained Maids */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${trainedMaidsImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${trainedMaidsImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -190,12 +173,9 @@ const Index = () => {
             {/* Facility Management */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${facilityManagementImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${facilityManagementImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -208,12 +188,9 @@ const Index = () => {
             {/* Fumigation Services */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${fumigationServicesImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${fumigationServicesImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -226,12 +203,9 @@ const Index = () => {
             {/* Mobile Car Detailing */}
             <div className="service-card group">
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div 
-                  className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${mobileCarDetailingImage})`
-                  }}
-                />
+                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
+                backgroundImage: `url(${mobileCarDetailingImage})`
+              }} />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Button className="btn-palmgren w-full">
@@ -258,6 +232,7 @@ const Index = () => {
               exceptional quality at competitive prices.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+              
               <div>
                 <h3 className="text-xl font-semibold mb-4">LUSAKA</h3>
                 <div className="space-y-2 text-muted-foreground">
@@ -267,26 +242,10 @@ const Index = () => {
                   </div>
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span>+260 XXX XXX XXX</span>
+                    <span>+260 7686 71420</span>
                   </div>
                   <div className="flex items-center">
-                    <span>kontakt@wewash.zm</span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-4">COVERAGE AREA</h3>
-                <div className="space-y-2 text-muted-foreground">
-                  <div className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    <span>Greater Lusaka Area</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-4 w-4 mr-2" />
-                    <span>+260 XXX XXX XXX</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span>kontakt@wewash.zm</span>
+                    <span>contact@wewashzm.com</span>
                   </div>
                 </div>
               </div>
@@ -316,10 +275,10 @@ const Index = () => {
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <Phone className="h-4 w-4 mr-2" />
-                  <span>+260 XXX XXX XXX</span>
+                  <span>+260 7686 71420</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
-                  <span>kontakt@wewash.zm</span>
+                  <span>contact@wewashzm.com</span>
                 </div>
               </div>
             </div>
@@ -329,24 +288,21 @@ const Index = () => {
               <div className="space-y-2 text-muted-foreground">
                 <div className="flex items-center justify-center md:justify-start">
                   <MapPin className="h-4 w-4 mr-2" />
-                  <span>Greater Lusaka Area</span>
+                  <span>Aarhus, Denmark</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <Phone className="h-4 w-4 mr-2" />
-                  <span>+260 XXX XXX XXX</span>
+                  <span>+45 60 67 81 93</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
-                  <span>kontakt@wewash.zm</span>
+                  <span>partner@wewashzm.com</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="text-center">
-            <Button 
-              onClick={() => navigate('/booking')} 
-              className="btn-palmgren mb-8"
-            >
+            <Button onClick={() => navigate('/booking')} className="btn-palmgren mb-8">
               Whatsapp Support
             </Button>
           </div>
