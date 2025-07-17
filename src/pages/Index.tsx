@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car } from 'lucide-react';
+import heroImage from '@/assets/hero-cleaning-professionals.jpg';
+import cleaningServicesImage from '@/assets/cleaning-services.jpg';
+import homeMaintenanceImage from '@/assets/home-maintenance.jpg';
+import trainedMaidsImage from '@/assets/trained-maids.jpg';
+import facilityManagementImage from '@/assets/facility-management.jpg';
+import fumigationServicesImage from '@/assets/fumigation-services.jpg';
+import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
 const Index = () => {
   const navigate = useNavigate();
   const services = [{
@@ -103,7 +110,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"%3E%3Crect fill="%23f3f4f6" width="1200" height="800"/%3E%3C/svg%3E")'
+            backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url(${heroImage})`
           }}
         />
         <div className="relative container-palmgren text-center text-white">
@@ -132,7 +139,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ECleaning Service%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${cleaningServicesImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -150,7 +157,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EHome Maintenance%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${homeMaintenanceImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -168,7 +175,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ETrained Maids%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${trainedMaidsImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -186,7 +193,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EFacility Management%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${facilityManagementImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -204,7 +211,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3EFumigation%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${fumigationServicesImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
@@ -222,7 +229,7 @@ const Index = () => {
                 <div 
                   className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                   style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23e5e7eb" width="600" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%236b7280" text-anchor="middle" dy=".3em"%3ECar Detailing%3C/text%3E%3C/svg%3E")'
+                    backgroundImage: `url(${mobileCarDetailingImage})`
                   }}
                 />
                 <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
