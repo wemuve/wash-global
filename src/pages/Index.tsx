@@ -123,7 +123,7 @@ const Index = () => {
               onClick={() => navigate('/booking')} 
               className="btn-palmgren text-lg px-12 py-6"
             >
-              GET AN OBLIGATION-FREE QUOTE
+              Whatsapp Support
             </Button>
           </div>
         </div>
@@ -347,7 +347,7 @@ const Index = () => {
               onClick={() => navigate('/booking')} 
               className="btn-palmgren mb-8"
             >
-              GET AN OBLIGATION-FREE QUOTE
+              Whatsapp Support
             </Button>
           </div>
 
