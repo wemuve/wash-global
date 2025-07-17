@@ -178,7 +178,7 @@ const Index = () => {
         <div className="relative container-palmgren text-center text-white">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             PROFESSIONAL CLEANING TO<br />
-            <span className="text-blue-200">HOME SERVICES & FACILITY MANA</span>
+            <span className="text-blue-200">HOME SERVICES & FACILITY MANAGEMENT</span>
           </h1>
           <div className="mt-12 space-y-4">
             <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4">
