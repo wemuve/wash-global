@@ -14,71 +14,82 @@ import fumigationServicesImage from '@/assets/fumigation-services.jpg';
 import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
 const Index = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useAuth();
-  
+  const {
+    user,
+    isAuthenticated,
+    logout
+  } = useAuth();
+
   // Updated service data with pricing from the new structure
-  const serviceCategories = [
-    {
-      title: "Home Cleaning Services",
-      image: cleaningServicesImage,
-      services: [
-        { name: "General Cleaning (2 rooms)", price: "K650+" },
-        { name: "Deep Cleaning", price: "K950+" },
-        { name: "Post-Construction Cleaning", price: "K1,200+" }
-      ]
-    },
-    {
-      title: "Car Detailing Services", 
-      image: mobileCarDetailingImage,
-      services: [
-        { name: "Small Car (e.g. Vitz, Corolla)", price: "K450" },
-        { name: "Big Car (e.g. Alphard, Noah)", price: "K550" },
-        { name: "SUV & Canta", price: "K750" }
-      ]
-    },
-    {
-      title: "Fumigation Services",
-      image: fumigationServicesImage,
-      services: [
-        { name: "Starting From", price: "K250" }
-      ]
-    },
-    {
-      title: "Carpet & Sofa Cleaning",
-      image: cleaningServicesImage,
-      services: [
-        { name: "Starting From", price: "K300" }
-      ]
-    },
-    {
-      title: "Window Polishing",
-      image: cleaningServicesImage,
-      services: [
-        { name: "Starting From", price: "K350" }
-      ]
-    },
-    {
-      title: "Facility Management",
-      image: facilityManagementImage,
-      services: [
-        { name: "Starting From", price: "K1,500" }
-      ]
-    },
-    {
-      title: "Office Cleaning",
-      image: cleaningServicesImage,
-      services: [
-        { name: "Starting From", price: "K1,200" }
-      ]
-    },
-    {
-      title: "Trainee Maids (Onboarding Services)",
-      image: trainedMaidsImage,
-      services: [
-        { name: "Starting From", price: "K650" }
-      ]
-    }
-  ];
+  const serviceCategories = [{
+    title: "Home Cleaning Services",
+    image: cleaningServicesImage,
+    services: [{
+      name: "General Cleaning (2 rooms)",
+      price: "K650+"
+    }, {
+      name: "Deep Cleaning",
+      price: "K950+"
+    }, {
+      name: "Post-Construction Cleaning",
+      price: "K1,200+"
+    }]
+  }, {
+    title: "Car Detailing Services",
+    image: mobileCarDetailingImage,
+    services: [{
+      name: "Small Car (e.g. Vitz, Corolla)",
+      price: "K450"
+    }, {
+      name: "Big Car (e.g. Alphard, Noah)",
+      price: "K550"
+    }, {
+      name: "SUV & Canta",
+      price: "K750"
+    }]
+  }, {
+    title: "Fumigation Services",
+    image: fumigationServicesImage,
+    services: [{
+      name: "Starting From",
+      price: "K250"
+    }]
+  }, {
+    title: "Carpet & Sofa Cleaning",
+    image: cleaningServicesImage,
+    services: [{
+      name: "Starting From",
+      price: "K300"
+    }]
+  }, {
+    title: "Window Polishing",
+    image: cleaningServicesImage,
+    services: [{
+      name: "Starting From",
+      price: "K350"
+    }]
+  }, {
+    title: "Facility Management",
+    image: facilityManagementImage,
+    services: [{
+      name: "Starting From",
+      price: "K1,500"
+    }]
+  }, {
+    title: "Office Cleaning",
+    image: cleaningServicesImage,
+    services: [{
+      name: "Starting From",
+      price: "K1,200"
+    }]
+  }, {
+    title: "Trainee Maids (Onboarding Services)",
+    image: trainedMaidsImage,
+    services: [{
+      name: "Starting From",
+      price: "K650"
+    }]
+  }];
   const whyChooseUs = [{
     icon: Shield,
     title: "Trusted & Insured",
@@ -106,8 +117,7 @@ const Index = () => {
               <span>+260 768 671 420</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>Contact@wewashzm.com
-            </span>
+              <span>contact@wewashzm.com</span>
             </div>
           </div>
         </div>
@@ -127,61 +137,32 @@ const Index = () => {
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
               
               {/* Authentication buttons */}
-              {isAuthenticated ? (
-                <div className="flex items-center space-x-4">
+              {isAuthenticated ? <div className="flex items-center space-x-4">
                   <span className="text-sm text-muted-foreground">Welcome, {user?.email}</span>
-                  <Button 
-                    onClick={() => logout()}
-                    variant="outline"
-                    size="sm"
-                  >
+                  <Button onClick={() => logout()} variant="outline" size="sm">
                     Logout
                   </Button>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Button 
-                    onClick={() => navigate('/login')}
-                    variant="outline"
-                    size="sm"
-                  >
+                </div> : <div className="flex items-center space-x-2">
+                  <Button onClick={() => navigate('/login')} variant="outline" size="sm">
                     <LogIn className="h-4 w-4 mr-2" />
                     Login
                   </Button>
-                  <Button 
-                    onClick={() => navigate('/login')}
-                    variant="outline"
-                    size="sm"
-                  >
+                  <Button onClick={() => navigate('/login')} variant="outline" size="sm">
                     <UserPlus className="h-4 w-4 mr-2" />
                     Sign Up
                   </Button>
-                </div>
-              )}
+                </div>}
               
-              <Button 
-                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
+              <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white">
                 WhatsApp Inquiry
               </Button>
             </div>
             <div className="md:hidden flex items-center space-x-2">
-              {!isAuthenticated && (
-                <Button 
-                  onClick={() => navigate('/login')}
-                  variant="outline"
-                  size="sm"
-                >
+              {!isAuthenticated && <Button onClick={() => navigate('/login')} variant="outline" size="sm">
                   <LogIn className="h-3 w-3 mr-1" />
                   Login
-                </Button>
-              )}
-              <Button 
-                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
-                className="bg-green-600 hover:bg-green-700 text-white"
-                size="sm"
-              >
+                </Button>}
+              <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white" size="sm">
                 WhatsApp
               </Button>
             </div>
@@ -200,16 +181,10 @@ const Index = () => {
             <span className="text-blue-200">HOME SERVICES & FACILITY MANA</span>
           </h1>
           <div className="mt-12 space-y-4">
-            <Button 
-              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
-              className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4"
-            >
+            <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4">
               WhatsApp Inquiry
             </Button>
-            <Button 
-              onClick={() => navigate('/booking')}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-12 py-6"
-            >
+            <Button onClick={() => navigate('/booking')} className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-12 py-6">
               Book Service Online
             </Button>
           </div>
@@ -230,15 +205,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {serviceCategories.map((category, index) => (
-              <ServiceCard
-                key={index}
-                title={category.title}
-                image={category.image}
-                services={category.services}
-                onBook={() => navigate('/booking')}
-              />
-            ))}
+            {serviceCategories.map((category, index) => <ServiceCard key={index} title={category.title} image={category.image} services={category.services} onBook={() => navigate('/booking')} />)}
           </div>
         </div>
       </section>
@@ -327,10 +294,7 @@ const Index = () => {
           </div>
 
           <div className="text-center">
-            <Button 
-              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
-              className="btn-palmgren mb-8"
-            >
+            <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="btn-palmgren mb-8">
               WhatsApp Inquiry
             </Button>
           </div>
