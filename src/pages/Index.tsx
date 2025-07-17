@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car, UserPlus } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ServiceCard } from '@/components/ServiceCard';
+import FloatingParticles from '@/components/FloatingParticles';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
 import cleaningServicesImage from '@/assets/cleaning-services.jpg';
 import homeMaintenanceImage from '@/assets/home-maintenance.jpg';
@@ -175,6 +176,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
         backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url(${heroImage})`
       }} />
+        <FloatingParticles />
         <div className="relative container-palmgren text-center text-white">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             PROFESSIONAL CLEANING TO<br />
