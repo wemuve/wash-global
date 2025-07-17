@@ -2,7 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car } from 'lucide-react';
+import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car, UserPlus } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { ServiceCard } from '@/components/ServiceCard';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
 import cleaningServicesImage from '@/assets/cleaning-services.jpg';
 import homeMaintenanceImage from '@/assets/home-maintenance.jpg';
@@ -12,37 +14,71 @@ import fumigationServicesImage from '@/assets/fumigation-services.jpg';
 import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
 const Index = () => {
   const navigate = useNavigate();
-  const services = [{
-    icon: Sparkles,
-    title: "Cleaning Services",
-    description: "Professional deep cleaning, office cleaning, carpet and window cleaning services",
-    features: ["Deep House Cleaning", "Office Cleaning", "Carpet Cleaning", "Window Cleaning"]
-  }, {
-    icon: Home,
-    title: "Home Maintenance",
-    description: "Expert plumbing, electrical, painting and general repair services",
-    features: ["Plumbing Repairs", "Electrical Work", "Painting", "General Repairs"]
-  }, {
-    icon: UserCheck,
-    title: "Trained Maids",
-    description: "Reliable and professional maid services for your home",
-    features: ["Daily Maid Service", "Weekly Service", "Part-time", "Live-in Options"]
-  }, {
-    icon: Building,
-    title: "Facility Management",
-    description: "Complete building maintenance and property management solutions",
-    features: ["Building Maintenance", "Security Services", "Landscaping", "Property Management"]
-  }, {
-    icon: Bug,
-    title: "Fumigation Services",
-    description: "Professional pest control and fumigation for residential and commercial properties",
-    features: ["Residential Fumigation", "Commercial Service", "Pest Control", "Termite Treatment"]
-  }, {
-    icon: Car,
-    title: "Mobile Car Detailing",
-    description: "Professional mobile car detailing and full valet services at your location",
-    features: ["Full Car Wash", "Interior Detailing", "Wax & Polish", "Mobile Service"]
-  }];
+  const { user, isAuthenticated, logout } = useAuth();
+  
+  // Updated service data with pricing from the new structure
+  const serviceCategories = [
+    {
+      title: "Home Cleaning Services",
+      image: cleaningServicesImage,
+      services: [
+        { name: "General Cleaning (2 rooms)", price: "K650+" },
+        { name: "Deep Cleaning", price: "K950+" },
+        { name: "Post-Construction Cleaning", price: "K1,200+" }
+      ]
+    },
+    {
+      title: "Car Detailing Services", 
+      image: mobileCarDetailingImage,
+      services: [
+        { name: "Small Car (e.g. Vitz, Corolla)", price: "K450" },
+        { name: "Big Car (e.g. Alphard, Noah)", price: "K550" },
+        { name: "SUV & Canta", price: "K750" }
+      ]
+    },
+    {
+      title: "Fumigation Services",
+      image: fumigationServicesImage,
+      services: [
+        { name: "Starting From", price: "K250" }
+      ]
+    },
+    {
+      title: "Carpet & Sofa Cleaning",
+      image: cleaningServicesImage,
+      services: [
+        { name: "Starting From", price: "K300" }
+      ]
+    },
+    {
+      title: "Window Polishing",
+      image: cleaningServicesImage,
+      services: [
+        { name: "Starting From", price: "K350" }
+      ]
+    },
+    {
+      title: "Facility Management",
+      image: facilityManagementImage,
+      services: [
+        { name: "Starting From", price: "K1,500" }
+      ]
+    },
+    {
+      title: "Office Cleaning",
+      image: cleaningServicesImage,
+      services: [
+        { name: "Starting From", price: "K1,200" }
+      ]
+    },
+    {
+      title: "Trainee Maids (Onboarding Services)",
+      image: trainedMaidsImage,
+      services: [
+        { name: "Starting From", price: "K650" }
+      ]
+    }
+  ];
   const whyChooseUs = [{
     icon: Shield,
     title: "Trusted & Insured",
@@ -67,7 +103,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <span>+260 7686 71420</span>
+              <span>+260 768 671 420</span>
             </div>
             <div className="flex items-center gap-2">
               <span>Contact@wewashzm.com
@@ -82,21 +118,71 @@ const Index = () => {
         <div className="container-palmgren">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
+              <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Zambia Logo" className="h-12 w-auto object-contain" />
             </div>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <a href="#" className="text-foreground hover:text-primary font-medium transition-colors">Home</a>
               <a href="#services" className="text-foreground hover:text-primary font-medium transition-colors">Services</a>
               <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
-              <Button onClick={() => navigate('/login')} className="btn-palmgren">
-                <LogIn className="mr-2 h-4 w-4" />
-                Login
+              
+              {/* Authentication buttons */}
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-muted-foreground">Welcome, {user?.email}</span>
+                  <Button 
+                    onClick={() => logout()}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Button>
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Button>
+                </div>
+              )}
+              
+              <Button 
+                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                WhatsApp Inquiry
               </Button>
             </div>
-            <div className="md:hidden">
-              <Button variant="outline" onClick={() => navigate('/login')}>
-                <LogIn className="h-4 w-4" />
+            <div className="md:hidden flex items-center space-x-2">
+              {!isAuthenticated && (
+                <Button 
+                  onClick={() => navigate('/login')}
+                  variant="outline"
+                  size="sm"
+                >
+                  <LogIn className="h-3 w-3 mr-1" />
+                  Login
+                </Button>
+              )}
+              <Button 
+                onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                className="bg-green-600 hover:bg-green-700 text-white"
+                size="sm"
+              >
+                WhatsApp
               </Button>
             </div>
           </div>
@@ -113,107 +199,46 @@ const Index = () => {
             PROFESSIONAL CLEANING TO<br />
             <span className="text-blue-200">HOME SERVICES & FACILITY MANA</span>
           </h1>
-          <div className="mt-12">
-            <Button onClick={() => navigate('/booking')} className="btn-palmgren text-lg px-12 py-6">
-              Whatsapp Support
+          <div className="mt-12 space-y-4">
+            <Button 
+              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+              className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4"
+            >
+              WhatsApp Inquiry
+            </Button>
+            <Button 
+              onClick={() => navigate('/booking')}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-12 py-6"
+            >
+              Book Service Online
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Services Section - Palmgren style image cards */}
+      {/* Services Section - Updated with pricing */}
       <section id="services" className="section-spacing bg-gradient-subtle">
         <div className="container-palmgren">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Cleaning Services */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${cleaningServicesImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    CLEANING SERVICES
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Home Maintenance */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${homeMaintenanceImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    HOME MAINTENANCE
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Trained Maids */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${trainedMaidsImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    TRAINED MAIDS
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Facility Management */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${facilityManagementImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    FACILITY MANAGEMENT
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Fumigation Services */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${fumigationServicesImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    FUMIGATION SERVICES
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Car Detailing */}
-            <div className="service-card group">
-              <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" style={{
-                backgroundImage: `url(${mobileCarDetailingImage})`
-              }} />
-                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:bg-black/10" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <Button className="btn-palmgren w-full">
-                    MOBILE CAR DETAILING
-                  </Button>
-                </div>
-              </div>
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              OUR CLEANING SERVICES
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Professional cleaning and property services with transparent pricing. 
+              Contact us for detailed quotes based on your specific needs.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {serviceCategories.map((category, index) => (
+              <ServiceCard
+                key={index}
+                title={category.title}
+                image={category.image}
+                services={category.services}
+                onBook={() => navigate('/booking')}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -242,7 +267,7 @@ const Index = () => {
                   </div>
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span>+260 7686 71420</span>
+                    <span>+260 768 671 420</span>
                   </div>
                   <div className="flex items-center">
                     <span>contact@wewashzm.com</span>
@@ -258,7 +283,7 @@ const Index = () => {
       <footer id="contact" className="section-spacing bg-palmgren-gray border-t">
         <div className="container-palmgren">
           <div className="text-center mb-12">
-            <img src="/lovable-uploads/93791de6-069c-4110-8d97-625f4c9a2cc3.png" alt="WeWash Zambia" className="h-16 mx-auto mb-6" />
+            <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Zambia" className="h-16 mx-auto mb-6" />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Professional cleaning and property services in Zambia. 
               Contact us for an obligation-free quote.
@@ -275,7 +300,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <Phone className="h-4 w-4 mr-2" />
-                  <span>+260 7686 71420</span>
+                  <span>+260 768 671 420</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
                   <span>contact@wewashzm.com</span>
@@ -295,15 +320,18 @@ const Index = () => {
                   <span>+45 60 67 81 93</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start">
-                  <span> © 2024 WeWash Zambia. All rights reserved.</span>
+                  <span>partner@wewashzm.com</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="text-center">
-            <Button onClick={() => navigate('/booking')} className="btn-palmgren mb-8">
-              Whatsapp Support
+            <Button 
+              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+              className="btn-palmgren mb-8"
+            >
+              WhatsApp Inquiry
             </Button>
           </div>
 
