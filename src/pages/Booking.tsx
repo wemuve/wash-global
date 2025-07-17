@@ -9,12 +9,13 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
-import { CalendarIcon, CheckCircle, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react';
+import { CalendarIcon, CheckCircle, ArrowRight, ArrowLeft, Loader2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useServices } from '@/hooks/useServices';
 import { useBookings } from '@/hooks/useBookings';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface BookingData {
   serviceCategory: string;
@@ -66,25 +67,134 @@ const Booking = () => {
     electricityAvailable: true
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
-  const { categories, services, packages, loading, getServicesByCategory, getServicePrice } = useServices();
+  const { categories, services, packages, loading, error, getServicesByCategory, getServicePrice, refetch } = useServices();
   const { createBooking } = useBookings();
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
+  // Enhanced debugging function
+  const addDebugInfo = (message: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const debugMessage = `[${timestamp}] ${message}`;
+    console.log('🔍 BOOKING DEBUG:', debugMessage);
+    setDebugInfo(prev => [...prev.slice(-9), debugMessage]); // Keep last 10 messages
+  };
 
+  // Enhanced authentication and data loading monitoring
+  useEffect(() => {
+    addDebugInfo(`Authentication check - isAuthenticated: ${isAuthenticated}, user: ${user ? 'present' : 'null'}`);
+    
+    if (!isAuthenticated) {
+      addDebugInfo('User not authenticated, redirecting to login');
+      navigate('/login');
+      return;
+    }
+
+    addDebugInfo(`Services loading: ${loading}, error: ${error || 'none'}`);
+    addDebugInfo(`Data loaded - Categories: ${categories.length}, Services: ${services.length}, Packages: ${packages.length}`);
+    
+    if (error) {
+      addDebugInfo(`Service loading error: ${error}`);
+    }
+  }, [isAuthenticated, user, navigate, loading, error, categories.length, services.length, packages.length]);
+
+  // Enhanced loading state with timeout handling
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-wewash-blue-light/10 to-wewash-gold-light/10 flex items-center justify-center">
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
           <p>Loading services...</p>
+          <div className="text-sm text-muted-foreground space-y-1">
+            <p>Categories: {categories.length}</p>
+            <p>Services: {services.length}</p>
+            <p>Packages: {packages.length}</p>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              addDebugInfo('Manual refresh triggered');
+              refetch();
+            }}
+            className="mt-4"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state display
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-wewash-blue-light/10 to-wewash-gold-light/10 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Error Loading Services</AlertTitle>
+            <AlertDescription className="mt-2">
+              {error}
+            </AlertDescription>
+          </Alert>
+          <div className="mt-4 space-y-2">
+            <Button 
+              onClick={() => {
+                addDebugInfo('Retry button clicked');
+                refetch();
+              }}
+              className="w-full"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Try Again
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/')}
+              className="w-full"
+            >
+              Back to Home
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check for empty data after loading
+  if (!loading && categories.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-wewash-blue-light/10 to-wewash-gold-light/10 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <Alert>
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>No Services Available</AlertTitle>
+            <AlertDescription className="mt-2">
+              No service categories are currently available. Please contact support.
+            </AlertDescription>
+          </Alert>
+          <div className="mt-4 space-y-2">
+            <Button 
+              onClick={() => {
+                addDebugInfo('Refresh empty state clicked');
+                refetch();
+              }}
+              className="w-full"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/')}
+              className="w-full"
+            >
+              Back to Home
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -98,22 +208,30 @@ const Booking = () => {
   const totalSteps = isCarDetailing ? 6 : 5;
 
   const handleNext = () => {
+    addDebugInfo(`Moving from step ${step} to ${step + 1}`);
     if (step < totalSteps) setStep(step + 1);
   };
 
   const handlePrevious = () => {
+    addDebugInfo(`Moving from step ${step} to ${step - 1}`);
     if (step > 1) setStep(step - 1);
   };
 
   const handleSubmit = async () => {
-    if (!user || !bookingData.date) return;
+    addDebugInfo('Submit booking attempt started');
+    
+    if (!user || !bookingData.date) {
+      addDebugInfo(`Submit validation failed - user: ${user ? 'present' : 'null'}, date: ${bookingData.date ? 'present' : 'null'}`);
+      return;
+    }
     
     setIsSubmitting(true);
     
     try {
       const totalAmount = getServicePrice(bookingData.specificService, bookingData.packageTier || undefined);
+      addDebugInfo(`Calculated total amount: ${totalAmount}`);
       
-      const result = await createBooking({
+      const bookingPayload = {
         service_id: bookingData.specificService,
         package_id: bookingData.packageTier || undefined,
         customer_name: bookingData.name,
@@ -136,9 +254,15 @@ const Booking = () => {
           water_available: bookingData.waterAvailable,
           electricity_available: bookingData.electricityAvailable,
         })
-      });
+      };
+      
+      addDebugInfo(`Booking payload: ${JSON.stringify(bookingPayload, null, 2)}`);
+      
+      const result = await createBooking(bookingPayload);
+      addDebugInfo(`Booking result: ${JSON.stringify(result)}`);
       
       if (result.success) {
+        addDebugInfo('Booking created successfully');
         toast({
           title: "Booking Submitted Successfully!",
           description: `Your booking has been created and is pending confirmation.`,
@@ -146,6 +270,7 @@ const Booking = () => {
         
         navigate('/booking-confirmation');
       } else {
+        addDebugInfo(`Booking failed: ${result.error}`);
         toast({
           title: "Booking Failed",
           description: result.error || "An error occurred while creating your booking",
@@ -153,13 +278,18 @@ const Booking = () => {
         });
       }
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      addDebugInfo(`Booking exception: ${errorMessage}`);
+      console.error('Booking submission error:', error);
+      
       toast({
         title: "Booking Failed",
-        description: "An unexpected error occurred",
+        description: `An unexpected error occurred: ${errorMessage}`,
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
+      addDebugInfo('Submit booking attempt completed');
     }
   };
 
@@ -698,6 +828,61 @@ const Booking = () => {
             ← Back to Home
           </Button>
         </div>
+
+        {/* Debug Panel (only visible in development or when there are issues) */}
+        {(process.env.NODE_ENV === 'development' || error || debugInfo.length > 5) && (
+          <Card className="mt-6 border-yellow-200 bg-yellow-50">
+            <CardHeader>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4" />
+                Debug Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <div className="grid grid-cols-3 gap-4 text-xs">
+                  <div>
+                    <strong>Auth:</strong> {isAuthenticated ? 'Yes' : 'No'}
+                  </div>
+                  <div>
+                    <strong>User:</strong> {user ? 'Present' : 'Null'}
+                  </div>
+                  <div>
+                    <strong>Loading:</strong> {loading ? 'Yes' : 'No'}
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-xs">
+                  <div>
+                    <strong>Categories:</strong> {categories.length}
+                  </div>
+                  <div>
+                    <strong>Services:</strong> {services.length}
+                  </div>
+                  <div>
+                    <strong>Packages:</strong> {packages.length}
+                  </div>
+                </div>
+                {error && (
+                  <div className="text-xs text-red-600">
+                    <strong>Error:</strong> {error}
+                  </div>
+                )}
+                <div className="mt-4">
+                  <strong className="text-xs">Recent Activity:</strong>
+                  <div className="mt-2 max-h-32 overflow-y-auto text-xs font-mono bg-white p-2 rounded border">
+                    {debugInfo.length === 0 ? (
+                      <div className="text-gray-500">No debug info yet...</div>
+                    ) : (
+                      debugInfo.map((info, i) => (
+                        <div key={i} className="text-gray-700">{info}</div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
