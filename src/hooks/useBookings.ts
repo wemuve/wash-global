@@ -203,7 +203,7 @@ export const useBookings = () => {
             water_available: data.water_available,
             electricity_available: data.electricity_available,
             // n8n webhook URL
-            n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/ff8d1119-605c-4024-a25a-6342663517fb'
+            n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/68919d41-3f08-45ee-b018-e2b8ac1d5085'
           }
         });
       } catch (webhookError) {
