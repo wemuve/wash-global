@@ -140,6 +140,10 @@ export const useBookings = () => {
 
   const createBooking = async (bookingData: CreateBookingData): Promise<{ success: boolean; error?: string; booking?: Booking }> => {
     try {
+      console.log('🔍 BOOKING DEBUG: User object:', user);
+      console.log('🔍 BOOKING DEBUG: Booking data user_id:', bookingData.user_id);
+      console.log('🔍 BOOKING DEBUG: Final user_id to use:', bookingData.user_id || user?.id || null);
+      
       const { data, error: insertError } = await supabase
         .from('bookings')
         .insert({
