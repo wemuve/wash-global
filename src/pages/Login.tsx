@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,11 +23,7 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated && user && !loading) {
-      if (user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/client-dashboard');
-      }
+      navigate(user.role === 'admin' ? '/admin' : '/client-dashboard');
     }
   }, [isAuthenticated, user, loading, navigate]);
 
@@ -50,7 +47,7 @@ const Login = () => {
         } else {
           toast({
             title: "Registration failed",
-            description: result.error || "An error occurred during registration",
+            description: result.error || "Registration failed. Please try again.",
             variant: "destructive",
           });
         }
@@ -73,7 +70,7 @@ const Login = () => {
     } catch (error) {
       toast({
         title: isSignUp ? "Registration failed" : "Login failed",
-        description: "An unexpected error occurred",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {

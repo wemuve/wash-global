@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -132,6 +133,7 @@ export const useBookings = () => {
       setBookings((data as any) || []);
       setError(null);
     } catch (err) {
+      console.error('Error fetching bookings:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
@@ -140,16 +142,14 @@ export const useBookings = () => {
 
   const createBooking = async (bookingData: CreateBookingData): Promise<{ success: boolean; error?: string; booking?: Booking }> => {
     try {
-      console.log('🔍 BOOKING DEBUG: User object:', user);
-      console.log('🔍 BOOKING DEBUG: Booking data user_id:', bookingData.user_id);
-      console.log('🔍 BOOKING DEBUG: Final user_id to use:', bookingData.user_id || user?.id || null);
+      // Determine user_id: use provided user_id, current user's id, or null for guest bookings
+      const finalUserId = bookingData.user_id || user?.id || null;
       
       const { data, error: insertError } = await supabase
         .from('bookings')
         .insert({
           ...bookingData,
-          // Use provided user_id or current user's id, or null for guest bookings
-          user_id: bookingData.user_id || user?.id || null,
+          user_id: finalUserId,
         })
         .select(`
           *,
@@ -172,11 +172,14 @@ export const useBookings = () => {
         `)
         .single();
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        console.error('Booking creation error:', insertError);
+        throw insertError;
+      }
 
-      // Trigger n8n webhook for booking confirmation
+      // Trigger webhook for booking confirmation
       try {
-        const webhookResponse = await supabase.functions.invoke('booking-webhook', {
+        await supabase.functions.invoke('booking-webhook', {
           body: {
             booking_id: data.id,
             customer_name: data.customer_name,
@@ -203,8 +206,6 @@ export const useBookings = () => {
             n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/ff8d1119-605c-4024-a25a-6342663517fb'
           }
         });
-        
-        console.log('Webhook triggered successfully:', webhookResponse);
       } catch (webhookError) {
         console.error('Webhook error (non-blocking):', webhookError);
         // Don't fail the booking if webhook fails
@@ -217,9 +218,10 @@ export const useBookings = () => {
 
       return { success: true, booking: data as any };
     } catch (err) {
+      console.error('Create booking error:', err);
       return { 
         success: false, 
-        error: err instanceof Error ? err.message : 'An error occurred' 
+        error: err instanceof Error ? err.message : 'Failed to create booking. Please try again.' 
       };
     }
   };
@@ -242,9 +244,10 @@ export const useBookings = () => {
 
       return { success: true };
     } catch (err) {
+      console.error('Update booking status error:', err);
       return { 
         success: false, 
-        error: err instanceof Error ? err.message : 'An error occurred' 
+        error: err instanceof Error ? err.message : 'Failed to update booking status' 
       };
     }
   };

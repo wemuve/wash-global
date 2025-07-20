@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -56,20 +57,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setSession(session);
         
         if (session?.user) {
-          // Fetch user profile
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .single();
-          
-          setUser({
-            id: session.user.id,
-            email: session.user.email || '',
-            role: profile?.role || 'client',
-            name: profile?.full_name || session.user.email || '',
-            profile: profile || undefined
-          });
+          // Use setTimeout to prevent auth callback recursion
+          setTimeout(async () => {
+            try {
+              const { data: profile } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('user_id', session.user.id)
+                .single();
+              
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                role: profile?.role || 'client',
+                name: profile?.full_name || session.user.email || '',
+                profile: profile || undefined
+              });
+            } catch (error) {
+              console.error('Error fetching profile:', error);
+              // Set basic user info even if profile fetch fails
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                role: 'client',
+                name: session.user.email || ''
+              });
+            }
+          }, 0);
         } else {
           setUser(null);
         }
@@ -80,7 +94,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
       if (!session) {
         setLoading(false);
       }
