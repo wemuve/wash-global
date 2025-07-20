@@ -145,6 +145,12 @@ export const useBookings = () => {
       // Determine user_id: use provided user_id, current user's id, or null for guest bookings
       const finalUserId = bookingData.user_id || user?.id || null;
       
+      console.log('=== BOOKING DEBUG ===');
+      console.log('Current user:', user);
+      console.log('bookingData.user_id:', bookingData.user_id);
+      console.log('Final user_id that will be used:', finalUserId);
+      console.log('Booking data to insert:', { ...bookingData, user_id: finalUserId });
+      
       const { data, error: insertError } = await supabase
         .from('bookings')
         .insert({
@@ -173,9 +179,15 @@ export const useBookings = () => {
         .single();
 
       if (insertError) {
-        console.error('Booking creation error:', insertError);
+        console.error('=== BOOKING INSERT ERROR ===');
+        console.error('Error details:', insertError);
+        console.error('Error message:', insertError.message);
+        console.error('Error code:', insertError.code);
         throw insertError;
       }
+
+      console.log('=== BOOKING SUCCESS ===');
+      console.log('Created booking:', data);
 
       // Trigger webhook for booking confirmation
       try {
