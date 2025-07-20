@@ -182,12 +182,25 @@ export const useBookings = () => {
             scheduled_date: data.scheduled_date,
             scheduled_time: data.scheduled_time,
             total_amount: data.total_amount,
-            // You can set your n8n webhook URL here or pass it from environment
-            n8n_webhook_url: 'YOUR_N8N_WEBHOOK_URL_HERE' // Replace with actual n8n webhook URL
+            customer_address: data.customer_address,
+            special_instructions: data.special_instructions,
+            // Vehicle information
+            vehicle_make: data.vehicle_make,
+            vehicle_model: data.vehicle_model,
+            vehicle_year: data.vehicle_year,
+            vehicle_type: data.vehicle_type,
+            vehicle_color: data.vehicle_color,
+            license_plate: data.license_plate,
+            vehicle_notes: data.vehicle_notes,
+            parking_details: data.parking_details,
+            water_available: data.water_available,
+            electricity_available: data.electricity_available,
+            // n8n webhook URL
+            n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/ff8d1119-605c-4024-a25a-6342663517fb'
           }
         });
         
-        console.log('Webhook triggered:', webhookResponse);
+        console.log('Webhook triggered successfully:', webhookResponse);
       } catch (webhookError) {
         console.error('Webhook error (non-blocking):', webhookError);
         // Don't fail the booking if webhook fails
