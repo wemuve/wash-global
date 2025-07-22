@@ -183,11 +183,8 @@ const Index = () => {
             <span className="text-blue-200">HOME SERVICES & FACILITY MANAGEMENT</span>
           </h1>
           <div className="mt-12 space-y-4">
-            <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6 mr-4">
+            <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-6">
               WhatsApp Inquiry
-            </Button>
-            <Button onClick={() => navigate('/booking')} className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-12 py-6">
-              Book Service Online
             </Button>
           </div>
         </div>
@@ -207,7 +204,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {serviceCategories.map((category, index) => <ServiceCard key={index} title={category.title} image={category.image} services={category.services} onBook={() => navigate('/booking')} />)}
+            {serviceCategories.map((category, index) => <ServiceCard key={index} title={category.title} image={category.image} services={category.services} />)}
           </div>
         </div>
       </section>

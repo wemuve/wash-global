@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useNavigate } from 'react-router-dom';
+
 interface ServiceCardProps {
   title: string;
   image: string;
@@ -10,22 +10,12 @@ interface ServiceCardProps {
     price: string;
     description?: string;
   }>;
-  onBook?: () => void;
 }
 export const ServiceCard: React.FC<ServiceCardProps> = ({
   title,
   image,
-  services,
-  onBook
+  services
 }) => {
-  const navigate = useNavigate();
-  const handleBookService = () => {
-    if (onBook) {
-      onBook();
-    } else {
-      navigate('/booking');
-    }
-  };
   return <Card className="service-card group overflow-hidden hover:shadow-lg transition-all duration-300">
       {/* Service Image */}
       <div className="aspect-[4/3] relative overflow-hidden">
@@ -48,9 +38,6 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
 
         {/* Action Buttons */}
         <div className="mt-6 space-y-3">
-          <Button onClick={handleBookService} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-            Book Service
-          </Button>
           <Button variant="outline" className="w-full" onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about ' + title + ' services.', '_blank')}>
             WhatsApp Inquiry
           </Button>

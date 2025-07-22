@@ -115,16 +115,16 @@ const ClientDashboard = () => {
               <div className="flex flex-col sm:flex-row items-center justify-between">
                 <div>
                   <h2 className="text-xl font-semibold mb-2">Need a service?</h2>
-                  <p className="text-white/80">Book your next WeWash service in just a few clicks</p>
+                  <p className="text-white/80">Contact us via WhatsApp for all your cleaning needs</p>
                 </div>
                 <Button 
                   variant="default" 
                   size="mobile" 
-                  onClick={() => navigate('/booking')}
-                  className="mt-4 sm:mt-0 bg-primary hover:bg-primary/90 text-primary-foreground"
+                  onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}
+                  className="mt-4 sm:mt-0 bg-green-600 hover:bg-green-700 text-white"
                 >
-                  <Plus className="mr-2 h-5 w-5" />
-                  Book New Service
+                  <Phone className="mr-2 h-5 w-5" />
+                  WhatsApp Inquiry
                 </Button>
               </div>
             </CardContent>
@@ -210,9 +210,9 @@ const ClientDashboard = () => {
                 <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">No Upcoming Services</h3>
                 <p className="text-muted-foreground mb-4">You don't have any upcoming bookings</p>
-                <Button variant="premium" onClick={() => navigate('/booking')}>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Book Your First Service
+                <Button variant="premium" onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')}>
+                  <Phone className="mr-2 h-4 w-4" />
+                  Contact via WhatsApp
                 </Button>
               </CardContent>
             </Card>
@@ -260,8 +260,8 @@ const ClientDashboard = () => {
                         <p className="text-sm text-muted-foreground mb-3">
                           Booking ID: {booking.id}
                         </p>
-                        <Button variant="outline" size="sm">
-                          Book Again
+                        <Button variant="outline" size="sm" onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to book the same service again: ' + booking.serviceType, '_blank')}>
+                          WhatsApp Inquiry
                         </Button>
                       </div>
                     </div>
