@@ -773,7 +773,7 @@ const Booking = () => {
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-2">
             {Array.from({ length: totalSteps }, (_, i) => i + 1).map((i) => (
-              <React.Fragment key={i}>
+              <div key={i} className="flex items-center">
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
                   i <= step ? "bg-wewash-blue text-white" : "bg-muted text-muted-foreground"
@@ -781,7 +781,7 @@ const Booking = () => {
                   {i < step ? <CheckCircle className="w-4 h-4" /> : i}
                 </div>
                 {i < totalSteps && <div className={cn("w-8 h-0.5", i < step ? "bg-wewash-blue" : "bg-muted")} />}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>
