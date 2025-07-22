@@ -103,7 +103,7 @@ const BookingForm = () => {
                   <SelectContent>
                     {services.map(service => (
                       <SelectItem key={service.id} value={service.id}>
-                        {service.name} - TSh {service.base_price}
+                        {service.name} - K {service.base_price}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -128,7 +128,7 @@ const BookingForm = () => {
 
               {totalAmount > 0 && (
                 <div className="p-3 bg-blue-50 rounded-md">
-                  <p className="font-semibold">Total Amount: TSh {totalAmount}</p>
+                  <p className="font-semibold">Total Amount: K {totalAmount}</p>
                 </div>
               )}
             </div>

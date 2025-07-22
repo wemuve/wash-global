@@ -103,6 +103,7 @@ export const useBookingSimple = () => {
           // Metadata
           created_at: data.created_at,
           booking_source: 'wewash_website',
+          currency: 'ZMW', // Zambian Kwacha
           webhook_timestamp: new Date().toISOString()
         };
 
