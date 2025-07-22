@@ -118,10 +118,10 @@ const ClientDashboard = () => {
                   <p className="text-white/80">Book your next WeWash service in just a few clicks</p>
                 </div>
                 <Button 
-                  variant="secondary" 
+                  variant="default" 
                   size="mobile" 
                   onClick={() => navigate('/booking')}
-                  className="mt-4 sm:mt-0 bg-wewash-gold hover:bg-wewash-gold-dark text-wewash-gold-dark hover:text-white"
+                  className="mt-4 sm:mt-0 bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   <Plus className="mr-2 h-5 w-5" />
                   Book New Service
