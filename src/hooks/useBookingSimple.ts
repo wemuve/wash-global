@@ -73,6 +73,59 @@ export const useBookingSimple = () => {
 
       console.log('Booking created successfully:', data);
 
+      // Send booking data to AI agent webhook
+      try {
+        const webhookUrl = 'https://fixflow.app.n8n.cloud/webhook-test/68919d41-3f08-45ee-b018-e2b8ac1d5085';
+        
+        const webhookPayload = {
+          booking_id: data.id,
+          service_id: data.service_id,
+          package_id: data.package_id,
+          customer_name: data.customer_name,
+          customer_phone: data.customer_phone,
+          customer_address: data.customer_address,
+          scheduled_date: data.scheduled_date,
+          scheduled_time: data.scheduled_time,
+          total_amount: data.total_amount,
+          status: data.status,
+          special_instructions: data.special_instructions,
+          // Vehicle details (if applicable)
+          vehicle_make: data.vehicle_make,
+          vehicle_model: data.vehicle_model,
+          vehicle_year: data.vehicle_year,
+          vehicle_color: data.vehicle_color,
+          vehicle_type: data.vehicle_type,
+          license_plate: data.license_plate,
+          parking_details: data.parking_details,
+          vehicle_notes: data.vehicle_notes,
+          water_available: data.water_available,
+          electricity_available: data.electricity_available,
+          // Metadata
+          created_at: data.created_at,
+          booking_source: 'wewash_website',
+          webhook_timestamp: new Date().toISOString()
+        };
+
+        console.log('Sending booking data to AI agent webhook:', webhookPayload);
+
+        const webhookResponse = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(webhookPayload),
+        });
+
+        if (webhookResponse.ok) {
+          console.log('Webhook sent successfully to AI agent');
+        } else {
+          console.warn('Webhook failed but booking was created:', webhookResponse.status);
+        }
+      } catch (webhookError) {
+        console.warn('Failed to send webhook to AI agent (booking still created):', webhookError);
+        // Don't fail the booking if webhook fails
+      }
+
       toast({
         title: "Booking Confirmed!",
         description: "Your service has been scheduled successfully.",
