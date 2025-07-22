@@ -189,35 +189,52 @@ export const useBookings = () => {
       console.log('=== BOOKING SUCCESS ===');
       console.log('Created booking:', data);
 
-      // Trigger webhook for booking confirmation
+      // Enhanced webhook for booking confirmation
       try {
-        await supabase.functions.invoke('booking-webhook', {
-          body: {
-            booking_id: data.id,
-            customer_name: data.customer_name,
-            customer_phone: data.customer_phone,
-            customer_email: user?.email || '',
-            service_name: data.services?.name || 'Service',
-            scheduled_date: data.scheduled_date,
-            scheduled_time: data.scheduled_time,
-            total_amount: data.total_amount,
-            customer_address: data.customer_address,
-            special_instructions: data.special_instructions,
-            // Vehicle information
-            vehicle_make: data.vehicle_make,
-            vehicle_model: data.vehicle_model,
-            vehicle_year: data.vehicle_year,
-            vehicle_type: data.vehicle_type,
-            vehicle_color: data.vehicle_color,
-            license_plate: data.license_plate,
-            vehicle_notes: data.vehicle_notes,
-            parking_details: data.parking_details,
-            water_available: data.water_available,
-            electricity_available: data.electricity_available,
-            // n8n webhook URL
-            n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/68919d41-3f08-45ee-b018-e2b8ac1d5085'
-          }
+        console.log('=== TRIGGERING ENHANCED WEBHOOK ===');
+        
+        const webhookPayload = {
+          booking_id: data.id,
+          customer_name: data.customer_name,
+          customer_phone: data.customer_phone,
+          customer_email: user?.email || '',
+          customer_address: data.customer_address,
+          service_name: data.services?.name || 'Service',
+          service_category: data.services?.service_categories?.name || 'General',
+          scheduled_date: data.scheduled_date,
+          scheduled_time: data.scheduled_time,
+          total_amount: data.total_amount,
+          status: data.status,
+          special_instructions: data.special_instructions,
+          
+          // Enhanced vehicle information for car detailing
+          vehicle_make: data.vehicle_make,
+          vehicle_model: data.vehicle_model,
+          vehicle_year: data.vehicle_year,
+          vehicle_type: data.vehicle_type,
+          vehicle_color: data.vehicle_color,
+          license_plate: data.license_plate,
+          vehicle_notes: data.vehicle_notes,
+          parking_details: data.parking_details,
+          water_available: data.water_available,
+          electricity_available: data.electricity_available,
+          
+          // n8n webhook URL (you can make this configurable)
+          n8n_webhook_url: 'https://fixflow.app.n8n.cloud/webhook-test/68919d41-3f08-45ee-b018-e2b8ac1d5085'
+        };
+
+        console.log('Webhook payload:', webhookPayload);
+
+        const webhookResponse = await supabase.functions.invoke('booking-webhook', {
+          body: webhookPayload
         });
+
+        if (webhookResponse.error) {
+          console.error('Webhook invocation error:', webhookResponse.error);
+        } else {
+          console.log('Webhook response:', webhookResponse.data);
+        }
+
       } catch (webhookError) {
         console.error('Webhook error (non-blocking):', webhookError);
         // Don't fail the booking if webhook fails
