@@ -1,9 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin, LogIn, Briefcase, Home, UserCheck, Building, Bug, Car, UserPlus } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { Sparkles, Shield, Clock, Phone, Star, CheckCircle, Users, Calendar, MapPin } from 'lucide-react';
 import { ServiceCard } from '@/components/ServiceCard';
 import FloatingParticles from '@/components/FloatingParticles';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
@@ -14,12 +12,6 @@ import facilityManagementImage from '@/assets/facility-management.jpg';
 import fumigationServicesImage from '@/assets/fumigation-services.jpg';
 import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
 const Index = () => {
-  const navigate = useNavigate();
-  const {
-    user,
-    isAuthenticated,
-    logout
-  } = useAuth();
 
   // Updated service data with pricing from the new structure
   const serviceCategories = [{
@@ -137,33 +129,12 @@ const Index = () => {
               <a href="#about" className="text-foreground hover:text-primary font-medium transition-colors">About</a>
               <a href="#contact" className="text-foreground hover:text-primary font-medium transition-colors">Contact</a>
               
-              {/* Authentication buttons */}
-              {isAuthenticated ? <div className="flex items-center space-x-4">
-                  <span className="text-sm text-muted-foreground">Welcome, {user?.email}</span>
-                  <Button onClick={() => logout()} variant="outline" size="sm">
-                    Logout
-                  </Button>
-                </div> : <div className="flex items-center space-x-2">
-                  <Button onClick={() => navigate('/login')} variant="outline" size="sm">
-                    <LogIn className="h-4 w-4 mr-2" />
-                    Login
-                  </Button>
-                  <Button onClick={() => navigate('/login')} variant="outline" size="sm">
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Sign Up
-                  </Button>
-                </div>}
-              
               <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white">
                 WhatsApp Inquiry
               </Button>
             </div>
             <div className="md:hidden flex items-center space-x-2">
-              {!isAuthenticated && <Button onClick={() => navigate('/login')} variant="outline" size="sm">
-                  <LogIn className="h-3 w-3 mr-1" />
-                  Login
-                </Button>}
-              <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white" size="sm">
+              <Button onClick={() => window.open('https://wa.me/260768671420?text=Hello, I would like to inquirer about your services.', '_blank')} className="bg-green-600 hover:bg-green-700 text-white" size="sm">
                 WhatsApp
               </Button>
             </div>
