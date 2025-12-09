@@ -19,7 +19,8 @@ import {
   CreditCard,
   Shield,
   Star,
-  Crown
+  Crown,
+  Smartphone
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,7 +29,9 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { useBookingSimple } from '@/hooks/useBookingSimple';
+import { usePayment } from '@/hooks/usePayment';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 const services = [
   { id: 'home-cleaning', name: 'Home Cleaning', icon: Home, basePrice: 350 },
@@ -50,10 +53,17 @@ const timeSlots = [
   '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
 ];
 
+const paymentMethods = [
+  { id: 'mtn', name: 'MTN Money', color: 'bg-yellow-400', textColor: 'text-yellow-900' },
+  { id: 'airtel', name: 'Airtel Money', color: 'bg-red-500', textColor: 'text-white' },
+  { id: 'zamtel', name: 'Zamtel Money', color: 'bg-green-500', textColor: 'text-white' },
+];
+
 const Booking = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { createBooking, isLoading } = useBookingSimple();
+  const { initiatePayment, simulatePaymentCompletion, loading: paymentLoading } = usePayment();
   
   const [step, setStep] = useState(1);
   const [booking, setBooking] = useState({
@@ -66,7 +76,10 @@ const Booking = () => {
     email: '',
     address: '',
     instructions: '',
+    paymentMethod: '' as 'mtn' | 'airtel' | 'zamtel' | '',
   });
+  const [processingPayment, setProcessingPayment] = useState(false);
+  const [paymentTransactionRef, setPaymentTransactionRef] = useState('');
 
   const selectedService = services.find(s => s.id === booking.serviceId);
   const selectedPackage = packages.find(p => p.id === booking.packageId);
@@ -75,30 +88,101 @@ const Booking = () => {
     : 0;
 
   const handleSubmit = async () => {
-    if (!selectedService || !selectedPackage) return;
-
-    const result = await createBooking({
-      serviceName: selectedService.name,
-      packageName: selectedPackage.name,
-      scheduledDate: booking.date,
-      scheduledTime: booking.time,
-      customerName: booking.name,
-      customerPhone: booking.phone,
-      customerEmail: booking.email,
-      customerAddress: booking.address,
-      specialInstructions: booking.instructions,
-      totalAmount: totalPrice,
-      currency: 'ZMW',
-    });
-
-    if (result.success) {
-      navigate('/booking-confirmation', { 
-        state: { 
-          booking: result.booking,
-          serviceName: selectedService.name,
-          packageName: selectedPackage.name,
-        } 
+    if (!selectedService || !selectedPackage || !booking.paymentMethod) {
+      toast({
+        title: 'Please select a payment method',
+        variant: 'destructive',
       });
+      return;
+    }
+
+    setProcessingPayment(true);
+
+    try {
+      // First, create the booking
+      const result = await createBooking({
+        serviceName: selectedService.name,
+        packageName: selectedPackage.name,
+        scheduledDate: booking.date,
+        scheduledTime: booking.time,
+        customerName: booking.name,
+        customerPhone: booking.phone,
+        customerEmail: booking.email,
+        customerAddress: booking.address,
+        specialInstructions: booking.instructions,
+        totalAmount: totalPrice,
+        currency: 'ZMW',
+      });
+
+      if (!result.success) {
+        throw new Error('Failed to create booking');
+      }
+
+      // Initiate payment
+      const paymentResult = await initiatePayment({
+        amount: totalPrice,
+        currency: 'ZMW',
+        customerName: booking.name,
+        customerPhone: booking.phone,
+        customerEmail: booking.email,
+        serviceName: selectedService.name,
+        bookingId: result.booking?.id,
+        paymentMethod: booking.paymentMethod as 'mtn' | 'airtel' | 'zamtel',
+      });
+
+      if (paymentResult.success && paymentResult.transactionRef) {
+        setPaymentTransactionRef(paymentResult.transactionRef);
+        
+        // Send WhatsApp notification via booking webhook
+        await supabase.functions.invoke('booking-webhook', {
+          body: {
+            booking_id: result.booking?.id,
+            customer_name: booking.name,
+            customer_phone: booking.phone,
+            customer_email: booking.email,
+            customer_address: booking.address,
+            service_name: selectedService.name,
+            scheduled_date: booking.date,
+            scheduled_time: booking.time,
+            total_amount: totalPrice,
+            status: 'pending_payment',
+            special_instructions: booking.instructions,
+          }
+        });
+
+        toast({
+          title: '📱 Complete payment on your phone',
+          description: `Check your ${booking.paymentMethod.toUpperCase()} Money for payment prompt`,
+        });
+
+        // For demo: simulate payment completion after 3 seconds
+        setTimeout(async () => {
+          if (paymentResult.transactionRef) {
+            const confirmResult = await simulatePaymentCompletion(paymentResult.transactionRef);
+            if (confirmResult.success) {
+              navigate('/booking-confirmation', { 
+                state: { 
+                  booking: result.booking,
+                  serviceName: selectedService.name,
+                  packageName: selectedPackage.name,
+                  paymentMethod: booking.paymentMethod,
+                  receiptNumber: confirmResult.receiptNumber,
+                  transactionRef: paymentResult.transactionRef,
+                } 
+              });
+            }
+          }
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Booking/payment error:', error);
+      toast({
+        title: 'Booking Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setProcessingPayment(false);
     }
   };
 
@@ -108,6 +192,7 @@ const Booking = () => {
       case 2: return booking.packageId !== '';
       case 3: return booking.date !== '' && booking.time !== '';
       case 4: return booking.name !== '' && booking.phone !== '' && booking.address !== '';
+      case 5: return booking.paymentMethod !== '';
       default: return false;
     }
   };
@@ -117,18 +202,18 @@ const Booking = () => {
       {/* Progress Header */}
       <section className="bg-wewash-navy py-8">
         <div className="container-wewash">
-          <div className="flex items-center justify-between max-w-2xl mx-auto">
-            {[1, 2, 3, 4, 5].map((s) => (
+          <div className="flex items-center justify-between max-w-3xl mx-auto">
+            {[1, 2, 3, 4, 5, 6].map((s) => (
               <div key={s} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-semibold text-sm ${
                   step >= s 
                     ? 'bg-wewash-gold text-wewash-navy' 
                     : 'bg-white/20 text-white/60'
                 }`}>
-                  {step > s ? <Check className="h-5 w-5" /> : s}
+                  {step > s ? <Check className="h-4 w-4" /> : s}
                 </div>
-                {s < 5 && (
-                  <div className={`w-12 md:w-20 h-1 mx-2 ${
+                {s < 6 && (
+                  <div className={`w-6 md:w-12 h-1 mx-1 md:mx-2 ${
                     step > s ? 'bg-wewash-gold' : 'bg-white/20'
                   }`} />
                 )}
@@ -140,7 +225,8 @@ const Booking = () => {
             {step === 2 && 'Choose Package'}
             {step === 3 && 'Pick Date & Time'}
             {step === 4 && 'Your Details'}
-            {step === 5 && 'Confirm Booking'}
+            {step === 5 && 'Payment Method'}
+            {step === 6 && 'Confirm & Pay'}
           </div>
         </div>
       </section>
@@ -285,7 +371,7 @@ const Booking = () => {
                 <div>
                   <Label className="flex items-center gap-2 mb-2">
                     <Phone className="h-4 w-4" />
-                    Phone Number
+                    Phone Number (for Mobile Money)
                   </Label>
                   <Input
                     type="tel"
@@ -333,11 +419,53 @@ const Booking = () => {
             </div>
           )}
 
-          {/* Step 5: Confirmation */}
+          {/* Step 5: Payment Method */}
           {step === 5 && (
             <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2 text-center">
+                Choose Payment Method
+              </h2>
+              <p className="text-center text-muted-foreground mb-6">
+                Pay instantly with Mobile Money
+              </p>
+              <div className="max-w-md mx-auto grid gap-4">
+                {paymentMethods.map((method) => {
+                  const isSelected = booking.paymentMethod === method.id;
+                  return (
+                    <button
+                      key={method.id}
+                      onClick={() => setBooking({ ...booking, paymentMethod: method.id as 'mtn' | 'airtel' | 'zamtel' })}
+                      className={`p-5 rounded-xl border-2 transition-all flex items-center gap-4 ${
+                        isSelected 
+                          ? 'border-primary bg-primary/5 ring-2 ring-primary' 
+                          : 'border-border hover:border-primary/50'
+                      }`}
+                    >
+                      <div className={`w-14 h-14 rounded-xl ${method.color} flex items-center justify-center`}>
+                        <Smartphone className={`h-7 w-7 ${method.textColor}`} />
+                      </div>
+                      <div className="text-left flex-1">
+                        <h3 className="font-semibold text-foreground">{method.name}</h3>
+                        <p className="text-sm text-muted-foreground">Pay with your {method.name} wallet</p>
+                      </div>
+                      {isSelected && (
+                        <Check className="h-6 w-6 text-primary" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-center text-xs text-muted-foreground mt-6">
+                Secure payment powered by DPO/Paystack Zambia
+              </p>
+            </div>
+          )}
+
+          {/* Step 6: Confirmation */}
+          {step === 6 && (
+            <div>
               <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
-                Confirm your booking
+                Confirm & Pay
               </h2>
               <div className="max-w-lg mx-auto bg-muted/50 rounded-2xl p-6 space-y-4">
                 <div className="flex justify-between">
@@ -368,13 +496,17 @@ const Booking = () => {
                   <span className="text-muted-foreground">Address</span>
                   <span className="font-medium text-right max-w-[200px]">{booking.address}</span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Payment Method</span>
+                  <span className="font-medium">{paymentMethods.find(m => m.id === booking.paymentMethod)?.name}</span>
+                </div>
                 <div className="border-t pt-4 flex justify-between text-lg">
                   <span className="font-semibold">Total</span>
                   <span className="font-bold text-primary">ZMW {totalPrice.toLocaleString()}</span>
                 </div>
               </div>
               <p className="text-center text-sm text-muted-foreground mt-4">
-                Payment will be collected on-site after service completion.
+                You will receive a payment prompt on your phone after confirming.
               </p>
             </div>
           )}
@@ -386,6 +518,7 @@ const Booking = () => {
                 variant="outline"
                 onClick={() => setStep(step - 1)}
                 className="gap-2"
+                disabled={processingPayment}
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back
@@ -394,7 +527,7 @@ const Booking = () => {
               <div />
             )}
             
-            {step < 5 ? (
+            {step < 6 ? (
               <Button
                 onClick={() => setStep(step + 1)}
                 disabled={!canProceed()}
@@ -406,11 +539,19 @@ const Booking = () => {
             ) : (
               <Button
                 onClick={handleSubmit}
-                disabled={isLoading}
+                disabled={isLoading || paymentLoading || processingPayment}
                 className="btn-gold gap-2"
               >
-                {isLoading ? 'Booking...' : 'Confirm Booking'}
-                <CreditCard className="h-4 w-4" />
+                {processingPayment ? (
+                  <>
+                    <span className="animate-pulse">Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    Pay ZMW {totalPrice.toLocaleString()}
+                    <CreditCard className="h-4 w-4" />
+                  </>
+                )}
               </Button>
             )}
           </div>
