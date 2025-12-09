@@ -6,8 +6,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Booking from "./pages/Booking";
 import BookingConfirmation from "./pages/BookingConfirmation";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Pricing from "./pages/Pricing";
+import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/AdminDashboard";
+import VendorDashboard from "./pages/VendorDashboard";
+import VendorRegistration from "./pages/VendorRegistration";
 import NotFound from "./pages/NotFound";
+import AIReceptionist from "./components/ai/AIReceptionist";
 
 const queryClient = new QueryClient();
 
@@ -21,9 +30,18 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/book" element={<Booking />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/vendor" element={<VendorDashboard />} />
+          <Route path="/vendor-registration" element={<VendorRegistration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <AIReceptionist />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
