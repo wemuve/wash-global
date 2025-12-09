@@ -7,54 +7,15 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
-      booking_status_history: {
-        Row: {
-          booking_id: string
-          changed_by: string | null
-          created_at: string
-          id: string
-          new_status: Database["public"]["Enums"]["booking_status"]
-          notes: string | null
-          old_status: Database["public"]["Enums"]["booking_status"] | null
-        }
-        Insert: {
-          booking_id: string
-          changed_by?: string | null
-          created_at?: string
-          id?: string
-          new_status: Database["public"]["Enums"]["booking_status"]
-          notes?: string | null
-          old_status?: Database["public"]["Enums"]["booking_status"] | null
-        }
-        Update: {
-          booking_id?: string
-          changed_by?: string | null
-          created_at?: string
-          id?: string
-          new_status?: Database["public"]["Enums"]["booking_status"]
-          notes?: string | null
-          old_status?: Database["public"]["Enums"]["booking_status"] | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "booking_status_history_booking_id_fkey"
-            columns: ["booking_id"]
-            isOneToOne: false
-            referencedRelation: "bookings"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       bookings: {
         Row: {
-          assigned_team: string | null
           created_at: string
           customer_address: string
           customer_name: string
@@ -66,9 +27,9 @@ export type Database = {
           parking_details: string | null
           scheduled_date: string
           scheduled_time: string
-          service_id: string
+          service_id: string | null
           special_instructions: string | null
-          status: Database["public"]["Enums"]["booking_status"]
+          status: string
           total_amount: number
           updated_at: string
           user_id: string | null
@@ -81,7 +42,6 @@ export type Database = {
           water_available: boolean | null
         }
         Insert: {
-          assigned_team?: string | null
           created_at?: string
           customer_address: string
           customer_name: string
@@ -93,9 +53,9 @@ export type Database = {
           parking_details?: string | null
           scheduled_date: string
           scheduled_time: string
-          service_id: string
+          service_id?: string | null
           special_instructions?: string | null
-          status?: Database["public"]["Enums"]["booking_status"]
+          status?: string
           total_amount: number
           updated_at?: string
           user_id?: string | null
@@ -108,7 +68,6 @@ export type Database = {
           water_available?: boolean | null
         }
         Update: {
-          assigned_team?: string | null
           created_at?: string
           customer_address?: string
           customer_name?: string
@@ -120,9 +79,9 @@ export type Database = {
           parking_details?: string | null
           scheduled_date?: string
           scheduled_time?: string
-          service_id?: string
+          service_id?: string | null
           special_instructions?: string | null
-          status?: Database["public"]["Enums"]["booking_status"]
+          status?: string
           total_amount?: number
           updated_at?: string
           user_id?: string | null
@@ -155,65 +114,32 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
-          features: string[] | null
+          features: Json | null
           id: string
           is_active: boolean
           name: string
           price_multiplier: number
-          type: Database["public"]["Enums"]["package_type"]
+          type: string
         }
         Insert: {
           created_at?: string
           description?: string | null
-          features?: string[] | null
+          features?: Json | null
           id?: string
           is_active?: boolean
           name: string
           price_multiplier?: number
-          type: Database["public"]["Enums"]["package_type"]
+          type: string
         }
         Update: {
           created_at?: string
           description?: string | null
-          features?: string[] | null
+          features?: Json | null
           id?: string
           is_active?: boolean
           name?: string
           price_multiplier?: number
-          type?: Database["public"]["Enums"]["package_type"]
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          address: string | null
-          created_at: string
-          full_name: string
-          id: string
-          phone: string | null
-          role: Database["public"]["Enums"]["user_role"]
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          address?: string | null
-          created_at?: string
-          full_name: string
-          id?: string
-          phone?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          address?: string | null
-          created_at?: string
-          full_name?: string
-          id?: string
-          phone?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string
-          user_id?: string
+          type?: string
         }
         Relationships: []
       }
@@ -244,21 +170,21 @@ export type Database = {
       services: {
         Row: {
           base_price: number
-          category_id: string
+          category_id: string | null
           created_at: string
           description: string | null
-          duration_hours: number
+          duration_hours: number | null
           id: string
           is_active: boolean
           name: string
           updated_at: string
         }
         Insert: {
-          base_price: number
-          category_id: string
+          base_price?: number
+          category_id?: string | null
           created_at?: string
           description?: string | null
-          duration_hours?: number
+          duration_hours?: number | null
           id?: string
           is_active?: boolean
           name: string
@@ -266,10 +192,10 @@ export type Database = {
         }
         Update: {
           base_price?: number
-          category_id?: string
+          category_id?: string | null
           created_at?: string
           description?: string | null
-          duration_hours?: number
+          duration_hours?: number | null
           id?: string
           is_active?: boolean
           name?: string
@@ -290,20 +216,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      is_admin: {
-        Args: { user_id: string }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      booking_status:
-        | "pending"
-        | "confirmed"
-        | "in_progress"
-        | "completed"
-        | "cancelled"
-      package_type: "standard" | "premium" | "vip"
-      user_role: "client" | "admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -430,16 +346,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      booking_status: [
-        "pending",
-        "confirmed",
-        "in_progress",
-        "completed",
-        "cancelled",
-      ],
-      package_type: ["standard", "premium", "vip"],
-      user_role: ["client", "admin"],
-    },
+    Enums: {},
   },
 } as const

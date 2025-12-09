@@ -4,32 +4,32 @@ import { supabase } from '@/integrations/supabase/client';
 export interface ServiceCategory {
   id: string;
   name: string;
-  description: string;
-  icon: string;
+  description: string | null;
+  icon: string | null;
   created_at: string;
 }
 
 export interface Service {
   id: string;
-  category_id: string;
+  category_id: string | null;
   name: string;
-  description: string;
+  description: string | null;
   base_price: number;
-  duration_hours: number;
-  is_active: boolean;
+  duration_hours: number | null;
+  is_active: boolean | null;
   created_at: string;
   updated_at: string;
-  service_categories?: ServiceCategory;
+  service_categories?: ServiceCategory | null;
 }
 
 export interface PackageTier {
   id: string;
   name: string;
   type: 'standard' | 'premium' | 'vip';
-  description: string;
+  description: string | null;
   price_multiplier: number;
   features: string[];
-  is_active: boolean;
+  is_active: boolean | null;
   created_at: string;
 }
 
@@ -94,8 +94,14 @@ export const useServices = () => {
       console.log('🔍 SERVICES DEBUG: Packages fetched:', packagesData?.length || 0);
 
       setCategories(categoriesData || []);
-      setServices(servicesData || []);
-      setPackages(packagesData || []);
+      setServices(servicesData as Service[] || []);
+      // Cast package tiers with proper type handling
+      const typedPackages: PackageTier[] = (packagesData || []).map(pkg => ({
+        ...pkg,
+        type: pkg.type as 'standard' | 'premium' | 'vip',
+        features: Array.isArray(pkg.features) ? pkg.features as string[] : []
+      }));
+      setPackages(typedPackages);
       setError(null);
       
       console.log('🔍 SERVICES DEBUG: Data fetch completed successfully');

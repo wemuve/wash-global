@@ -71,6 +71,10 @@ export const useBookingSimple = () => {
         throw new Error(insertError.message);
       }
 
+      if (!data) {
+        throw new Error('No data returned from booking creation');
+      }
+
       console.log('Booking created successfully:', data);
 
       // Send booking data to AI agent webhook
