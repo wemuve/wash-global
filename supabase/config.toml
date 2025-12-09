@@ -1,7 +1,28 @@
 project_id = "ouggluzwawtvyxwighsk"
 
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[functions.ai-receptionist]
+verify_jwt = false
+
 [functions.booking-webhook]
 verify_jwt = false
 
-[functions.ai-receptionist]
+[functions.initiate-payment]
+verify_jwt = false
+
+[functions.payment-webhook]
 verify_jwt = false
