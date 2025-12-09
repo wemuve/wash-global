@@ -3,15 +3,32 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export interface BookingData {
-  service_id: string;
-  package_id: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_address: string;
-  scheduled_date: string;
-  scheduled_time: string;
-  total_amount: number;
+  // Service info - accepts either ID or name
+  service_id?: string;
+  serviceName?: string;
+  package_id?: string;
+  packageName?: string;
+  // Customer info
+  customer_name?: string;
+  customerName?: string;
+  customer_phone?: string;
+  customerPhone?: string;
+  customer_email?: string;
+  customerEmail?: string;
+  customer_address?: string;
+  customerAddress?: string;
+  // Schedule
+  scheduled_date?: string;
+  scheduledDate?: string;
+  scheduled_time?: string;
+  scheduledTime?: string;
+  // Pricing
+  total_amount?: number;
+  totalAmount?: number;
+  currency?: string;
+  // Instructions
   special_instructions?: string;
+  specialInstructions?: string;
   // Car detailing specific fields
   vehicle_make?: string;
   vehicle_model?: string;
@@ -37,32 +54,37 @@ export const useBookingSimple = () => {
     try {
       console.log('Creating booking with data:', bookingData);
 
-      // Simple direct insert - no complex logic
+      // Normalize field names (support both conventions)
+      const normalizedData = {
+        service_id: bookingData.service_id || null,
+        package_id: bookingData.package_id || null,
+        customer_name: bookingData.customer_name || bookingData.customerName || '',
+        customer_phone: bookingData.customer_phone || bookingData.customerPhone || '',
+        customer_email: bookingData.customer_email || bookingData.customerEmail || null,
+        customer_address: bookingData.customer_address || bookingData.customerAddress || '',
+        scheduled_date: bookingData.scheduled_date || bookingData.scheduledDate || '',
+        scheduled_time: bookingData.scheduled_time || bookingData.scheduledTime || '',
+        total_amount: bookingData.total_amount || bookingData.totalAmount || 0,
+        special_instructions: bookingData.special_instructions || bookingData.specialInstructions || null,
+        currency: bookingData.currency || 'ZMW',
+        vehicle_make: bookingData.vehicle_make || null,
+        vehicle_model: bookingData.vehicle_model || null,
+        vehicle_year: bookingData.vehicle_year || null,
+        vehicle_color: bookingData.vehicle_color || null,
+        vehicle_type: bookingData.vehicle_type || null,
+        license_plate: bookingData.license_plate || null,
+        parking_details: bookingData.parking_details || null,
+        vehicle_notes: bookingData.vehicle_notes || null,
+        water_available: bookingData.water_available ?? null,
+        electricity_available: bookingData.electricity_available ?? null,
+        user_id: null,
+        status: 'pending'
+      };
+
+      // Simple direct insert
       const { data, error: insertError } = await supabase
         .from('bookings')
-        .insert({
-          service_id: bookingData.service_id,
-          package_id: bookingData.package_id,
-          customer_name: bookingData.customer_name,
-          customer_phone: bookingData.customer_phone,
-          customer_address: bookingData.customer_address,
-          scheduled_date: bookingData.scheduled_date,
-          scheduled_time: bookingData.scheduled_time,
-          total_amount: bookingData.total_amount,
-          special_instructions: bookingData.special_instructions,
-          vehicle_make: bookingData.vehicle_make,
-          vehicle_model: bookingData.vehicle_model,
-          vehicle_year: bookingData.vehicle_year,
-          vehicle_color: bookingData.vehicle_color,
-          vehicle_type: bookingData.vehicle_type,
-          license_plate: bookingData.license_plate,
-          parking_details: bookingData.parking_details,
-          vehicle_notes: bookingData.vehicle_notes,
-          water_available: bookingData.water_available,
-          electricity_available: bookingData.electricity_available,
-          user_id: null, // Always null for guest bookings
-          status: 'pending'
-        })
+        .insert(normalizedData)
         .select()
         .single();
 
