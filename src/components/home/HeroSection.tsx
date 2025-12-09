@@ -19,12 +19,6 @@ const HeroSection = () => {
     window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank');
   };
 
-  const stats = [
-    { value: '5,000+', label: 'Happy Clients' },
-    { value: '10,000+', label: 'Jobs Completed' },
-    { value: '4.9/5', label: 'Customer Rating' },
-  ];
-
   const highlights = [
     'Professional & Trained Staff',
     'Eco-Friendly Products',
@@ -64,7 +58,7 @@ const HeroSection = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-sm mb-6 animate-fade-up">
             <Star className="h-4 w-4 text-wewash-gold fill-wewash-gold" />
-            <span>Trusted by 5,000+ customers across Zambia & Denmark</span>
+            <span>Premium Services in Zambia • Connected with Denmark</span>
           </div>
 
           {/* Headline */}
@@ -107,16 +101,20 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap gap-8 animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-white/60">{stat.label}</div>
-              </div>
-            ))}
+          {/* Trust indicators */}
+          <div className="flex flex-wrap gap-6 animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            <div className="flex items-center gap-2 text-white/80">
+              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+              <span className="text-sm">Licensed & Insured</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/80">
+              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+              <span className="text-sm">Background Checked Staff</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/80">
+              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+              <span className="text-sm">Satisfaction Guaranteed</span>
+            </div>
           </div>
         </div>
       </div>

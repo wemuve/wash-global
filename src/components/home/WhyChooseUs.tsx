@@ -92,24 +92,27 @@ const WhyChooseUs = () => {
           })}
         </div>
 
-        {/* Trust Stats */}
-        <div className="mt-20 bg-wewash-navy rounded-3xl p-8 md:p-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-wewash-gold mb-2">5+</div>
-              <div className="text-white/70">Years Experience</div>
+        {/* Trust Banner */}
+        <div className="mt-20 bg-wewash-navy rounded-3xl p-8 md:p-12 text-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            Trusted by Homes & Businesses Across Zambia
+          </h3>
+          <p className="text-white/70 max-w-2xl mx-auto mb-6">
+            From residential homes to corporate offices and government institutions, 
+            we deliver professional cleaning and property services you can count on.
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex items-center gap-2 text-white/80">
+              <Shield className="h-5 w-5 text-wewash-gold" />
+              <span>Fully Insured</span>
             </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-wewash-gold mb-2">5,000+</div>
-              <div className="text-white/70">Happy Clients</div>
+            <div className="flex items-center gap-2 text-white/80">
+              <Award className="h-5 w-5 text-wewash-gold" />
+              <span>Certified Professionals</span>
             </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-wewash-gold mb-2">10,000+</div>
-              <div className="text-white/70">Jobs Completed</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold text-wewash-gold mb-2">4.9</div>
-              <div className="text-white/70">Customer Rating</div>
+            <div className="flex items-center gap-2 text-white/80">
+              <Leaf className="h-5 w-5 text-wewash-gold" />
+              <span>Eco-Friendly</span>
             </div>
           </div>
         </div>
