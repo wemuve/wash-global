@@ -411,6 +411,13 @@ export type Database = {
             referencedRelation: "vendors"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "job_assignments_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       leads: {
@@ -504,6 +511,13 @@ export type Database = {
             columns: ["assigned_to"]
             isOneToOne: false
             referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
             referencedColumns: ["id"]
           },
         ]
@@ -944,6 +958,13 @@ export type Database = {
             referencedRelation: "vendors"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reviews_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       service_categories: {
@@ -1103,7 +1124,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      vendors_public: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string | null
+          is_active: boolean | null
+          is_verified: boolean | null
+          name: string | null
+          phone: string | null
+          profile_image: string | null
+          rating: number | null
+          service_areas: string[] | null
+          specializations: string[] | null
+          total_jobs: number | null
+          total_reviews: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          rating?: number | null
+          service_areas?: string[] | null
+          specializations?: string[] | null
+          total_jobs?: number | null
+          total_reviews?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          name?: string | null
+          phone?: string | null
+          profile_image?: string | null
+          rating?: number | null
+          service_areas?: string[] | null
+          specializations?: string[] | null
+          total_jobs?: number | null
+          total_reviews?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
