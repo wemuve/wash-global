@@ -13,6 +13,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
+import GetQuote from "./pages/GetQuote";
 import AdminDashboard from "./pages/AdminDashboard";
 import VendorDashboard from "./pages/VendorDashboard";
 import VendorRegistration from "./pages/VendorRegistration";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/quote" element={<GetQuote />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/vendor" element={<VendorDashboard />} />
             <Route path="/vendor-registration" element={<VendorRegistration />} />
