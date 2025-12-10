@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { 
   CheckCircle2, 
@@ -81,19 +82,29 @@ const Pricing = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Pricing | WeWash Global - Transparent Service Pricing in Zambia</title>
+        <meta name="description" content="View transparent pricing for all WeWash Global services. Standard, Premium, and VIP packages available. Pay after service completion." />
+        <meta name="keywords" content="cleaning prices Zambia, car wash prices Lusaka, fumigation cost, maid service rates" />
+        <link rel="canonical" href="https://wewashglobal.com/pricing" />
+        <meta property="og:title" content="Service Pricing | WeWash Global" />
+        <meta property="og:description" content="Transparent pricing for professional cleaning and facility services in Zambia." />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       {/* Hero */}
-      <section className="relative bg-wewash-navy py-20 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-wewash-navy via-wewash-navy to-primary/20" />
+      <section className="relative bg-gradient-to-br from-background via-card to-primary/10 py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         <div className="container-wewash relative">
           <div className="max-w-3xl">
             <span className="badge-gold mb-6">Pricing</span>
-            <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-foreground text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Transparent
-              <span className="text-wewash-gold"> Pricing</span>
+              <span className="text-primary"> Pricing</span>
             </h1>
-            <p className="text-xl text-white/80">
+            <p className="text-xl text-muted-foreground">
               Choose the package that fits your needs. All prices are in Zambian Kwacha (ZMW).
-              Custom quotes available for large or recurring projects.
+              <span className="text-primary font-semibold"> Pay after service completion.</span>
             </p>
           </div>
         </div>
@@ -119,13 +130,13 @@ const Pricing = () => {
                   key={index}
                   className={`relative rounded-2xl p-8 ${
                     pkg.popular 
-                      ? 'bg-primary text-primary-foreground ring-4 ring-wewash-gold' 
-                      : 'bg-muted/50'
+                      ? 'bg-gradient-to-br from-primary/20 to-primary/5 ring-2 ring-primary shadow-glow' 
+                      : 'bg-card ring-1 ring-border'
                   }`}
                 >
                   {pkg.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-wewash-gold text-wewash-navy px-4 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
                         Most Popular
                       </span>
                     </div>
@@ -133,19 +144,19 @@ const Pricing = () => {
                   
                   <div className="flex items-center gap-3 mb-4">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      pkg.popular ? 'bg-white/20' : 'bg-primary/10'
+                      pkg.popular ? 'bg-primary/20' : 'bg-muted'
                     }`}>
-                      <Icon className={`h-6 w-6 ${pkg.popular ? 'text-white' : 'text-primary'}`} />
+                      <Icon className={`h-6 w-6 ${pkg.popular ? 'text-primary' : 'text-muted-foreground'}`} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold">{pkg.name}</h3>
-                      <p className={`text-sm ${pkg.popular ? 'text-white/70' : 'text-muted-foreground'}`}>
+                      <h3 className="text-xl font-bold text-foreground">{pkg.name}</h3>
+                      <p className="text-sm text-muted-foreground">
                         {pkg.multiplier} base price
                       </p>
                     </div>
                   </div>
                   
-                  <p className={`mb-6 ${pkg.popular ? 'text-white/80' : 'text-muted-foreground'}`}>
+                  <p className="text-muted-foreground mb-6">
                     {pkg.description}
                   </p>
                   
@@ -153,9 +164,9 @@ const Pricing = () => {
                     {pkg.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-3">
                         <CheckCircle2 className={`h-5 w-5 mt-0.5 ${
-                          pkg.popular ? 'text-wewash-gold' : 'text-primary'
+                          pkg.popular ? 'text-primary' : 'text-muted-foreground'
                         }`} />
-                        <span className={pkg.popular ? 'text-white/90' : 'text-foreground'}>
+                        <span className="text-foreground">
                           {feature}
                         </span>
                       </li>
@@ -164,7 +175,8 @@ const Pricing = () => {
                   
                   <Button 
                     onClick={() => navigate('/book')}
-                    className={`w-full gap-2 ${pkg.popular ? 'btn-gold' : 'btn-primary'}`}
+                    className={`w-full gap-2 ${pkg.popular ? 'btn-primary' : ''}`}
+                    variant={pkg.popular ? 'default' : 'outline'}
                   >
                     Select {pkg.name}
                     <ArrowRight className="h-4 w-4" />
@@ -177,7 +189,7 @@ const Pricing = () => {
       </section>
 
       {/* Service Prices */}
-      <section className="section-spacing bg-muted/30">
+      <section className="section-spacing bg-card/50">
         <div className="container-wewash">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="badge-success mb-4">Base Prices</span>
@@ -188,10 +200,10 @@ const Pricing = () => {
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-background rounded-2xl shadow-card overflow-hidden">
+            <div className="bg-card rounded-2xl ring-1 ring-border overflow-hidden">
               <div className="grid grid-cols-2 bg-primary text-primary-foreground font-semibold">
-                <div className="p-4 border-b border-white/10">Service</div>
-                <div className="p-4 border-b border-white/10 text-right">Price (ZMW)</div>
+                <div className="p-4 border-b border-primary-foreground/20">Service</div>
+                <div className="p-4 border-b border-primary-foreground/20 text-right">Price (ZMW)</div>
               </div>
               {services.map((service, index) => (
                 <div 
@@ -214,12 +226,12 @@ const Pricing = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-spacing bg-wewash-navy">
+      <section className="section-spacing bg-gradient-to-br from-primary/20 via-card to-background">
         <div className="container-wewash text-center">
-          <h2 className="text-white text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-4">
             Need a Custom Quote?
           </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
             For large projects, recurring services, or special requirements, 
             contact us for a personalized quote.
           </p>
@@ -234,7 +246,7 @@ const Pricing = () => {
             <Button 
               onClick={() => navigate('/book')}
               variant="outline"
-              className="border-white text-white hover:bg-white/10 gap-2"
+              className="gap-2"
             >
               Book Now
             </Button>

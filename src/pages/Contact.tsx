@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { 
   Phone, 
@@ -87,17 +88,27 @@ const Contact = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Contact Us | WeWash Global - Get in Touch</title>
+        <meta name="description" content="Contact WeWash Global for professional cleaning services in Zambia. Reach us via phone, email, or WhatsApp. Response within 24 hours guaranteed." />
+        <meta name="keywords" content="contact WeWash, cleaning service Lusaka, WhatsApp cleaning service, Zambia cleaning company" />
+        <link rel="canonical" href="https://wewashglobal.com/contact" />
+        <meta property="og:title" content="Contact WeWash Global" />
+        <meta property="og:description" content="Get in touch with our team for quotes and bookings. Response within 24 hours." />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       {/* Hero */}
-      <section className="relative bg-wewash-navy py-20 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-wewash-navy via-wewash-navy to-primary/20" />
+      <section className="relative bg-gradient-to-br from-background via-card to-primary/10 py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         <div className="container-wewash relative">
           <div className="max-w-3xl">
             <span className="badge-gold mb-6">Contact Us</span>
-            <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-foreground text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Get In
-              <span className="text-wewash-gold"> Touch</span>
+              <span className="text-primary"> Touch</span>
             </h1>
-            <p className="text-xl text-white/80">
+            <p className="text-xl text-muted-foreground">
               Have questions? Need a quote? We're here to help. 
               Reach out and we'll respond within 24 hours.
             </p>
@@ -121,6 +132,7 @@ const Contact = () => {
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Your full name"
                     required
+                    className="bg-card"
                   />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -132,6 +144,7 @@ const Contact = () => {
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="your@email.com"
+                      className="bg-card"
                     />
                   </div>
                   <div>
@@ -143,6 +156,7 @@ const Contact = () => {
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       placeholder="+260 XXX XXX XXX"
                       required
+                      className="bg-card"
                     />
                   </div>
                 </div>
@@ -155,6 +169,7 @@ const Contact = () => {
                     placeholder="Tell us about your needs..."
                     rows={5}
                     required
+                    className="bg-card"
                   />
                 </div>
                 <Button 
@@ -176,8 +191,8 @@ const Contact = () => {
                 {contactInfo.map((item, index) => {
                   const Icon = item.icon;
                   return (
-                    <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-muted/50">
-                      <div className="w-12 h-12 rounded-xl bg-primary-muted flex items-center justify-center">
+                    <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-card ring-1 ring-border">
+                      <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
                       <div>
@@ -201,24 +216,17 @@ const Contact = () => {
               </div>
 
               {/* Locations */}
-              <div className="bg-wewash-navy rounded-2xl p-6">
-                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                  <Globe className="h-5 w-5 text-wewash-gold" />
+              <div className="bg-gradient-to-br from-primary/20 to-card rounded-2xl p-6 ring-1 ring-primary/30">
+                <h3 className="text-foreground font-bold mb-4 flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-primary" />
                   Our Locations
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-wewash-gold mt-0.5" />
+                    <MapPin className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="text-white font-medium">Zambia (Headquarters)</p>
-                      <p className="text-white/70 text-sm">Lusaka, Zambia</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-wewash-gold mt-0.5" />
-                    <div>
-                      <p className="text-white font-medium">Denmark (Partner Office)</p>
-                      <p className="text-white/70 text-sm">Copenhagen, Denmark</p>
+                      <p className="text-foreground font-medium">Zambia (Headquarters)</p>
+                      <p className="text-muted-foreground text-sm">Lusaka, Zambia</p>
                     </div>
                   </div>
                 </div>

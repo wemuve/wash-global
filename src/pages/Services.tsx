@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { 
   Home, 
@@ -111,17 +112,27 @@ const Services = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Our Services | WeWash Global - Professional Cleaning & Facility Management</title>
+        <meta name="description" content="Explore WeWash Global's comprehensive services: home cleaning, mobile car detailing, fumigation, facility management, and trained housekeepers in Zambia." />
+        <meta name="keywords" content="cleaning services Zambia, car detailing Lusaka, fumigation services, facility management, trained maids, housekeepers" />
+        <link rel="canonical" href="https://wewashglobal.com/services" />
+        <meta property="og:title" content="Professional Cleaning Services | WeWash Global" />
+        <meta property="og:description" content="From home cleaning to facility management - comprehensive property services in Zambia." />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       {/* Hero */}
-      <section className="relative bg-wewash-navy py-20 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-wewash-navy via-wewash-navy to-primary/20" />
+      <section className="relative bg-gradient-to-br from-background via-card to-primary/10 py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         <div className="container-wewash relative">
           <div className="max-w-3xl">
             <span className="badge-gold mb-6">Our Services</span>
-            <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-foreground text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Comprehensive Property
-              <span className="text-wewash-gold"> Services</span>
+              <span className="text-primary"> Services</span>
             </h1>
-            <p className="text-xl text-white/80">
+            <p className="text-xl text-muted-foreground">
               From home cleaning to facility management, we offer a full range of 
               professional services for residential, commercial, and institutional clients.
             </p>
@@ -143,14 +154,15 @@ const Services = () => {
                   className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}
                 >
                   <div className={isReversed ? 'lg:order-2' : ''}>
-                    <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
+                    <div className="relative rounded-2xl overflow-hidden aspect-[4/3] ring-1 ring-primary/20">
                       <img 
                         src={service.image} 
                         alt={service.title}
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                       <div className="absolute top-4 left-4">
-                        <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-glow">
                           <Icon className="h-6 w-6 text-primary-foreground" />
                         </div>
                       </div>
@@ -195,12 +207,12 @@ const Services = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-spacing bg-primary">
+      <section className="section-spacing bg-gradient-to-br from-primary/20 via-card to-background">
         <div className="container-wewash text-center">
-          <h2 className="text-white text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-4">
             Need a Custom Solution?
           </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
             We offer tailored packages for businesses and institutions. 
             Contact us for a personalized quote.
           </p>
