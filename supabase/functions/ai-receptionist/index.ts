@@ -84,13 +84,124 @@ When a customer wants to book, collect:
 
 Respond in a friendly, professional tone. Keep responses concise but helpful. Use currency ZMW for Zambia.`;
 
+// Validation helpers
+interface ValidationResult {
+  valid: boolean;
+  error?: string;
+  sanitized?: { messages: Array<{ role: string; content: string }> };
+}
+
+function sanitizeText(text: string, maxLength: number): string {
+  // Remove potential injection patterns and limit length
+  return text
+    .substring(0, maxLength)
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+\s*=/gi, '')
+    .trim();
+}
+
+function validateMessages(payload: any): ValidationResult {
+  // Check if messages array exists
+  if (!payload || !Array.isArray(payload.messages)) {
+    return { valid: false, error: 'Messages array is required' };
+  }
+
+  // Limit number of messages to prevent abuse
+  if (payload.messages.length > 50) {
+    return { valid: false, error: 'Too many messages in conversation history' };
+  }
+
+  const sanitizedMessages: Array<{ role: string; content: string }> = [];
+
+  for (let i = 0; i < payload.messages.length; i++) {
+    const msg = payload.messages[i];
+    
+    // Validate message structure
+    if (!msg || typeof msg !== 'object') {
+      return { valid: false, error: `Invalid message at index ${i}` };
+    }
+
+    // Validate role
+    const validRoles = ['user', 'assistant', 'system'];
+    if (!msg.role || !validRoles.includes(msg.role)) {
+      return { valid: false, error: `Invalid role at message ${i}` };
+    }
+
+    // Validate content
+    if (typeof msg.content !== 'string') {
+      return { valid: false, error: `Invalid content at message ${i}` };
+    }
+
+    // Limit message length (10,000 chars per message)
+    if (msg.content.length > 10000) {
+      return { valid: false, error: `Message ${i} exceeds maximum length` };
+    }
+
+    // Sanitize and add message
+    sanitizedMessages.push({
+      role: msg.role,
+      content: sanitizeText(msg.content, 10000),
+    });
+  }
+
+  return { valid: true, sanitized: { messages: sanitizedMessages } };
+}
+
+// Validate lead data before saving
+function validateLeadData(leadData: any): { valid: boolean; sanitized?: any } {
+  if (!leadData || typeof leadData !== 'object') {
+    return { valid: false };
+  }
+
+  const zambianPhoneRegex = /^(\+?260|0)?[97]\d{8}$/;
+  
+  // Validate name
+  if (!leadData.name || typeof leadData.name !== 'string' || leadData.name.trim().length < 2) {
+    return { valid: false };
+  }
+
+  // Validate phone
+  if (!leadData.phone || typeof leadData.phone !== 'string') {
+    return { valid: false };
+  }
+
+  const cleanPhone = leadData.phone.replace(/\s/g, '');
+  if (!zambianPhoneRegex.test(cleanPhone)) {
+    console.log('Invalid phone format in lead data:', cleanPhone);
+    return { valid: false };
+  }
+
+  return {
+    valid: true,
+    sanitized: {
+      name: sanitizeText(leadData.name, 100),
+      phone: cleanPhone.substring(0, 15),
+      service: leadData.service ? sanitizeText(String(leadData.service), 200) : null,
+      message: leadData.message ? sanitizeText(String(leadData.message), 500) : null,
+    },
+  };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const rawPayload = await req.json();
+    
+    // Validate and sanitize input
+    const validation = validateMessages(rawPayload);
+    if (!validation.valid) {
+      console.error('AI Receptionist validation failed:', validation.error);
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { messages } = validation.sanitized!;
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -147,39 +258,46 @@ serve(async (req) => {
         const leadMatch = text.match(/\[LEAD_DATA\](.*?)\[\/LEAD_DATA\]/s);
         if (leadMatch && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
           try {
-            const leadData = JSON.parse(leadMatch[1]);
-            console.log("Lead detected:", leadData);
+            const rawLeadData = JSON.parse(leadMatch[1]);
             
-            // Save lead to database
-            const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-            await supabase.from('leads').insert({
-              customer_name: leadData.name,
-              customer_phone: leadData.phone,
-              service_interest: leadData.service ? [leadData.service] : [],
-              message: leadData.message,
-              source: 'ai_receptionist',
-              status: 'new',
-            });
+            // Validate lead data before saving
+            const leadValidation = validateLeadData(rawLeadData);
+            if (leadValidation.valid) {
+              const leadData = leadValidation.sanitized;
+              console.log("Valid lead detected, saving...");
+              
+              // Save lead to database
+              const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+              await supabase.from('leads').insert({
+                customer_name: leadData.name,
+                customer_phone: leadData.phone,
+                service_interest: leadData.service ? [leadData.service] : [],
+                message: leadData.message,
+                source: 'ai_receptionist',
+                status: 'new',
+              });
 
-            // Send WhatsApp notification
-            const WHATSAPP_WEBHOOK_URL = Deno.env.get("WHATSAPP_WEBHOOK_URL");
-            if (WHATSAPP_WEBHOOK_URL) {
-              try {
-                await fetch(WHATSAPP_WEBHOOK_URL, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    message: `🔔 *New Lead from AI Receptionist!*\n\n👤 *Name:* ${leadData.name}\n📱 *Phone:* ${leadData.phone}\n🛠️ *Interest:* ${leadData.service || 'General'}\n💬 *Message:* ${leadData.message || 'N/A'}`,
-                    phone: leadData.phone,
-                    type: 'lead',
-                    rawData: leadData,
-                    timestamp: new Date().toISOString(),
-                  }),
-                });
-                console.log("WhatsApp notification sent for lead");
-              } catch (whatsappError) {
-                console.error("WhatsApp notification failed:", whatsappError);
+              // Send WhatsApp notification
+              const WHATSAPP_WEBHOOK_URL = Deno.env.get("WHATSAPP_WEBHOOK_URL");
+              if (WHATSAPP_WEBHOOK_URL) {
+                try {
+                  await fetch(WHATSAPP_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      message: `🔔 *New Lead from AI Receptionist!*\n\n👤 *Name:* ${leadData.name}\n📱 *Phone:* ${leadData.phone}\n🛠️ *Interest:* ${leadData.service || 'General'}\n💬 *Message:* ${leadData.message || 'N/A'}`,
+                      phone: leadData.phone,
+                      type: 'lead',
+                      timestamp: new Date().toISOString(),
+                    }),
+                  });
+                  console.log("WhatsApp notification sent for lead");
+                } catch (whatsappError) {
+                  console.error("WhatsApp notification failed:", whatsappError);
+                }
               }
+            } else {
+              console.log("Invalid lead data format, skipping save");
             }
             
             // Remove the lead data block from the response
@@ -202,7 +320,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("AI Receptionist error:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "An error occurred" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
