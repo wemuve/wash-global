@@ -1,17 +1,18 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const WEWASH_CONTEXT = `You are the AI Receptionist for WeWash Global, a premium cleaning and property services company based in Zambia with connections to Denmark.
+const WEWASH_CONTEXT = `You are the AI Receptionist for WeWash Global, a premium cleaning and property services company based in Lusaka, Zambia. WeWash is a daughter brand of WeMuve, our parent company in Denmark.
 
 COMPANY INFORMATION:
-- Website: wewashglobal.com
+- Website: wewash.co.zm
 - WhatsApp: +260 768 671 420
-- Email: hello@wewashglobal.com
-- Location: Lusaka, Zambia (with Denmark connection)
+- Email: hello@wewash.co.zm
+- Location: Lusaka, Zambia
 - Operating Hours: Monday-Saturday 7am-7pm, Sunday 8am-4pm
 
 SERVICES & PRICING (Zambian Kwacha - ZMW):
@@ -51,6 +52,11 @@ PACKAGE TIERS:
 - Premium: 1.5x price (includes premium products, extended warranty)
 - VIP: 2x price (priority scheduling, dedicated team, 24/7 support)
 
+PAYMENT:
+- Customers pay AFTER the service is completed
+- We accept: Cash, Mobile Money (MTN, Airtel), Bank Transfer
+- No upfront payment required
+
 YOUR ROLE:
 1. Answer questions about services and pricing
 2. Help customers book services by collecting: name, phone, address, service type, preferred date/time
@@ -58,6 +64,13 @@ YOUR ROLE:
 4. When customer wants to book, collect all details and confirm the booking
 5. Always mention WhatsApp (+260 768 671 420) for direct contact
 6. For complex quotes, suggest speaking with our team
+7. IMPORTANT: When a customer shares their contact information (name AND phone number), acknowledge it and let them know our team will reach out
+
+LEAD CAPTURE:
+When you detect a customer's name and phone number in the conversation, respond with a special JSON block at the END of your message like this:
+[LEAD_DATA]{"name":"Customer Name","phone":"0971234567","service":"Service they're interested in","message":"Brief summary of inquiry"}[/LEAD_DATA]
+
+This helps our team follow up quickly. Only include this when you have BOTH name and phone.
 
 BOOKING PROCESS:
 When a customer wants to book, collect:
@@ -79,6 +92,8 @@ serve(async (req) => {
   try {
     const { messages } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
@@ -123,7 +138,66 @@ serve(async (req) => {
       });
     }
 
-    return new Response(response.body, {
+    // Create a transform stream to intercept and process lead data
+    const { readable, writable } = new TransformStream({
+      transform: async (chunk, controller) => {
+        const text = new TextDecoder().decode(chunk);
+        
+        // Check for lead data pattern
+        const leadMatch = text.match(/\[LEAD_DATA\](.*?)\[\/LEAD_DATA\]/s);
+        if (leadMatch && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+          try {
+            const leadData = JSON.parse(leadMatch[1]);
+            console.log("Lead detected:", leadData);
+            
+            // Save lead to database
+            const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+            await supabase.from('leads').insert({
+              customer_name: leadData.name,
+              customer_phone: leadData.phone,
+              service_interest: leadData.service ? [leadData.service] : [],
+              message: leadData.message,
+              source: 'ai_receptionist',
+              status: 'new',
+            });
+
+            // Send WhatsApp notification
+            const WHATSAPP_WEBHOOK_URL = Deno.env.get("WHATSAPP_WEBHOOK_URL");
+            if (WHATSAPP_WEBHOOK_URL) {
+              try {
+                await fetch(WHATSAPP_WEBHOOK_URL, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    message: `🔔 *New Lead from AI Receptionist!*\n\n👤 *Name:* ${leadData.name}\n📱 *Phone:* ${leadData.phone}\n🛠️ *Interest:* ${leadData.service || 'General'}\n💬 *Message:* ${leadData.message || 'N/A'}`,
+                    phone: leadData.phone,
+                    type: 'lead',
+                    rawData: leadData,
+                    timestamp: new Date().toISOString(),
+                  }),
+                });
+                console.log("WhatsApp notification sent for lead");
+              } catch (whatsappError) {
+                console.error("WhatsApp notification failed:", whatsappError);
+              }
+            }
+            
+            // Remove the lead data block from the response
+            const cleanedText = text.replace(/\[LEAD_DATA\].*?\[\/LEAD_DATA\]/s, '');
+            controller.enqueue(new TextEncoder().encode(cleanedText));
+            return;
+          } catch (parseError) {
+            console.error("Failed to parse lead data:", parseError);
+          }
+        }
+        
+        controller.enqueue(chunk);
+      }
+    });
+
+    response.body?.pipeTo(writable);
+
+    return new Response(readable, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (error) {

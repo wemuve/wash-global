@@ -4,11 +4,8 @@ import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, 
   MessageCircle, 
-  Play, 
   CheckCircle2,
-  Star,
-  Users,
-  Clock
+  Star
 } from 'lucide-react';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
 
@@ -58,7 +55,7 @@ const HeroSection = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-sm mb-6 animate-fade-up">
             <Star className="h-4 w-4 text-wewash-gold fill-wewash-gold" />
-            <span>Premium Services in Zambia • Connected with Denmark</span>
+            <span>Premium Cleaning Services in Zambia</span>
           </div>
 
           {/* Headline */}
