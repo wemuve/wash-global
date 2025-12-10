@@ -8,7 +8,7 @@ import {
   Star,
   Sparkles
 } from 'lucide-react';
-import heroImage from '@/assets/hero-cleaning-professionals.jpg';
+import heroImage from '@/assets/hero-diverse-team.jpg';
 
 const HeroSection = () => {
   const navigate = useNavigate();
