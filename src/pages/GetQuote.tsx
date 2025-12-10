@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import AIPriceCalculator from '@/components/booking/AIPriceCalculator';
+import VoiceAgentButton from '@/components/dashboard/VoiceAgentButton';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, MessageCircle, Calculator, ClipboardList } from 'lucide-react';
+import { ArrowRight, MessageCircle, Calculator, ClipboardList, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+
+const ELEVENLABS_AGENT_ID = 'domain_pk_6939d88162dc8194a3b663d6b1565ea600f1fa0fd59a280e';
 
 const GetQuote = () => {
   const navigate = useNavigate();
@@ -50,6 +53,22 @@ const GetQuote = () => {
       {/* Calculator Section */}
       <section className="section-spacing -mt-8">
         <div className="container-wewash max-w-2xl">
+          {/* Voice Agent Card */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-xl border border-primary/20">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="font-semibold flex items-center gap-2">
+                  <Phone className="h-5 w-5 text-primary" />
+                  Need Help? Talk to Our AI Assistant
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Get instant answers about pricing and services
+                </p>
+              </div>
+              <VoiceAgentButton agentId={ELEVENLABS_AGENT_ID} />
+            </div>
+          </div>
+          
           <AIPriceCalculator 
             onPriceCalculated={handlePriceCalculated}
             onBookNow={handleBookNow}
