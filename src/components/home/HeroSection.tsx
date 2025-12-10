@@ -5,7 +5,8 @@ import {
   ArrowRight, 
   MessageCircle, 
   CheckCircle2,
-  Star
+  Star,
+  Sparkles
 } from 'lucide-react';
 import heroImage from '@/assets/hero-cleaning-professionals.jpg';
 
@@ -20,61 +21,53 @@ const HeroSection = () => {
     'Professional & Trained Staff',
     'Eco-Friendly Products',
     'Satisfaction Guaranteed',
-    '24/7 Customer Support',
+    'Pay After Service',
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 hero-gradient" />
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background">
+      {/* Background with gradient overlay */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
 
-      {/* Animated Particles */}
+      {/* Animated glow effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full animate-float-gentle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${8 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Content */}
       <div className="relative container-wewash py-20">
         <div className="max-w-3xl">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-sm mb-6 animate-fade-up">
-            <Star className="h-4 w-4 text-wewash-gold fill-wewash-gold" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 ring-1 ring-primary/30 text-primary text-sm mb-6 animate-fade-up">
+            <Star className="h-4 w-4 fill-primary" />
             <span>Premium Cleaning Services in Zambia</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-white text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+          <h1 className="text-foreground text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
             Premium Cleaning &
-            <span className="block text-wewash-gold">Property Services</span>
+            <span className="block text-primary">Property Services</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-2xl animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl animate-fade-up" style={{ animationDelay: '0.2s' }}>
             From home cleaning to facility management, we deliver exceptional 
-            service for residential, commercial, and institutional clients.
+            service. <span className="text-primary font-semibold">Book now, pay after service.</span>
           </p>
 
           {/* Highlights */}
           <div className="grid grid-cols-2 gap-3 mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             {highlights.map((item, index) => (
-              <div key={index} className="flex items-center gap-2 text-white/90">
-                <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+              <div key={index} className="flex items-center gap-2 text-foreground">
+                <CheckCircle2 className="h-5 w-5 text-primary" />
                 <span className="text-sm md:text-base">{item}</span>
               </div>
             ))}
@@ -84,8 +77,9 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <Button 
               onClick={() => navigate('/book')}
-              className="btn-gold text-lg px-8 py-6 gap-2"
+              className="btn-primary text-lg px-8 py-6 gap-2"
             >
+              <Sparkles className="h-5 w-5" />
               Book a Service
               <ArrowRight className="h-5 w-5" />
             </Button>
@@ -100,26 +94,26 @@ const HeroSection = () => {
 
           {/* Trust indicators */}
           <div className="flex flex-wrap gap-6 animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            <div className="flex items-center gap-2 text-white/80">
-              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CheckCircle2 className="h-5 w-5 text-success" />
               <span className="text-sm">Licensed & Insured</span>
             </div>
-            <div className="flex items-center gap-2 text-white/80">
-              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CheckCircle2 className="h-5 w-5 text-success" />
               <span className="text-sm">Background Checked Staff</span>
             </div>
-            <div className="flex items-center gap-2 text-white/80">
-              <CheckCircle2 className="h-5 w-5 text-wewash-gold" />
-              <span className="text-sm">Satisfaction Guaranteed</span>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CheckCircle2 className="h-5 w-5 text-success" />
+              <span className="text-sm">No Upfront Payment</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
-        <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-          <div className="w-1 h-3 bg-white/60 rounded-full animate-pulse" />
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="w-8 h-12 rounded-full border-2 border-primary/30 flex items-start justify-center p-2">
+          <div className="w-1 h-3 bg-primary rounded-full animate-pulse" />
         </div>
       </div>
     </section>
