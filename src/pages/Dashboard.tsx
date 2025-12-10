@@ -12,7 +12,6 @@ import {
   Clock, 
   MapPin, 
   User, 
-  Phone, 
   Settings, 
   LogOut, 
   Plus,
@@ -20,9 +19,14 @@ import {
   Package,
   Star,
   FileText,
-  Bell
+  Bell,
+  Calculator,
+  Phone
 } from 'lucide-react';
 import { format } from 'date-fns';
+import BookingModal from '@/components/dashboard/BookingModal';
+import ProfileEditor from '@/components/dashboard/ProfileEditor';
+import VoiceAgentButton from '@/components/dashboard/VoiceAgentButton';
 
 interface Booking {
   id: string;
@@ -46,12 +50,16 @@ interface Profile {
   user_type: string | null;
 }
 
+const ELEVENLABS_AGENT_ID = 'domain_pk_6939d88162dc8194a3b663d6b1565ea600f1fa0fd59a280e';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, isLoading: authLoading, isAuthenticated, signOut } = useAuth();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showProfileEditor, setShowProfileEditor] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -143,10 +151,15 @@ const Dashboard = () => {
                 Manage your bookings and account settings
               </p>
             </div>
-            <div className="flex gap-3">
-              <Button onClick={() => navigate('/')} variant="outline">
+            <div className="flex flex-wrap gap-3">
+              <VoiceAgentButton agentId={ELEVENLABS_AGENT_ID} />
+              <Button onClick={() => navigate('/quote')} variant="outline">
+                <Calculator className="h-4 w-4 mr-2" />
+                Get AI Quote
+              </Button>
+              <Button onClick={() => setShowBookingModal(true)}>
                 <Plus className="h-4 w-4 mr-2" />
-                New Booking
+                Book Now
               </Button>
               <Button onClick={handleSignOut} variant="ghost" size="icon">
                 <LogOut className="h-4 w-4" />
@@ -229,7 +242,7 @@ const Dashboard = () => {
                     <div className="text-center py-8">
                       <Calendar className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
                       <p className="text-muted-foreground">No upcoming bookings</p>
-                      <Button onClick={() => navigate('/')} className="mt-4" variant="outline">
+                      <Button onClick={() => setShowBookingModal(true)} className="mt-4" variant="outline">
                         Book a Service
                       </Button>
                     </div>
@@ -350,10 +363,14 @@ const Dashboard = () => {
                       </div>
                     )}
                   </div>
-                  <div className="pt-4 border-t">
-                    <Button variant="outline">
+                  <div className="pt-4 border-t flex flex-wrap gap-3">
+                    <Button variant="outline" onClick={() => setShowProfileEditor(true)}>
                       <Settings className="h-4 w-4 mr-2" />
                       Edit Profile
+                    </Button>
+                    <Button onClick={() => setShowBookingModal(true)}>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Book a Service
                     </Button>
                   </div>
                 </CardContent>
@@ -380,6 +397,24 @@ const Dashboard = () => {
           </Tabs>
         </div>
       </div>
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        onSuccess={() => {
+          setShowBookingModal(false);
+          fetchUserData();
+        }}
+      />
+
+      {/* Profile Editor Modal */}
+      <ProfileEditor
+        isOpen={showProfileEditor}
+        onClose={() => setShowProfileEditor(false)}
+        profile={profile}
+        onUpdate={fetchUserData}
+      />
     </Layout>
   );
 };
