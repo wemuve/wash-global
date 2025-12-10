@@ -31,8 +31,9 @@ const Header = () => {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
-    { href: '/about', label: 'About' },
+    { href: '/quote', label: 'Get Quote' },
     { href: '/pricing', label: 'Pricing' },
+    { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
 
@@ -59,9 +60,7 @@ const Header = () => {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <span className="opacity-80">🇿🇲 Zambia</span>
-              <span className="opacity-60">|</span>
-              <span className="opacity-80">🇩🇰 Denmark</span>
+              <span className="opacity-80">🇿🇲 Serving Zambia</span>
             </div>
           </div>
         </div>
