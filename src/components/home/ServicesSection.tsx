@@ -10,16 +10,14 @@ import {
   Building2, 
   Briefcase, 
   UserCheck,
-  Sparkles,
-  Leaf
 } from 'lucide-react';
 
-import cleaningServicesImage from '@/assets/cleaning-services.jpg';
-import mobileCarDetailingImage from '@/assets/mobile-car-detailing.jpg';
-import fumigationServicesImage from '@/assets/fumigation-services.jpg';
-import facilityManagementImage from '@/assets/facility-management.jpg';
-import trainedMaidsImage from '@/assets/trained-maids.jpg';
-import homeMaintenanceImage from '@/assets/home-maintenance.jpg';
+import diverseHomeCleaningImage from '@/assets/diverse-home-cleaning.jpg';
+import diverseCarDetailingImage from '@/assets/diverse-car-detailing.jpg';
+import diversePestControlImage from '@/assets/diverse-pest-control.jpg';
+import diverseFacilityImage from '@/assets/diverse-facility-management.jpg';
+import diverseOfficeImage from '@/assets/diverse-office-cleaning.jpg';
+import diverseMaidImage from '@/assets/diverse-professional-maid.jpg';
 
 const ServicesSection = () => {
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const ServicesSection = () => {
       icon: SprayCan,
       title: 'Home Cleaning',
       description: 'Deep cleaning, regular maintenance, and post-construction cleaning for homes of all sizes.',
-      image: cleaningServicesImage,
+      image: diverseHomeCleaningImage,
       price: 'From K650',
       features: ['General Cleaning', 'Deep Cleaning', 'Post-Construction'],
     },
@@ -37,7 +35,7 @@ const ServicesSection = () => {
       icon: Car,
       title: 'Mobile Car Detailing',
       description: 'Professional car wash and detailing services delivered to your doorstep.',
-      image: mobileCarDetailingImage,
+      image: diverseCarDetailingImage,
       price: 'From K450',
       features: ['Exterior Wash', 'Interior Detailing', 'Full Detail Package'],
     },
@@ -45,23 +43,23 @@ const ServicesSection = () => {
       icon: Bug,
       title: 'Fumigation Services',
       description: 'Complete pest control solutions for residential and commercial properties.',
-      image: fumigationServicesImage,
-      price: 'From K250',
+      image: diversePestControlImage,
+      price: 'From K400',
       features: ['Pest Control', 'Termite Treatment', 'Preventive Care'],
     },
     {
       icon: Building2,
       title: 'Facility Management',
       description: 'Comprehensive property management for commercial and institutional clients.',
-      image: facilityManagementImage,
-      price: 'From K1,500',
+      image: diverseFacilityImage,
+      price: 'From K2,500',
       features: ['Building Maintenance', 'Grounds Care', 'Staff Management'],
     },
     {
       icon: Briefcase,
       title: 'Office Cleaning',
       description: 'Keep your workplace pristine with our professional office cleaning services.',
-      image: cleaningServicesImage,
+      image: diverseOfficeImage,
       price: 'From K1,200',
       features: ['Daily Cleaning', 'Window Cleaning', 'Carpet Care'],
     },
@@ -69,8 +67,8 @@ const ServicesSection = () => {
       icon: UserCheck,
       title: 'Trained Maids',
       description: 'Professionally trained domestic workers for your home or business.',
-      image: trainedMaidsImage,
-      price: 'From K650',
+      image: diverseMaidImage,
+      price: 'From K850',
       features: ['Background Checked', 'Fully Trained', 'Ongoing Support'],
     },
   ];

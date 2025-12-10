@@ -21,7 +21,8 @@ import {
   Star,
   Crown,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Calculator
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,20 +31,22 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useBookingSimple } from '@/hooks/useBookingSimple';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
+// Premium pricing tiers
 const services = [
-  { id: 'home-cleaning', name: 'Home Cleaning', icon: Home, basePrice: 350 },
-  { id: 'car-detailing', name: 'Car Detailing', icon: Car, basePrice: 150 },
+  { id: 'home-cleaning', name: 'Home Cleaning', icon: Home, basePrice: 650 },
+  { id: 'car-detailing', name: 'Car Detailing', icon: Car, basePrice: 450 },
   { id: 'fumigation', name: 'Fumigation', icon: Bug, basePrice: 400 },
   { id: 'facility', name: 'Facility Management', icon: Building2, basePrice: 2500 },
-  { id: 'office', name: 'Office Cleaning', icon: Briefcase, basePrice: 200 },
-  { id: 'maids', name: 'Trained Maids', icon: Users, basePrice: 150 },
+  { id: 'office', name: 'Office Cleaning', icon: Briefcase, basePrice: 1200 },
+  { id: 'maids', name: 'Trained Maids', icon: Users, basePrice: 850 },
 ];
 
 const packages = [
   { id: 'standard', name: 'Standard', icon: Shield, multiplier: 1, description: 'Essential service with quality assurance' },
-  { id: 'premium', name: 'Premium', icon: Star, multiplier: 1.5, description: 'Enhanced service with premium products' },
-  { id: 'vip', name: 'VIP', icon: Crown, multiplier: 2, description: 'White-glove service for discerning clients' },
+  { id: 'premium', name: 'Premium', icon: Star, multiplier: 1.5, description: 'Enhanced service with premium eco-friendly products' },
+  { id: 'vip', name: 'VIP', icon: Crown, multiplier: 2.2, description: 'White-glove service for discerning clients' },
 ];
 
 const timeSlots = [
@@ -57,6 +60,8 @@ const Booking = () => {
   const { createBooking, isLoading } = useBookingSimple();
   
   const [step, setStep] = useState(1);
+  const [aiEstimate, setAiEstimate] = useState<any>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
   const [booking, setBooking] = useState({
     serviceId: '',
     packageId: 'standard',
@@ -71,9 +76,50 @@ const Booking = () => {
 
   const selectedService = services.find(s => s.id === booking.serviceId);
   const selectedPackage = packages.find(p => p.id === booking.packageId);
-  const totalPrice = selectedService && selectedPackage 
+  const basePrice = selectedService && selectedPackage 
     ? selectedService.basePrice * selectedPackage.multiplier 
     : 0;
+  
+  // Use AI estimate if available, otherwise use base price
+  const totalPrice = aiEstimate?.estimatedPrice || Math.round(basePrice);
+
+  const calculateAIPrice = async () => {
+    if (!selectedService || !booking.address) {
+      toast({
+        title: 'Missing Information',
+        description: 'Please select a service and enter your address first.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsCalculating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('calculate-price', {
+        body: {
+          serviceType: selectedService.id,
+          location: booking.address,
+          jobDescription: `${selectedService.name} - ${selectedPackage?.name} Package. ${booking.instructions || 'Standard service requested.'}`,
+        },
+      });
+
+      if (error) throw error;
+
+      setAiEstimate(data);
+      toast({
+        title: 'Price Calculated',
+        description: `AI estimated price: ZMW ${data.estimatedPrice}`,
+      });
+    } catch (error) {
+      console.error('AI Price calculation error:', error);
+      toast({
+        title: 'Estimate Ready',
+        description: 'Using standard pricing for your booking.',
+      });
+    } finally {
+      setIsCalculating(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!selectedService || !selectedPackage) {
@@ -213,7 +259,7 @@ const Booking = () => {
                 {packages.map((pkg) => {
                   const Icon = pkg.icon;
                   const isSelected = booking.packageId === pkg.id;
-                  const price = selectedService ? selectedService.basePrice * pkg.multiplier : 0;
+                  const price = selectedService ? Math.round(selectedService.basePrice * pkg.multiplier) : 0;
                   return (
                     <button
                       key={pkg.id}
@@ -339,7 +385,7 @@ const Booking = () => {
                   <Textarea
                     value={booking.address}
                     onChange={(e) => setBooking({ ...booking, address: e.target.value })}
-                    placeholder="Full address for the service"
+                    placeholder="Full address for the service (area, street, house number)"
                     rows={3}
                     required
                     className="bg-card"
@@ -350,10 +396,41 @@ const Booking = () => {
                   <Textarea
                     value={booking.instructions}
                     onChange={(e) => setBooking({ ...booking, instructions: e.target.value })}
-                    placeholder="Any special requirements or notes..."
+                    placeholder="Describe the job: size of area, specific requirements, access details..."
                     rows={3}
                     className="bg-card"
                   />
+                </div>
+                
+                {/* AI Price Calculator */}
+                <div className="pt-4 border-t border-border">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={calculateAIPrice}
+                    disabled={isCalculating || !booking.address}
+                    className="w-full gap-2"
+                  >
+                    <Calculator className="h-4 w-4" />
+                    {isCalculating ? 'Calculating...' : 'Get AI Price Estimate'}
+                  </Button>
+                  {aiEstimate && (
+                    <div className="mt-4 p-4 bg-primary/10 rounded-xl ring-1 ring-primary/30">
+                      <p className="text-sm text-foreground">
+                        <strong>AI Estimate:</strong> ZMW {aiEstimate.estimatedPrice}
+                        {aiEstimate.priceRange && (
+                          <span className="text-muted-foreground ml-2">
+                            (Range: ZMW {aiEstimate.priceRange.min} - {aiEstimate.priceRange.max})
+                          </span>
+                        )}
+                      </p>
+                      {aiEstimate.confidence && (
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Confidence: {aiEstimate.confidence}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -400,7 +477,9 @@ const Booking = () => {
 
                   <div className="pt-4 border-t border-border">
                     <div className="flex justify-between items-center">
-                      <span className="text-lg font-semibold text-foreground">Estimated Total</span>
+                      <span className="text-lg font-semibold text-foreground">
+                        {aiEstimate ? 'AI Estimated Total' : 'Estimated Total'}
+                      </span>
                       <span className="text-2xl font-bold text-primary">ZMW {totalPrice}</span>
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">
@@ -444,9 +523,9 @@ const Booking = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className="btn-primary gap-2"
+                className="btn-premium gap-2"
               >
-                {isLoading ? 'Confirming...' : 'Confirm Booking'}
+                {isLoading ? 'Processing...' : 'Confirm Booking'}
                 <CheckCircle2 className="h-4 w-4" />
               </Button>
             )}

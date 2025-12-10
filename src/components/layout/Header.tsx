@@ -46,21 +46,21 @@ const Header = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="hidden md:block header-gradient text-primary-foreground py-2">
+      <div className="hidden md:block bg-primary/90 py-2">
         <div className="container-wewash">
           <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center gap-6">
-              <a href="tel:+260768671420" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="flex items-center gap-6 text-white">
+              <a href="tel:+260768671420" className="flex items-center gap-2 hover:text-primary-light transition-colors">
                 <Phone className="h-4 w-4" />
                 <span>+260 768 671 420</span>
               </a>
               <span className="opacity-60">|</span>
-              <a href="mailto:contact@wewashglobal.com" className="hover:opacity-80 transition-opacity">
+              <a href="mailto:contact@wewashglobal.com" className="hover:text-primary-light transition-colors">
                 contact@wewashglobal.com
               </a>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="opacity-80">🇿🇲 Serving Zambia</span>
+            <div className="flex items-center gap-4 text-white">
+              <span>🇿🇲 Serving Zambia</span>
             </div>
           </div>
         </div>

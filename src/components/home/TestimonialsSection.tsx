@@ -21,12 +21,12 @@ const TestimonialsSection = () => {
       avatar: 'DC',
     },
     {
-      name: 'Sarah Nielsen',
+      name: 'Thandiwe Phiri',
       role: 'Business Owner',
-      location: 'Aarhus, Denmark',
+      location: 'Ndola, Zambia',
       rating: 5,
-      text: "Finding a reliable cleaning service in Denmark with Zambian roots was perfect for our family. The team understands our needs and always delivers excellence.",
-      avatar: 'SN',
+      text: "Finding a reliable cleaning service was challenging until we found WeWash. The team understands our needs and always delivers excellence.",
+      avatar: 'TP',
     },
     {
       name: 'Michael Banda',
@@ -45,12 +45,12 @@ const TestimonialsSection = () => {
       avatar: 'LT',
     },
     {
-      name: 'Peter Jensen',
-      role: 'Apartment Owner',
-      location: 'Copenhagen, Denmark',
+      name: 'Joseph Mukuka',
+      role: 'Office Administrator',
+      location: 'Kabwe, Zambia',
       rating: 5,
       text: "Excellent service from start to finish. The booking was easy, communication was great, and the results exceeded my expectations. Will definitely use again!",
-      avatar: 'PJ',
+      avatar: 'JM',
     },
   ];
 
@@ -116,11 +116,12 @@ const TestimonialsSection = () => {
 
         {/* Trust Badges */}
         <div className="mt-16 text-center">
-          <p className="text-muted-foreground mb-6">Trusted by businesses and homeowners across</p>
-          <div className="flex flex-wrap justify-center gap-8 items-center opacity-60">
-            <span className="text-2xl font-bold text-foreground">🇿🇲 Zambia</span>
-            <span className="text-2xl font-bold text-foreground">🇩🇰 Denmark</span>
-            <span className="text-muted-foreground">& expanding globally</span>
+          <p className="text-muted-foreground mb-6">Trusted by businesses and homeowners across Zambia</p>
+          <div className="flex flex-wrap justify-center gap-8 items-center">
+            <span className="text-2xl font-bold text-foreground">🇿🇲 Lusaka</span>
+            <span className="text-2xl font-bold text-foreground">🇿🇲 Copperbelt</span>
+            <span className="text-2xl font-bold text-foreground">🇿🇲 Livingstone</span>
+            <span className="text-muted-foreground">& expanding nationally</span>
           </div>
         </div>
       </div>
