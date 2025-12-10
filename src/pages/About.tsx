@@ -7,10 +7,12 @@ import {
   Heart, 
   MapPin,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  Building2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   const navigate = useNavigate();
@@ -40,6 +42,12 @@ const About = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>About WeWash Global | Our Story & Mission | Cleaning Services Zambia</title>
+        <meta name="description" content="Learn about WeWash Global, a daughter brand of WeMuve Denmark. We provide premium cleaning and property services across Zambia with international standards." />
+        <link rel="canonical" href="https://wewash.co.zm/about" />
+      </Helmet>
+
       {/* Hero */}
       <section className="relative bg-wewash-navy py-20 lg:py-32">
         <div className="absolute inset-0 bg-gradient-to-br from-wewash-navy via-wewash-navy to-primary/20" />
@@ -51,8 +59,8 @@ const About = () => {
               <span className="text-wewash-gold"> Building Trust</span>
             </h1>
             <p className="text-xl text-white/80">
-              From Lusaka to Copenhagen, WeWash Global is redefining cleaning and property 
-              services with professionalism, reliability, and a commitment to excellence.
+              WeWash Global is redefining cleaning and property services in Zambia 
+              with professionalism, reliability, and a commitment to excellence.
             </p>
           </div>
         </div>
@@ -65,7 +73,7 @@ const About = () => {
             <div>
               <span className="badge-primary mb-4">Our Story</span>
               <h2 className="text-foreground mb-6">
-                Born in Zambia, Growing Globally
+                Born in Zambia, Backed by Global Excellence
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
@@ -75,30 +83,32 @@ const About = () => {
                   genuine customer care.
                 </p>
                 <p>
-                  Today, we serve homes, businesses, and institutions across Zambia, with 
-                  strategic operations extending to Denmark. Our dual presence represents our 
-                  commitment to bringing international standards to local markets while 
-                  maintaining the personal touch that sets us apart.
+                  <strong className="text-foreground">WeWash is a proud daughter brand of WeMuve</strong>, 
+                  our parent company headquartered in Denmark. This international backing gives us 
+                  access to world-class operational standards, training methodologies, and technology 
+                  that we bring directly to the Zambian market.
                 </p>
                 <p>
-                  Every member of our team is carefully selected, thoroughly trained, and 
-                  committed to the WeWash standard of excellence. We don't just clean spaces – 
-                  we transform them.
+                  Today, we serve homes, businesses, and institutions across Zambia, combining 
+                  international best practices with deep local understanding. Every member of 
+                  our team is carefully selected, thoroughly trained, and committed to the 
+                  WeWash standard of excellence.
                 </p>
               </div>
             </div>
             <div className="relative">
               <div className="bg-gradient-to-br from-primary/10 to-wewash-gold/10 rounded-3xl p-8">
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   <div className="bg-background rounded-2xl p-6 text-center shadow-card">
                     <MapPin className="h-8 w-8 text-primary mx-auto mb-3" />
                     <h3 className="font-semibold text-foreground">Lusaka, Zambia</h3>
-                    <p className="text-sm text-muted-foreground">Headquarters</p>
+                    <p className="text-sm text-muted-foreground">Operations Headquarters</p>
                   </div>
-                  <div className="bg-background rounded-2xl p-6 text-center shadow-card">
-                    <Globe className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
-                    <h3 className="font-semibold text-foreground">Copenhagen, Denmark</h3>
-                    <p className="text-sm text-muted-foreground">Partner Office</p>
+                  <div className="bg-background rounded-2xl p-6 text-center shadow-card border-2 border-wewash-gold/30">
+                    <Building2 className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
+                    <h3 className="font-semibold text-foreground">WeMuve - Denmark</h3>
+                    <p className="text-sm text-muted-foreground">Parent Company</p>
+                    <p className="text-xs text-muted-foreground mt-1">International Standards & Support</p>
                   </div>
                 </div>
               </div>
@@ -145,7 +155,7 @@ const About = () => {
                 <p className="text-white/80 text-lg mb-6">
                   To deliver exceptional cleaning and property management services that exceed 
                   expectations, create local employment, and set new standards for the industry 
-                  in Africa and beyond.
+                  in Africa.
                 </p>
                 <ul className="space-y-3">
                   {[
