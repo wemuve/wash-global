@@ -18,6 +18,100 @@ interface PaymentRequest {
   returnUrl?: string;
 }
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+// Zambian phone regex
+const zambianPhoneRegex = /^(\+?260|0)?[97]\d{8}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function validatePaymentRequest(payload: any): { valid: boolean; errors: ValidationError[]; sanitized?: PaymentRequest } {
+  const errors: ValidationError[] = [];
+
+  // Amount validation
+  if (typeof payload.amount !== 'number' || isNaN(payload.amount)) {
+    errors.push({ field: 'amount', message: 'Amount must be a valid number' });
+  } else if (payload.amount <= 0) {
+    errors.push({ field: 'amount', message: 'Amount must be greater than 0' });
+  } else if (payload.amount > 1000000) {
+    errors.push({ field: 'amount', message: 'Amount cannot exceed 1,000,000 ZMW' });
+  }
+
+  // Customer name validation
+  if (!payload.customerName || typeof payload.customerName !== 'string') {
+    errors.push({ field: 'customerName', message: 'Customer name is required' });
+  } else if (payload.customerName.trim().length < 2) {
+    errors.push({ field: 'customerName', message: 'Customer name must be at least 2 characters' });
+  } else if (payload.customerName.length > 100) {
+    errors.push({ field: 'customerName', message: 'Customer name cannot exceed 100 characters' });
+  }
+
+  // Customer phone validation
+  if (!payload.customerPhone || typeof payload.customerPhone !== 'string') {
+    errors.push({ field: 'customerPhone', message: 'Customer phone is required' });
+  } else if (!zambianPhoneRegex.test(payload.customerPhone.replace(/\s/g, ''))) {
+    errors.push({ field: 'customerPhone', message: 'Please enter a valid Zambian phone number' });
+  }
+
+  // Customer email validation (optional)
+  if (payload.customerEmail && typeof payload.customerEmail === 'string' && payload.customerEmail.trim()) {
+    if (!emailRegex.test(payload.customerEmail)) {
+      errors.push({ field: 'customerEmail', message: 'Please enter a valid email address' });
+    } else if (payload.customerEmail.length > 255) {
+      errors.push({ field: 'customerEmail', message: 'Email cannot exceed 255 characters' });
+    }
+  }
+
+  // Service name validation
+  if (!payload.serviceName || typeof payload.serviceName !== 'string') {
+    errors.push({ field: 'serviceName', message: 'Service name is required' });
+  } else if (payload.serviceName.length > 200) {
+    errors.push({ field: 'serviceName', message: 'Service name cannot exceed 200 characters' });
+  }
+
+  // Payment method validation
+  const validPaymentMethods = ['mtn', 'airtel', 'zamtel'];
+  if (!payload.paymentMethod || !validPaymentMethods.includes(payload.paymentMethod)) {
+    errors.push({ field: 'paymentMethod', message: 'Payment method must be mtn, airtel, or zamtel' });
+  }
+
+  // Booking ID validation (optional)
+  if (payload.bookingId && typeof payload.bookingId === 'string' && payload.bookingId.trim()) {
+    if (!uuidRegex.test(payload.bookingId)) {
+      errors.push({ field: 'bookingId', message: 'Invalid booking ID format' });
+    }
+  }
+
+  // Currency validation
+  const validCurrencies = ['ZMW', 'USD'];
+  const currency = payload.currency || 'ZMW';
+  if (!validCurrencies.includes(currency)) {
+    errors.push({ field: 'currency', message: 'Currency must be ZMW or USD' });
+  }
+
+  if (errors.length > 0) {
+    return { valid: false, errors };
+  }
+
+  // Return sanitized data
+  const sanitized: PaymentRequest = {
+    amount: Math.round(payload.amount * 100) / 100, // Round to 2 decimal places
+    currency: currency,
+    customerName: payload.customerName.trim().substring(0, 100),
+    customerPhone: payload.customerPhone.replace(/\s/g, '').substring(0, 15),
+    customerEmail: payload.customerEmail?.trim().substring(0, 255) || undefined,
+    serviceName: payload.serviceName.trim().substring(0, 200),
+    bookingId: payload.bookingId?.trim() || undefined,
+    paymentMethod: payload.paymentMethod,
+    returnUrl: payload.returnUrl?.substring(0, 500) || undefined,
+  };
+
+  return { valid: true, errors: [], sanitized };
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -28,10 +122,24 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const payload: PaymentRequest = await req.json();
-    const { amount, currency, customerName, customerPhone, customerEmail, serviceName, bookingId, paymentMethod, returnUrl } = payload;
+    const rawPayload = await req.json();
+    
+    // Validate and sanitize input
+    const validation = validatePaymentRequest(rawPayload);
+    if (!validation.valid) {
+      console.error('Payment validation failed:', validation.errors);
+      return new Response(
+        JSON.stringify({ 
+          error: 'Validation failed', 
+          details: validation.errors 
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-    console.log('Initiating payment:', { amount, customerName, paymentMethod, serviceName });
+    const { amount, currency, customerName, customerPhone, customerEmail, serviceName, bookingId, paymentMethod, returnUrl } = validation.sanitized!;
+
+    console.log('Initiating payment:', { amount, customerName: customerName.substring(0, 20), paymentMethod, serviceName });
 
     // Generate a unique transaction reference
     const transactionRef = `WW-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
@@ -45,7 +153,7 @@ serve(async (req) => {
         customer_phone: customerPhone,
         customer_email: customerEmail,
         amount: amount,
-        currency: currency || 'ZMW',
+        currency: currency,
         payment_method: paymentMethod,
         payment_provider: 'dpo_paystack',
         transaction_id: transactionRef,
@@ -65,21 +173,10 @@ serve(async (req) => {
     }
 
     // For demo purposes, we'll simulate the payment initiation
-    // In production, you would integrate with DPO/Paystack API here
     const paymentUrl = `${returnUrl || supabaseUrl}?payment_id=${payment.id}&transaction_ref=${transactionRef}`;
 
-    // Send WhatsApp notification for new payment request
-    const whatsappMessage = `🔔 New Payment Request\n\n` +
-      `Customer: ${customerName}\n` +
-      `Phone: ${customerPhone}\n` +
-      `Service: ${serviceName}\n` +
-      `Amount: ${currency} ${amount.toLocaleString()}\n` +
-      `Method: ${paymentMethod.toUpperCase()}\n` +
-      `Reference: ${transactionRef}\n` +
-      `Status: Pending`;
-
-    // Log the WhatsApp message (in production, integrate with WhatsApp Business API)
-    console.log('WhatsApp notification:', whatsappMessage);
+    // Log notification (sanitized - no PII in logs)
+    console.log('Payment initiated:', { transactionRef, paymentMethod, amount, currency });
 
     return new Response(
       JSON.stringify({
@@ -95,7 +192,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Payment initiation error:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Payment initiation failed' }),
+      JSON.stringify({ error: 'Payment initiation failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
