@@ -34,6 +34,34 @@ const AIReceptionist = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load ElevenLabs widget script
+  useEffect(() => {
+    const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+      script.async = true;
+      script.type = 'text/javascript';
+      document.body.appendChild(script);
+    }
+
+    // Add the ElevenLabs widget element
+    const existingWidget = document.querySelector('elevenlabs-convai');
+    if (!existingWidget) {
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_5301kc50mky3fynaxk0f98sasaz4');
+      document.body.appendChild(widget);
+    }
+
+    return () => {
+      // Cleanup widget on unmount
+      const widget = document.querySelector('elevenlabs-convai');
+      if (widget) {
+        widget.remove();
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
