@@ -1,52 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  MessageCircle,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Shield,
-  Award,
-  Clock
-} from 'lucide-react';
-
+import { Phone, Mail, MapPin, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Shield, Award, Clock } from 'lucide-react';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  const services = [
-    { name: 'Home Cleaning', href: '/services#cleaning' },
-    { name: 'Car Detailing', href: '/services#car-detailing' },
-    { name: 'Fumigation', href: '/services#fumigation' },
-    { name: 'Facility Management', href: '/services#facility' },
-    { name: 'Office Cleaning', href: '/services#office' },
-    { name: 'Trained Maids', href: '/services#maids' },
-  ];
-
-  const company = [
-    { name: 'About Us', href: '/about' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Get Quote', href: '/quote' },
-    { name: 'Contact', href: '/contact' },
-  ];
-
-  const support = [
-    { name: 'Book Service', href: '/book' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-  ];
-
+  const services = [{
+    name: 'Home Cleaning',
+    href: '/services#cleaning'
+  }, {
+    name: 'Car Detailing',
+    href: '/services#car-detailing'
+  }, {
+    name: 'Fumigation',
+    href: '/services#fumigation'
+  }, {
+    name: 'Facility Management',
+    href: '/services#facility'
+  }, {
+    name: 'Office Cleaning',
+    href: '/services#office'
+  }, {
+    name: 'Trained Maids',
+    href: '/services#maids'
+  }];
+  const company = [{
+    name: 'About Us',
+    href: '/about'
+  }, {
+    name: 'Pricing',
+    href: '/pricing'
+  }, {
+    name: 'Get Quote',
+    href: '/quote'
+  }, {
+    name: 'Contact',
+    href: '/contact'
+  }];
+  const support = [{
+    name: 'Book Service',
+    href: '/book'
+  }, {
+    name: 'FAQ',
+    href: '/faq'
+  }, {
+    name: 'Privacy Policy',
+    href: '/privacy'
+  }, {
+    name: 'Terms of Service',
+    href: '/terms'
+  }];
   const openWhatsApp = () => {
     window.open('https://wa.me/260768671420?text=Hello, I would like to inquire about your services.', '_blank');
   };
-
-  return (
-    <footer className="bg-card border-t border-border">
+  return <footer className="bg-card border-t border-border">
       {/* CTA Section */}
       <div className="border-b border-border">
         <div className="container-wewash section-spacing-sm">
@@ -78,11 +84,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <img 
-              src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" 
-              alt="WeWash Global" 
-              className="h-12 w-auto mb-6"
-            />
+            <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Global" className="h-12 w-auto mb-6" />
             <p className="text-muted-foreground mb-6 max-w-sm">
               WeWash Global delivers premium cleaning and facility management services 
               for homes, businesses, and institutions across Zambia.
@@ -125,16 +127,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-6">Services</h3>
             <ul className="space-y-3">
-              {services.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    to={item.href} 
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
+              {services.map(item => <li key={item.name}>
+                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors">
                     {item.name}
                   </Link>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -142,16 +139,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-6">Company</h3>
             <ul className="space-y-3">
-              {company.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    to={item.href} 
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
+              {company.map(item => <li key={item.name}>
+                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors">
                     {item.name}
                   </Link>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -166,8 +158,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@wewashglobal.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                  <Mail className="h-4 w-4" />
+                <a href="mailto:hello@wewashglobal.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">contact@wewashglobal.com<Mail className="h-4 w-4" />
                   hello@wewashglobal.com
                 </a>
               </li>
@@ -178,12 +169,7 @@ const Footer = () => {
                 </div>
               </li>
               <li>
-                <a 
-                  href="https://wa.me/260768671420" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="https://wa.me/260768671420" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
                 </a>
@@ -205,8 +191,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
