@@ -32,6 +32,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      // Save to leads table
       const { error } = await supabase.from('leads').insert({
         customer_name: form.name,
         customer_email: form.email,
@@ -41,6 +42,26 @@ const Contact = () => {
       });
 
       if (error) throw error;
+
+      // Send email notification to booking@wewashglobal.com
+      try {
+        await supabase.functions.invoke('send-booking-email', {
+          body: {
+            customerName: form.name,
+            customerPhone: form.phone,
+            customerEmail: form.email,
+            service: 'Contact Form Inquiry',
+            package: 'General',
+            scheduledDate: new Date().toISOString().split('T')[0],
+            scheduledTime: 'N/A',
+            address: 'N/A',
+            totalAmount: 0,
+            specialInstructions: form.message,
+          },
+        });
+      } catch (emailError) {
+        console.warn('Email notification failed:', emailError);
+      }
 
       toast({
         title: 'Message Sent!',
@@ -70,8 +91,8 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'hello@wewashglobal.com',
-      href: 'mailto:hello@wewashglobal.com',
+      value: 'booking@wewashglobal.com',
+      href: 'mailto:booking@wewashglobal.com',
     },
     {
       icon: MessageCircle,
