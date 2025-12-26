@@ -105,9 +105,12 @@ export const useBookingSimple = () => {
 
       console.log('Booking created successfully:', data);
 
-      // Send WhatsApp notification
-      try {
-        await supabase.functions.invoke('send-whatsapp', {
+      // Send notifications in parallel (WhatsApp + Email)
+      const notificationPromises = [];
+      
+      // WhatsApp notification
+      notificationPromises.push(
+        supabase.functions.invoke('send-whatsapp', {
           body: {
             type: 'booking',
             data: {
@@ -123,12 +126,39 @@ export const useBookingSimple = () => {
               source: 'Website Booking',
             },
           },
-        });
-        console.log('WhatsApp notification sent');
-      } catch (whatsappError) {
-        console.warn('WhatsApp notification failed:', whatsappError);
-        // Don't fail the booking if notification fails
-      }
+        }).catch(err => console.warn('WhatsApp notification failed:', err))
+      );
+      
+      // Email notification to booking@wewashglobal.com
+      notificationPromises.push(
+        supabase.functions.invoke('send-booking-email', {
+          body: {
+            customerName: data.customer_name,
+            customerPhone: data.customer_phone,
+            customerEmail: data.customer_email,
+            service: bookingData.serviceName || 'Service',
+            package: bookingData.packageName || 'Standard',
+            scheduledDate: data.scheduled_date,
+            scheduledTime: data.scheduled_time,
+            address: data.customer_address,
+            totalAmount: data.total_amount,
+            currency: data.currency || 'ZMW',
+            specialInstructions: data.special_instructions,
+            vehicleInfo: data.vehicle_make ? {
+              make: data.vehicle_make,
+              model: data.vehicle_model,
+              year: data.vehicle_year,
+              color: data.vehicle_color,
+              type: data.vehicle_type,
+              licensePlate: data.license_plate,
+            } : undefined,
+          },
+        }).catch(err => console.warn('Email notification failed:', err))
+      );
+
+      // Wait for all notifications (don't block on failures)
+      await Promise.allSettled(notificationPromises);
+      console.log('Notifications sent');
 
       toast({
         title: "Booking Confirmed!",
