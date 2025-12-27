@@ -108,6 +108,7 @@ export type Database = {
           parking_details: string | null
           promo_code: string | null
           quote_id: string | null
+          referral_code_used: string | null
           rescheduled_from: string | null
           scheduled_date: string
           scheduled_time: string
@@ -147,6 +148,7 @@ export type Database = {
           parking_details?: string | null
           promo_code?: string | null
           quote_id?: string | null
+          referral_code_used?: string | null
           rescheduled_from?: string | null
           scheduled_date: string
           scheduled_time: string
@@ -186,6 +188,7 @@ export type Database = {
           parking_details?: string | null
           promo_code?: string | null
           quote_id?: string | null
+          referral_code_used?: string | null
           rescheduled_from?: string | null
           scheduled_date?: string
           scheduled_time?: string
@@ -887,6 +890,80 @@ export type Database = {
           },
         ]
       }
+      referral_codes: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          created_at: string
+          credit_amount: number
+          credited_at: string | null
+          currency: string
+          id: string
+          referral_code: string
+          referred_booking_id: string | null
+          referred_user_id: string | null
+          referrer_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          credit_amount?: number
+          credited_at?: string | null
+          currency?: string
+          id?: string
+          referral_code: string
+          referred_booking_id?: string | null
+          referred_user_id?: string | null
+          referrer_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          credit_amount?: number
+          credited_at?: string | null
+          currency?: string
+          id?: string
+          referral_code?: string
+          referred_booking_id?: string | null
+          referred_user_id?: string | null
+          referrer_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referred_booking_id_fkey"
+            columns: ["referred_booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           booking_id: string
@@ -1035,6 +1112,33 @@ export type Database = {
           },
         ]
       }
+      user_credits: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           granted_at: string | null
@@ -1174,6 +1278,7 @@ export type Database = {
       }
     }
     Functions: {
+      generate_referral_code: { Args: { user_uuid: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

@@ -6,6 +6,7 @@ import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ClientTypesSection from '@/components/home/ClientTypesSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import CTASection from '@/components/home/CTASection';
+import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <HeroSection />
       <ServicesSection />
       <WhyChooseUs />
+      <ReferralPromoSection />
       <ClientTypesSection />
       <TestimonialsSection />
       <CTASection />
