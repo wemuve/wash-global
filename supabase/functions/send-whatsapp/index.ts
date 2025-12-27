@@ -6,7 +6,7 @@ const corsHeaders = {
 };
 
 interface WhatsAppPayload {
-  type: 'booking' | 'lead' | 'inquiry';
+  type: 'booking' | 'lead' | 'inquiry' | 'confirmation' | 'reminder' | 'promo';
   data: {
     customerName: string;
     customerPhone: string;
@@ -19,6 +19,9 @@ interface WhatsAppPayload {
     totalAmount?: number;
     message?: string;
     source?: string;
+    promoCode?: string;
+    promoDiscount?: string;
+    reminderType?: 'day_before' | 'hour_before' | 'follow_up';
   };
 }
 
@@ -41,10 +44,12 @@ serve(async (req) => {
 
     // Format message based on type
     let message = '';
+    let recipientPhone = '';
     const { type, data } = payload;
 
     switch (type) {
       case 'booking':
+        // Admin notification for new booking
         message = `🎉 *New Booking Received!*
 
 👤 *Customer:* ${data.customerName}
@@ -60,6 +65,78 @@ ${data.customerEmail ? `📧 *Email:* ${data.customerEmail}` : ''}
 💰 *Total:* K${data.totalAmount?.toLocaleString() || '0'}
 
 🔗 *Source:* ${data.source || 'Website'}`;
+        // Send to admin
+        recipientPhone = ''; // Will use default from webhook
+        break;
+
+      case 'confirmation':
+        // Customer confirmation message
+        message = `✅ *Booking Confirmed - WeWash!*
+
+Hi ${data.customerName}! 👋
+
+Your booking has been confirmed:
+
+🛠️ *Service:* ${data.service || 'Cleaning Service'}
+📅 *Date:* ${data.scheduledDate}
+⏰ *Time:* ${data.scheduledTime}
+📍 *Location:* ${data.address}
+
+💰 *Total:* K${data.totalAmount?.toLocaleString()}
+
+Our team will arrive on time. Please ensure access to the location.
+
+Need to reschedule? Reply to this message or call us.
+
+Thank you for choosing WeWash! 🧹✨`;
+        recipientPhone = data.customerPhone;
+        break;
+
+      case 'reminder':
+        const reminderText = data.reminderType === 'day_before' 
+          ? 'tomorrow' 
+          : data.reminderType === 'hour_before' 
+            ? 'in 1 hour'
+            : 'soon';
+        
+        message = `⏰ *Reminder - WeWash Service ${reminderText}!*
+
+Hi ${data.customerName}! 👋
+
+Just a friendly reminder about your upcoming service:
+
+🛠️ *Service:* ${data.service}
+📅 *Date:* ${data.scheduledDate}
+⏰ *Time:* ${data.scheduledTime}
+📍 *Location:* ${data.address}
+
+Please ensure:
+✓ Access to the location
+✓ Water/electricity available (if needed)
+✓ Valuables secured
+
+Reply if you need to reschedule!
+
+- The WeWash Team 🧹`;
+        recipientPhone = data.customerPhone;
+        break;
+
+      case 'promo':
+        message = `🎁 *Special Offer from WeWash!*
+
+Hi ${data.customerName}! 👋
+
+${data.message || 'We have an exclusive offer just for you!'}
+
+${data.promoCode ? `🏷️ *Use Code:* ${data.promoCode}` : ''}
+${data.promoDiscount ? `💰 *Save:* ${data.promoDiscount}` : ''}
+
+Book now at wewashglobal.com or reply to schedule!
+
+Offer valid for limited time only! ⏳
+
+- The WeWash Team ✨`;
+        recipientPhone = data.customerPhone;
         break;
 
       case 'lead':
@@ -91,6 +168,8 @@ ${data.message || 'No message provided'}
         break;
     }
 
+    console.log(`Sending ${type} WhatsApp notification`, { recipientPhone: recipientPhone || 'admin' });
+
     // Send to webhook (n8n, Make, Zapier, or direct WhatsApp API)
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -99,10 +178,11 @@ ${data.message || 'No message provided'}
       },
       body: JSON.stringify({
         message,
-        phone: data.customerPhone,
+        phone: recipientPhone || data.customerPhone,
         type,
         rawData: data,
         timestamp: new Date().toISOString(),
+        sendToCustomer: ['confirmation', 'reminder', 'promo'].includes(type),
       }),
     });
 

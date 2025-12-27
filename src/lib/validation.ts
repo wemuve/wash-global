@@ -1,12 +1,13 @@
 import { z } from 'zod';
 
 // Phone validation for Zambian numbers
-const zambianPhoneRegex = /^(\+?260|0)?[97]\d{8}$/;
+// More flexible phone validation - accepts Zambian and international formats
+const phoneRegex = /^[\d\s+()-]{9,20}$/;
 
 export const phoneSchema = z.string()
   .min(9, 'Phone number is too short')
-  .max(15, 'Phone number is too long')
-  .regex(zambianPhoneRegex, 'Please enter a valid Zambian phone number');
+  .max(20, 'Phone number is too long')
+  .regex(phoneRegex, 'Please enter a valid phone number');
 
 export const emailSchema = z.string()
   .email('Please enter a valid email address')
@@ -17,7 +18,7 @@ export const emailSchema = z.string()
 export const nameSchema = z.string()
   .min(2, 'Name must be at least 2 characters')
   .max(100, 'Name is too long')
-  .regex(/^[a-zA-Z\s'-]+$/, 'Name contains invalid characters');
+  .regex(/^[\p{L}\p{M}\s'.,-]+$/u, 'Name contains invalid characters');
 
 export const addressSchema = z.string()
   .min(10, 'Please provide a more detailed address')
