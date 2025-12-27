@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import { 
@@ -30,8 +30,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useBookingSimple } from '@/hooks/useBookingSimple';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import ReferralInput from '@/components/booking/ReferralInput';
 
 // Premium pricing tiers
 const services = [
@@ -56,12 +57,14 @@ const timeSlots = [
 
 const Booking = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const { createBooking, isLoading } = useBookingSimple();
   
   const [step, setStep] = useState(1);
   const [aiEstimate, setAiEstimate] = useState<any>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [referralCode, setReferralCode] = useState(searchParams.get('ref') || '');
   const [booking, setBooking] = useState({
     serviceId: '',
     packageId: 'standard',
@@ -431,6 +434,14 @@ const Booking = () => {
                       )}
                     </div>
                   )}
+                </div>
+
+                {/* Referral Code Input */}
+                <div className="pt-4 border-t border-border">
+                  <ReferralInput 
+                    initialCode={referralCode}
+                    onValidCode={(code) => setReferralCode(code)} 
+                  />
                 </div>
               </div>
             </div>

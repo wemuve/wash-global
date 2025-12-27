@@ -21,12 +21,15 @@ import {
   FileText,
   Bell,
   Calculator,
-  Phone
+  Phone,
+  Gift
 } from 'lucide-react';
 import { format } from 'date-fns';
 import BookingModal from '@/components/dashboard/BookingModal';
 import ProfileEditor from '@/components/dashboard/ProfileEditor';
 import VoiceAgentButton from '@/components/dashboard/VoiceAgentButton';
+import ReferralCard from '@/components/referral/ReferralCard';
+import WhatsAppCatalog from '@/components/whatsapp/WhatsAppCatalog';
 
 interface Booking {
   id: string;
@@ -223,6 +226,7 @@ const Dashboard = () => {
           <Tabs defaultValue="bookings" className="space-y-6">
             <TabsList className="bg-muted/50">
               <TabsTrigger value="bookings">My Bookings</TabsTrigger>
+              <TabsTrigger value="referrals">Referrals</TabsTrigger>
               <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="notifications">Notifications</TabsTrigger>
             </TabsList>
@@ -325,6 +329,13 @@ const Dashboard = () => {
                   </CardContent>
                 </Card>
               )}
+            </TabsContent>
+
+            <TabsContent value="referrals" className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <ReferralCard />
+                <WhatsAppCatalog variant="card" />
+              </div>
             </TabsContent>
 
             <TabsContent value="profile">
