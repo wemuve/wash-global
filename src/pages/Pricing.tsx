@@ -6,7 +6,10 @@ import {
   ArrowRight, 
   Star,
   Crown,
-  Shield
+  Shield,
+  Truck,
+  AlertTriangle,
+  MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +21,7 @@ const Pricing = () => {
     {
       name: 'Standard',
       icon: Shield,
-      description: 'Essential cleaning services with quality assurance',
+      description: 'Professional cleaning with quality-assured systems and trained teams',
       multiplier: '1x',
       features: [
         'Professional cleaning staff',
@@ -32,7 +35,7 @@ const Pricing = () => {
     {
       name: 'Premium',
       icon: Star,
-      description: 'Enhanced service with premium products and priority support',
+      description: 'Enhanced service with premium products and priority scheduling',
       multiplier: '1.5x',
       features: [
         'Everything in Standard',
@@ -47,7 +50,7 @@ const Pricing = () => {
     {
       name: 'VIP',
       icon: Crown,
-      description: 'White-glove service for the most discerning clients',
+      description: 'White-glove managed service for the most discerning clients',
       multiplier: '2x',
       features: [
         'Everything in Premium',
@@ -62,34 +65,81 @@ const Pricing = () => {
     },
   ];
 
-  const services = [
-    { name: 'Home Cleaning (Standard)', price: 'From ZMW 350' },
-    { name: 'Home Cleaning (Deep)', price: 'From ZMW 550' },
-    { name: 'Move In/Out Cleaning', price: 'From ZMW 750' },
-    { name: 'Basic Car Wash', price: 'From ZMW 150' },
-    { name: 'Full Car Detail', price: 'From ZMW 350' },
-    { name: 'Premium Car Detail', price: 'From ZMW 500' },
-    { name: 'Residential Fumigation', price: 'From ZMW 400' },
-    { name: 'Commercial Fumigation', price: 'From ZMW 800' },
-    { name: 'Termite Treatment', price: 'From ZMW 1,200' },
-    { name: 'Office Cleaning (Daily)', price: 'From ZMW 200/day' },
-    { name: 'Office Cleaning (Weekly)', price: 'From ZMW 800/week' },
-    { name: 'Office Cleaning (Monthly)', price: 'From ZMW 2,800/month' },
-    { name: 'Maid Service (Daily)', price: 'From ZMW 150/day' },
-    { name: 'Maid Service (Live-in)', price: 'From ZMW 2,500/month' },
-    { name: 'Facility Management', price: 'From ZMW 2,500/month' },
+  const homeCleaningPrices = [
+    { service: 'General Cleaning – 1 Bedroom', price: 'From K550' },
+    { service: 'General Cleaning – 2 Bedroom', price: 'From K700' },
+    { service: 'General Cleaning – 3 Bedroom', price: 'From K900' },
+    { service: 'General Cleaning – 4 Bedroom', price: 'From K1,100' },
+    { service: 'Deep Cleaning – 1 Bedroom', price: 'From K850' },
+    { service: 'Deep Cleaning – 2 Bedroom', price: 'From K1,200' },
+    { service: 'Deep Cleaning – 3 Bedroom', price: 'From K1,800' },
+    { service: 'Deep Cleaning – 4 Bedroom', price: 'From K2,500' },
+    { service: 'Post-Construction – 1 Bedroom', price: 'From K1,500' },
+    { service: 'Post-Construction – 2 Bedroom', price: 'From K2,000' },
+    { service: 'Post-Construction – 3 Bedroom', price: 'From K2,800' },
+    { service: 'Post-Construction – 4 Bedroom', price: 'From K3,500' },
   ];
+
+  const windowPrices = [
+    { service: 'Interior Standard Window', price: 'From K35/each' },
+    { service: 'Interior Large Aluminum Window', price: 'From K60/each' },
+    { service: 'Exterior Window (height-dependent)', price: 'From K50–K80/each' },
+  ];
+
+  const carDetailingPrices = [
+    { service: 'Interior Deep Clean – Small Car', price: 'From K450' },
+    { service: 'Interior Deep Clean – SUV', price: 'From K550' },
+    { service: 'Full Detailing – Small Car', price: 'From K650' },
+    { service: 'Full Detailing – SUV', price: 'From K850' },
+    { service: 'Seat Removal Add-On', price: 'From K150–K250' },
+  ];
+
+  const otherServices = [
+    { service: 'Residential Fumigation', price: 'From K400' },
+    { service: 'Commercial Fumigation', price: 'From K800' },
+    { service: 'Termite Treatment', price: 'From K1,200' },
+    { service: 'Office Cleaning (Daily)', price: 'From K200/day' },
+    { service: 'Office Cleaning (Weekly)', price: 'From K800/week' },
+    { service: 'Office Cleaning (Monthly)', price: 'From K2,800/month' },
+    { service: 'Maid Service (Daily)', price: 'From K150/day' },
+    { service: 'Maid Service (Live-in Monthly)', price: 'From K2,500/month' },
+    { service: 'Facility Management', price: 'From K2,500/month' },
+  ];
+
+  const transportPrices = [
+    { distance: '0–5 km from Kabulonga', price: 'K120 return' },
+    { distance: '5–10 km', price: 'K180 return' },
+    { distance: '10–20 km', price: 'K250 return' },
+    { distance: '20 km+', price: 'K350–K450 return' },
+  ];
+
+  const renderPriceTable = (title: string, items: { service?: string; distance?: string; price: string }[], isTransport = false) => (
+    <div className="mb-8">
+      <h3 className="text-lg font-bold text-foreground mb-3">{title}</h3>
+      <div className="bg-card rounded-xl ring-1 ring-border overflow-hidden">
+        <div className="grid grid-cols-2 bg-primary/10 font-semibold text-sm">
+          <div className="p-3 text-foreground">{isTransport ? 'Distance' : 'Service'}</div>
+          <div className="p-3 text-right text-foreground">Price (ZMW)</div>
+        </div>
+        {items.map((item, index) => (
+          <div key={index} className={`grid grid-cols-2 ${index % 2 === 0 ? 'bg-muted/20' : ''}`}>
+            <div className="p-3 border-b border-border/50 text-sm text-foreground">
+              {isTransport ? item.distance : item.service}
+            </div>
+            <div className="p-3 border-b border-border/50 text-right text-sm font-semibold text-primary">
+              {item.price}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <Layout>
       <Helmet>
-        <title>Pricing | WeWash Global - Transparent Service Pricing in Zambia</title>
-        <meta name="description" content="View transparent pricing for all WeWash Global services. Standard, Premium, and VIP packages available. Pay after service completion." />
-        <meta name="keywords" content="cleaning prices Zambia, car wash prices Lusaka, fumigation cost, maid service rates" />
-        <link rel="canonical" href="https://wewashglobal.com/pricing" />
-        <meta property="og:title" content="Service Pricing | WeWash Global" />
-        <meta property="og:description" content="Transparent pricing for professional cleaning and facility services in Zambia." />
-        <meta property="og:type" content="website" />
+        <title>Pricing | WeWash Global – Premium Service Pricing in Zambia</title>
+        <meta name="description" content="View starting prices for all WeWash Global premium services. All prices are estimates – final quotes confirmed after professional assessment." />
       </Helmet>
 
       {/* Hero */}
@@ -97,15 +147,15 @@ const Pricing = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         <div className="container-wewash relative">
           <div className="max-w-3xl">
-            <span className="badge-gold mb-6">Pricing</span>
+            <span className="badge-gold mb-6">Pricing Guide</span>
             <h1 className="text-foreground text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Transparent
-              <span className="text-primary"> Pricing</span>
+              Starting Price
+              <span className="text-primary"> Guide</span>
             </h1>
             <p className="text-xl text-muted-foreground">
-              All prices shown are <span className="text-wewash-gold font-semibold">starting estimates</span>. 
-              Final pricing is tailored after a professional assessment of your specific needs.
-              <span className="text-primary font-semibold"> Pay only after service completion.</span>
+              All prices shown are <span className="text-secondary font-bold">starting estimates</span>. 
+              Final pricing is tailored after a professional assessment of scope, condition, 
+              transport, labour, and materials.
             </p>
           </div>
         </div>
@@ -118,7 +168,7 @@ const Pricing = () => {
             <span className="badge-primary mb-4">Service Tiers</span>
             <h2 className="text-foreground mb-4">Choose Your Service Level</h2>
             <p className="text-lg text-muted-foreground">
-              Each tier multiplies the base service price. Choose based on your 
+              Each tier multiplies the base starting price. Choose based on your 
               requirements for products, scheduling, and support.
             </p>
           </div>
@@ -151,15 +201,11 @@ const Pricing = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-foreground">{pkg.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {pkg.multiplier} base price
-                      </p>
+                      <p className="text-sm text-muted-foreground">{pkg.multiplier} base price</p>
                     </div>
                   </div>
                   
-                  <p className="text-muted-foreground mb-6">
-                    {pkg.description}
-                  </p>
+                  <p className="text-muted-foreground mb-6">{pkg.description}</p>
                   
                   <ul className="space-y-3 mb-8">
                     {pkg.features.map((feature, idx) => (
@@ -167,19 +213,17 @@ const Pricing = () => {
                         <CheckCircle2 className={`h-5 w-5 mt-0.5 ${
                           pkg.popular ? 'text-primary' : 'text-muted-foreground'
                         }`} />
-                        <span className="text-foreground">
-                          {feature}
-                        </span>
+                        <span className="text-foreground">{feature}</span>
                       </li>
                     ))}
                   </ul>
                   
                   <Button 
-                    onClick={() => navigate('/book')}
+                    onClick={() => navigate('/quote')}
                     className={`w-full gap-2 ${pkg.popular ? 'btn-primary' : ''}`}
                     variant={pkg.popular ? 'default' : 'outline'}
                   >
-                    Select {pkg.name}
+                    Get Your Estimate
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -189,59 +233,83 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Service Prices */}
+      {/* Detailed Price Tables */}
       <section className="section-spacing bg-card/50">
         <div className="container-wewash">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="badge-success mb-4">Starting Prices</span>
-            <h2 className="text-foreground mb-4">Service Price Guide</h2>
+            <h2 className="text-foreground mb-4">Detailed Price Guide</h2>
             <p className="text-lg text-muted-foreground">
-              All prices shown are <span className="text-primary font-semibold">starting estimates</span> for standard-tier service. 
-              Final pricing is determined after a professional assessment of your specific requirements including 
-              property size, condition, location, labour, transport, and materials needed.
+              All prices are <span className="text-primary font-semibold">starting from</span> rates for 
+              light-condition, standard-tier service. Condition multipliers and transport are additional.
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-card rounded-2xl ring-1 ring-border overflow-hidden">
-              <div className="grid grid-cols-2 bg-primary text-primary-foreground font-semibold">
-                <div className="p-4 border-b border-primary-foreground/20">Service</div>
-                <div className="p-4 border-b border-primary-foreground/20 text-right">Price (ZMW)</div>
+            {renderPriceTable('Home Cleaning', homeCleaningPrices)}
+            {renderPriceTable('Window Cleaning', windowPrices)}
+            {renderPriceTable('Car Detailing', carDetailingPrices)}
+            {renderPriceTable('Other Services', otherServices)}
+
+            {/* Transport Section */}
+            <div className="mb-8">
+              <h3 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2">
+                <Truck className="h-5 w-5 text-primary" />
+                Transport Estimate (Yango Return Trip)
+              </h3>
+              <p className="text-xs text-muted-foreground mb-3">
+                From our base at D13 Antelope Close, Kabulonga. Transport is always shown separately.
+              </p>
+              {renderPriceTable('', transportPrices, true)}
+            </div>
+
+            {/* Condition Multipliers */}
+            <div className="mb-8 p-5 rounded-xl bg-primary/5 ring-1 ring-primary/20">
+              <h3 className="text-lg font-bold text-foreground mb-3">Condition Multipliers</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                Base prices assume light/well-maintained condition. Pricing adjusts based on actual workload:
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { label: 'Light', mult: '1.0x', desc: 'Well-maintained' },
+                  { label: 'Moderate', mult: '1.2x', desc: 'Average dirt' },
+                  { label: 'Heavy', mult: '1.4x', desc: 'Neglected' },
+                  { label: 'Post-Construction', mult: '1.6x', desc: 'Debris present' },
+                ].map((item, i) => (
+                  <div key={i} className="text-center p-3 rounded-lg bg-card border border-border/50">
+                    <p className="text-lg font-bold text-primary">{item.mult}</p>
+                    <p className="text-sm font-medium text-foreground">{item.label}</p>
+                    <p className="text-xs text-muted-foreground">{item.desc}</p>
+                  </div>
+                ))}
               </div>
-              {services.map((service, index) => (
-                <div 
-                  key={index}
-                  className={`grid grid-cols-2 ${
-                    index % 2 === 0 ? 'bg-muted/30' : ''
-                  }`}
-                >
-                  <div className="p-4 border-b border-border text-foreground">
-                    {service.name}
-                  </div>
-                  <div className="p-4 border-b border-border text-right font-semibold text-primary">
-                    {service.price}
-                  </div>
-                </div>
-              ))}
             </div>
             
-            {/* Important Disclaimer */}
-            <div className="mt-6 p-5 rounded-xl bg-primary/10 ring-1 ring-primary/20">
-              <p className="text-sm text-foreground font-semibold mb-2">⚠️ Important: Prices Are Starting Estimates</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                All prices listed above are <strong className="text-foreground">starting from</strong> rates for basic scope. 
-                Your final quote will be provided after a <strong className="text-foreground">professional on-site or virtual assessment</strong> that considers:
-              </p>
-              <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                <li>• <strong className="text-foreground">Property size</strong> — number of rooms, square footage, or vehicle type</li>
-                <li>• <strong className="text-foreground">Condition & workload</strong> — level of dirt, damage, or neglect</li>
-                <li>• <strong className="text-foreground">Location & transport</strong> — distance from our base of operations</li>
-                <li>• <strong className="text-foreground">Labour & materials</strong> — team size, specialist chemicals, and equipment required</li>
-                <li>• <strong className="text-foreground">Special requirements</strong> — windows, carpets, upholstery, or add-on services</li>
-              </ul>
-              <p className="mt-3 text-sm text-primary font-medium">
-                Request a free, no-obligation quote to get your exact price.
-              </p>
+            {/* Mandatory Disclaimer */}
+            <div className="p-5 rounded-xl bg-secondary/10 ring-1 ring-secondary/20">
+              <div className="flex gap-3 items-start">
+                <AlertTriangle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm text-foreground font-bold mb-2">
+                    Starting From (Estimate Only – Final Quote After Confirmation)
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    This is an automated estimate based on provided details. Final pricing is confirmed after 
+                    workload assessment, transport calculation, labor requirement, and cleaning intensity review 
+                    by our sales manager. No exceptions.
+                  </p>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                    <li>• <strong className="text-foreground">Property size</strong> — rooms, square footage, vehicle type</li>
+                    <li>• <strong className="text-foreground">Condition & workload</strong> — dirt level, damage, debris</li>
+                    <li>• <strong className="text-foreground">Location & transport</strong> — Yango return trip from Kabulonga</li>
+                    <li>• <strong className="text-foreground">Labour & materials</strong> — team size, chemicals, equipment</li>
+                    <li>• <strong className="text-foreground">Special requirements</strong> — windows, carpets, seat removal</li>
+                  </ul>
+                  <p className="mt-3 text-sm text-secondary font-medium">
+                    Request a free, no-obligation professional assessment to get your exact price.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -251,26 +319,27 @@ const Pricing = () => {
       <section className="section-spacing bg-gradient-to-br from-primary/20 via-card to-background">
         <div className="container-wewash text-center">
           <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-4">
-            Need a Custom Quote?
+            Get Your Professional Assessment
           </h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            For large projects, recurring services, or special requirements, 
-            contact us for a personalized quote.
+            Our sales manager will assess your requirements and provide a confirmed final quotation 
+            before any work begins.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/quote')}
               className="btn-gold gap-2"
             >
-              Request Quote
+              Get AI Estimate
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button 
-              onClick={() => navigate('/book')}
+              onClick={() => window.open('https://wa.me/260768671420?text=Hello, I need a professional quote for my cleaning requirements.', '_blank')}
               variant="outline"
               className="gap-2"
             >
-              Book Now
+              <MessageCircle className="h-4 w-4" />
+              Request Quote on WhatsApp
             </Button>
           </div>
         </div>

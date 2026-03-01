@@ -10,6 +10,7 @@ import {
   Building2, 
   Briefcase, 
   UserCheck,
+  AlertTriangle,
 } from 'lucide-react';
 
 import diverseHomeCleaningImage from '@/assets/diverse-home-cleaning.jpg';
@@ -26,55 +27,61 @@ const ServicesSection = () => {
     {
       icon: SprayCan,
       title: 'Home Cleaning',
-      description: 'Deep cleaning, regular maintenance, and post-construction cleaning for homes of all sizes.',
+      description: 'Professionally managed cleaning for homes of all sizes – general, deep, and post-construction.',
       image: diverseHomeCleaningImage,
-      price: 'From K650',
+      price: 'From K550',
+      priceNote: '1 Bed – Light Condition',
       features: ['General Cleaning', 'Deep Cleaning', 'Post-Construction'],
     },
     {
       icon: Car,
       title: 'Mobile Car Detailing',
-      description: 'Professional car wash and detailing services delivered to your doorstep.',
+      description: 'Premium car detailing delivered to your location by trained professionals.',
       image: diverseCarDetailingImage,
       price: 'From K450',
-      features: ['Exterior Wash', 'Interior Detailing', 'Full Detail Package'],
+      priceNote: 'Small Car – Interior',
+      features: ['Interior Deep Clean', 'Full Detailing', 'Seat Removal'],
     },
     {
       icon: Bug,
       title: 'Fumigation Services',
-      description: 'Complete pest control solutions for residential and commercial properties.',
+      description: 'Structured pest control with professional-grade chemicals and certified methods.',
       image: diversePestControlImage,
       price: 'From K400',
+      priceNote: 'Residential',
       features: ['Pest Control', 'Termite Treatment', 'Preventive Care'],
     },
     {
       icon: Building2,
       title: 'Facility Management',
-      description: 'Comprehensive property management for commercial and institutional clients.',
+      description: 'Comprehensive managed property operations for commercial and institutional clients.',
       image: diverseFacilityImage,
       price: 'From K2,500',
+      priceNote: 'Monthly Contract',
       features: ['Building Maintenance', 'Grounds Care', 'Staff Management'],
     },
     {
       icon: Briefcase,
       title: 'Office Cleaning',
-      description: 'Keep your workplace pristine with our professional office cleaning services.',
+      description: 'Reliable, structured cleaning with supervised teams and quality control.',
       image: diverseOfficeImage,
-      price: 'From K1,200',
-      features: ['Daily Cleaning', 'Window Cleaning', 'Carpet Care'],
+      price: 'From K200',
+      priceNote: 'Per Day',
+      features: ['Daily Cleaning', 'Window Cleaning', 'Sanitisation'],
     },
     {
       icon: UserCheck,
       title: 'Trained Maids',
-      description: 'Professionally trained domestic workers for your home or business.',
+      description: 'Vetted, professionally trained domestic staff with ongoing supervision.',
       image: diverseMaidImage,
-      price: 'From K850',
+      price: 'From K150',
+      priceNote: 'Per Day',
       features: ['Background Checked', 'Fully Trained', 'Ongoing Support'],
     },
   ];
 
   const openWhatsApp = (service: string) => {
-    window.open(`https://wa.me/260768671420?text=Hello, I would like to inquire about ${service} services.`, '_blank');
+    window.open(`https://wa.me/260768671420?text=Hello, I would like a professional quote for ${service} services.`, '_blank');
   };
 
   return (
@@ -84,11 +91,11 @@ const ServicesSection = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="badge-primary mb-4">Our Services</span>
           <h2 className="text-foreground mb-4">
-            Complete Property Care Solutions
+            Premium Property Care Solutions
           </h2>
           <p className="text-lg text-muted-foreground">
-            From residential cleaning to commercial facility management, we provide 
-            comprehensive services tailored to your needs.
+            Professionally managed, quality-controlled services delivered by trained teams. 
+            All prices are <span className="text-secondary font-semibold">starting estimates</span>.
           </p>
         </div>
 
@@ -118,23 +125,24 @@ const ServicesSection = () => {
 
                   {/* Price Badge */}
                   <div className="absolute top-4 right-4">
-                    <div className="px-3 py-1.5 rounded-full bg-wewash-gold text-wewash-navy text-sm font-semibold">
-                      {service.price}
+                    <div className="px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs font-bold">
+                      <span>{service.price}</span>
                     </div>
                   </div>
 
                   {/* Title */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-white text-xl font-bold mb-1">{service.title}</h3>
+                    <p className="text-white/60 text-xs">{service.priceNote}</p>
                   </div>
                 </div>
 
                 {/* Content */}
                 <CardContent className="p-6">
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
+                  <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
                   
                   {/* Features */}
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {service.features.map((feature, i) => (
                       <span 
                         key={i} 
@@ -144,6 +152,10 @@ const ServicesSection = () => {
                       </span>
                     ))}
                   </div>
+
+                  <p className="text-xs text-muted-foreground italic mb-4">
+                    * Starting estimate – final price after assessment
+                  </p>
 
                   {/* Actions */}
                   <div className="flex gap-3">
@@ -156,9 +168,9 @@ const ServicesSection = () => {
                     </Button>
                     <Button 
                       className="flex-1 bg-primary hover:bg-primary-hover"
-                      onClick={() => navigate('/book')}
+                      onClick={() => navigate('/quote')}
                     >
-                      Book Now
+                      Get Estimate
                     </Button>
                   </div>
                 </CardContent>
@@ -168,24 +180,28 @@ const ServicesSection = () => {
         </div>
 
         {/* Pricing Disclaimer */}
-        <div className="mt-12 max-w-2xl mx-auto text-center p-6 rounded-2xl bg-card ring-1 ring-border/50">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            <span className="text-foreground font-semibold">All prices shown are starting estimates.</span> Final pricing is determined after a professional assessment 
-            considering property size, condition, location, labour, and materials. 
-            <span className="text-primary font-medium"> Request a free quote for your exact price.</span>
-          </p>
+        <div className="mt-12 max-w-2xl mx-auto p-5 rounded-2xl bg-secondary/5 ring-1 ring-secondary/20">
+          <div className="flex gap-3 items-start">
+            <AlertTriangle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-bold text-foreground mb-1">
+                Starting From (Estimate Only – Final Quote After Confirmation)
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                All prices are starting estimates. Final pricing confirmed after professional assessment of 
+                condition, transport, labour, and materials by our sales manager.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Bottom CTA */}
         <div className="text-center mt-10">
-          <p className="text-muted-foreground mb-6">
-            Every project is unique. Let our experts assess your needs and provide a tailored quote.
-          </p>
           <Button 
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/quote')}
             className="btn-premium gap-2"
           >
-            Get Custom Quote
+            Get Your Professional Estimate
             <ArrowRight className="h-5 w-5" />
           </Button>
         </div>

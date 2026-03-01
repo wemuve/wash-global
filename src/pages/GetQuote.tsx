@@ -3,7 +3,7 @@ import Layout from '@/components/layout/Layout';
 import AIPriceCalculator from '@/components/booking/AIPriceCalculator';
 import VoiceAgentButton from '@/components/dashboard/VoiceAgentButton';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, MessageCircle, Calculator, ClipboardList, Phone } from 'lucide-react';
+import { ArrowRight, MessageCircle, Sparkles, ClipboardList, Phone, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -18,7 +18,6 @@ const GetQuote = () => {
   };
 
   const handleBookNow = (result: any) => {
-    // Navigate to booking with pre-filled data
     navigate('/book', { 
       state: { 
         estimatedPrice: result.estimatedPrice,
@@ -30,22 +29,22 @@ const GetQuote = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Get Instant Quote | WeWash Zambia AI Price Calculator</title>
-        <meta name="description" content="Get an instant price estimate for cleaning services in Zambia. Our AI calculates prices based on your job description, location, and requirements." />
+        <title>Get Starting Estimate | WeWash Global AI Price Estimator</title>
+        <meta name="description" content="Get a starting price estimate for premium cleaning services in Zambia. AI-powered estimator with transport and condition multipliers. Final quote after professional assessment." />
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-wewash-navy py-12 lg:py-20">
+      <section className="bg-gradient-to-br from-background via-card to-primary/10 py-12 lg:py-20">
         <div className="container-wewash">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="badge-gold mb-4">AI-Powered Pricing</span>
-            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Get Your <span className="text-wewash-gold">Starting Estimate</span>
+            <span className="badge-gold mb-4">AI-Powered Estimator</span>
+            <h1 className="text-foreground text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              Get Your <span className="text-primary">Starting Estimate</span>
             </h1>
-            <p className="text-lg text-white/80">
-              Describe your requirements and our AI will provide an indicative starting price. 
-              Your exact quote is confirmed after a professional assessment of the scope, 
-              condition, location, and materials required.
+            <p className="text-lg text-muted-foreground">
+              Our AI provides an indicative starting price based on your requirements. 
+              <span className="text-secondary font-semibold"> Final pricing is confirmed after a professional assessment</span> of 
+              scope, condition, transport, labour, and materials by our sales manager.
             </p>
           </div>
         </div>
@@ -54,16 +53,16 @@ const GetQuote = () => {
       {/* Calculator Section */}
       <section className="section-spacing -mt-8">
         <div className="container-wewash max-w-2xl">
-          {/* Voice Agent Card */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-xl border border-primary/20">
+          {/* Voice Agent */}
+          <div className="mb-6 p-4 bg-card rounded-xl border border-border">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <h3 className="font-semibold flex items-center gap-2">
+                <h3 className="font-semibold flex items-center gap-2 text-foreground">
                   <Phone className="h-5 w-5 text-primary" />
-                  Need Help? Talk to Our AI Assistant
+                  Speak to Our AI Assistant
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Get instant answers about pricing and services
+                  Get instant answers about services and pricing
                 </p>
               </div>
               <VoiceAgentButton agentId={ELEVENLABS_AGENT_ID} />
@@ -80,33 +79,33 @@ const GetQuote = () => {
       {/* How It Works */}
       <section className="section-spacing bg-muted/30">
         <div className="container-wewash">
-          <h2 className="text-2xl font-bold text-center mb-8">How It Works</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-foreground">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="w-14 h-14 rounded-2xl bg-primary-muted flex items-center justify-center mx-auto mb-4">
                 <ClipboardList className="h-7 w-7 text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">1. Describe Your Job</h3>
+              <h3 className="font-semibold mb-2 text-foreground">1. Describe Your Job</h3>
               <p className="text-sm text-muted-foreground">
-                Tell us about the space, condition, and any special requirements
+                Service type, bedrooms, condition, location, and special requirements
               </p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 rounded-2xl bg-wewash-gold/20 flex items-center justify-center mx-auto mb-4">
-                <Calculator className="h-7 w-7 text-wewash-gold" />
+              <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="h-7 w-7 text-secondary" />
               </div>
-              <h3 className="font-semibold mb-2">2. Get AI Estimate</h3>
+              <h3 className="font-semibold mb-2 text-foreground">2. AI Starting Estimate</h3>
               <p className="text-sm text-muted-foreground">
-                Our AI analyzes your description and calculates a fair price
+                Includes base price, condition multiplier, and Yango transport estimate
               </p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-4">
-                <ArrowRight className="h-7 w-7 text-green-600" />
+              <div className="w-14 h-14 rounded-2xl bg-success-light flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-7 w-7 text-success" />
               </div>
-              <h3 className="font-semibold mb-2">3. Book or Get Quote</h3>
+              <h3 className="font-semibold mb-2 text-foreground">3. Professional Confirmation</h3>
               <p className="text-sm text-muted-foreground">
-                Book instantly or chat with us on WhatsApp for complex jobs
+                Sales manager confirms final quote after workload and site assessment
               </p>
             </div>
           </div>
@@ -116,12 +115,12 @@ const GetQuote = () => {
       {/* CTA */}
       <section className="section-spacing">
         <div className="container-wewash text-center">
-          <h2 className="text-2xl font-bold mb-4">Need to Talk to Someone?</h2>
+          <h2 className="text-2xl font-bold mb-4 text-foreground">Prefer to Speak to Someone?</h2>
           <p className="text-muted-foreground mb-6">
-            Our team is available on WhatsApp for any questions or custom quotes
+            Our team is available on WhatsApp for professional quotes and assessments
           </p>
           <Button 
-            onClick={() => window.open('https://wa.me/260768671420?text=Hello, I need help with a quote', '_blank')}
+            onClick={() => window.open('https://wa.me/260768671420?text=Hello, I need a professional quote for my requirements', '_blank')}
             className="btn-whatsapp gap-2"
             size="lg"
           >

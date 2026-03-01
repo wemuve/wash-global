@@ -9,7 +9,8 @@ import {
   Briefcase, 
   Users,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  AlertTriangle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -28,49 +29,49 @@ const Services = () => {
       id: 'home-cleaning',
       icon: Home,
       title: 'Home Cleaning',
-      description: 'Professional residential cleaning services tailored to your needs. From regular maintenance to deep cleaning.',
+      description: 'Professional residential cleaning managed by trained, supervised teams. From regular maintenance to deep cleaning and post-construction.',
       image: cleaningImage,
       features: [
-        'Standard & Deep Cleaning',
-        'Move In/Out Cleaning',
-        'Post-Construction Cleaning',
-        'Window & Carpet Cleaning',
+        'General Cleaning – From K550 (1 Bed)',
+        'Deep Cleaning – From K850 (1 Bed)',
+        'Post-Construction – From K1,500 (1 Bed)',
+        'Window Cleaning – From K35/window',
       ],
-      pricing: 'Starting from ZMW 350',
+      pricing: 'Starting from K550 (1 Bedroom – Light Condition)',
     },
     {
       id: 'car-detailing',
       icon: Car,
       title: 'Mobile Car Detailing',
-      description: 'We come to you! Professional car wash and detailing services at your location.',
+      description: 'Premium mobile car detailing delivered to your location by our professionally trained detailing team.',
       image: carDetailingImage,
       features: [
-        'Exterior Wash & Polish',
-        'Interior Deep Clean',
-        'Engine Bay Cleaning',
-        'Ceramic Coating',
+        'Interior Deep Clean – From K450 (Small Car)',
+        'Full Detailing – From K650 (Small Car)',
+        'SUV Full Detailing – From K850',
+        'Seat Removal – From K150–K250',
       ],
-      pricing: 'Starting from ZMW 150',
+      pricing: 'Starting from K450 (Small Car – Interior Only)',
     },
     {
       id: 'fumigation',
       icon: Bug,
       title: 'Fumigation & Pest Control',
-      description: 'Eliminate pests and protect your property with our comprehensive pest control solutions.',
+      description: 'Structured pest control solutions with professional-grade chemicals and certified application methods.',
       image: fumigationImage,
       features: [
-        'Insect Control',
-        'Rodent Elimination',
-        'Termite Treatment',
-        'Preventive Treatments',
+        'Residential Fumigation – From K400',
+        'Commercial Fumigation – From K800',
+        'Termite Treatment – From K1,200',
+        'Preventive Treatments Available',
       ],
-      pricing: 'Starting from ZMW 400',
+      pricing: 'Starting from K400 (Residential)',
     },
     {
       id: 'facility-management',
       icon: Building2,
       title: 'Facility Management',
-      description: 'Complete property management solutions for commercial and institutional clients.',
+      description: 'Comprehensive, managed property operations for commercial and institutional clients with quality control systems.',
       image: facilityImage,
       features: [
         'Building Maintenance',
@@ -78,48 +79,43 @@ const Services = () => {
         'Security Coordination',
         'Vendor Management',
       ],
-      pricing: 'Custom quotes',
+      pricing: 'Custom quotes – Professional assessment required',
     },
     {
       id: 'office-cleaning',
       icon: Briefcase,
       title: 'Office & Commercial Cleaning',
-      description: 'Keep your workplace spotless and professional with our commercial cleaning services.',
+      description: 'Reliable, structured cleaning operations for workplaces with supervised teams and quality audits.',
       image: maintenanceImage,
       features: [
-        'Daily/Weekly Cleaning',
-        'Sanitization Services',
-        'Floor Care',
-        'Waste Management',
+        'Daily Cleaning – From K200/day',
+        'Weekly Cleaning – From K800/week',
+        'Monthly Contract – From K2,800/month',
+        'Sanitisation Services',
       ],
-      pricing: 'Starting from ZMW 200/day',
+      pricing: 'Starting from K200/day',
     },
     {
       id: 'trained-maids',
       icon: Users,
       title: 'Trained Maids & Housekeepers',
-      description: 'Vetted, trained, and reliable domestic staff for your home or business.',
+      description: 'Vetted, professionally trained domestic staff managed through our structured placement and supervision system.',
       image: maidsImage,
       features: [
-        'Background Checked',
+        'Background Checked & Verified',
         'Professionally Trained',
-        'Daily or Live-in Options',
-        'Replacement Guarantee',
+        'Daily – From K150/day',
+        'Live-in – From K2,500/month',
       ],
-      pricing: 'Starting from ZMW 150/day',
+      pricing: 'Starting from K150/day',
     },
   ];
 
   return (
     <Layout>
       <Helmet>
-        <title>Our Services | WeWash Global - Professional Cleaning & Facility Management</title>
-        <meta name="description" content="Explore WeWash Global's comprehensive services: home cleaning, mobile car detailing, fumigation, facility management, and trained housekeepers in Zambia." />
-        <meta name="keywords" content="cleaning services Zambia, car detailing Lusaka, fumigation services, facility management, trained maids, housekeepers" />
-        <link rel="canonical" href="https://wewashglobal.com/services" />
-        <meta property="og:title" content="Professional Cleaning Services | WeWash Global" />
-        <meta property="og:description" content="From home cleaning to facility management - comprehensive property services in Zambia." />
-        <meta property="og:type" content="website" />
+        <title>Our Services | WeWash Global – Premium Cleaning & Facility Management</title>
+        <meta name="description" content="Professional cleaning, car detailing, fumigation, and facility management services in Zambia. All prices are starting estimates – final quote after assessment." />
       </Helmet>
 
       {/* Hero */}
@@ -129,13 +125,13 @@ const Services = () => {
           <div className="max-w-3xl">
             <span className="badge-gold mb-6">Our Services</span>
             <h1 className="text-foreground text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Comprehensive Property
+              Premium Property
               <span className="text-primary"> Services</span>
             </h1>
             <p className="text-xl text-muted-foreground">
-              Bespoke solutions for residential, commercial, and institutional clients. 
-              All prices are <span className="text-primary font-semibold">starting estimates</span> — 
-              your exact quote is provided after a professional assessment of your specific requirements.
+              Professionally managed, structured operations backed by our Danish parent company WeMuve. 
+              All prices are <span className="text-secondary font-bold">starting estimates</span> — 
+              final quotes confirmed after professional assessment.
             </p>
           </div>
         </div>
@@ -160,6 +156,7 @@ const Services = () => {
                         src={service.image} 
                         alt={service.title}
                         className="w-full h-full object-cover"
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                       <div className="absolute top-4 left-4">
@@ -181,14 +178,14 @@ const Services = () => {
                     <ul className="space-y-3 mb-6">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="flex items-center gap-3 text-foreground">
-                          <CheckCircle2 className="h-5 w-5 text-primary" />
-                          {feature}
+                          <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
+                          <span className="text-sm">{feature}</span>
                         </li>
                       ))}
                     </ul>
                     
                     <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-wrap items-center gap-4">
                         <span className="text-lg font-semibold text-primary">
                           {service.pricing}
                         </span>
@@ -196,18 +193,35 @@ const Services = () => {
                           onClick={() => navigate('/quote')}
                           className="btn-gold gap-2"
                         >
-                          Get Exact Quote
+                          Get Your Estimate
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       </div>
                       <p className="text-xs text-muted-foreground italic">
-                        * Final price based on site assessment — size, condition, location & materials
+                        * Starting estimate only. Final price confirmed after assessment of condition, transport, labour & materials.
                       </p>
                     </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+
+          {/* Global Disclaimer */}
+          <div className="mt-16 max-w-3xl mx-auto p-5 rounded-xl bg-secondary/10 ring-1 ring-secondary/20">
+            <div className="flex gap-3 items-start">
+              <AlertTriangle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-foreground mb-1">
+                  Starting From (Estimate Only – Final Quote After Confirmation)
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  This is an automated estimate based on provided details. Final pricing is confirmed after 
+                  workload assessment, transport calculation, labor requirement, and cleaning intensity review 
+                  by our sales manager.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -216,18 +230,17 @@ const Services = () => {
       <section className="section-spacing bg-gradient-to-br from-primary/20 via-card to-background">
         <div className="container-wewash text-center">
           <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-4">
-            Need a Custom Solution?
+            Get Your Professional Assessment
           </h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            We offer tailored packages for businesses and institutions. 
-            Contact us for a personalized quote.
+            Every project is unique. Let our team assess your requirements and provide a confirmed final quotation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/quote')}
               className="btn-gold gap-2"
             >
-              Get Custom Quote
+              AI Price Estimator
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button 
