@@ -108,10 +108,11 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
       <CardHeader className="bg-gradient-to-r from-primary/10 to-wewash-gold/10">
         <CardTitle className="flex items-center gap-2 text-xl">
           <Sparkles className="h-5 w-5 text-wewash-gold" />
-          AI Price Calculator
+          AI Price Estimator
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Describe your job and our AI will estimate the price instantly
+          Get an <span className="font-semibold text-foreground">indicative starting estimate</span>. 
+          Your final quote is provided after a professional assessment of your specific needs.
         </p>
       </CardHeader>
       <CardContent className="pt-6 space-y-4">
@@ -198,10 +199,13 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
           <div className="mt-6 space-y-4 animate-fade-up">
             {/* Price Display */}
             <div className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-6 text-white text-center">
-              <p className="text-sm opacity-90 mb-1">Estimated Price</p>
-              <p className="text-4xl font-bold">ZMW {result.estimatedPrice.toLocaleString()}</p>
+              <p className="text-xs uppercase tracking-wider opacity-70 mb-1">Starting Estimate</p>
+              <p className="text-4xl font-bold">From ZMW {result.estimatedPrice.toLocaleString()}</p>
               <p className="text-sm opacity-80 mt-1">
-                Range: ZMW {result.priceRange.min.toLocaleString()} - {result.priceRange.max.toLocaleString()}
+                Estimated range: ZMW {result.priceRange.min.toLocaleString()} – {result.priceRange.max.toLocaleString()}
+              </p>
+              <p className="text-xs opacity-60 mt-2 italic">
+                Final price confirmed after professional assessment
               </p>
             </div>
 

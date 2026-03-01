@@ -133,8 +133,9 @@ const Services = () => {
               <span className="text-primary"> Services</span>
             </h1>
             <p className="text-xl text-muted-foreground">
-              From home cleaning to facility management, we offer a full range of 
-              professional services for residential, commercial, and institutional clients.
+              Bespoke solutions for residential, commercial, and institutional clients. 
+              All prices are <span className="text-primary font-semibold">starting estimates</span> — 
+              your exact quote is provided after a professional assessment of your specific requirements.
             </p>
           </div>
         </div>
@@ -186,17 +187,22 @@ const Services = () => {
                       ))}
                     </ul>
                     
-                    <div className="flex items-center gap-4">
-                      <span className="text-lg font-semibold text-primary">
-                        {service.pricing}
-                      </span>
-                      <Button 
-                        onClick={() => navigate('/book')}
-                        className="btn-primary gap-2"
-                      >
-                        Book Now
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-4">
+                        <span className="text-lg font-semibold text-primary">
+                          {service.pricing}
+                        </span>
+                        <Button 
+                          onClick={() => navigate('/quote')}
+                          className="btn-gold gap-2"
+                        >
+                          Get Exact Quote
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground italic">
+                        * Final price based on site assessment — size, condition, location & materials
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -37,17 +37,17 @@ const CTASection = () => {
 
           {/* Subheadline */}
           <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-            Get a free, no-obligation quote within 2 hours. Our team is ready to 
-            help you with all your cleaning and property management needs.
+            Every space is unique. Our experts conduct a professional assessment to deliver 
+            a tailored quote that reflects your exact requirements — no surprises, no hidden costs.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
             <Button 
-              onClick={() => navigate('/book')}
+              onClick={() => navigate('/quote')}
               className="btn-gold text-lg px-10 py-6 gap-2"
             >
-              Book Online
+              Request a Free Quote
               <ArrowRight className="h-5 w-5" />
             </Button>
             <Button 

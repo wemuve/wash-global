@@ -167,10 +167,19 @@ const ServicesSection = () => {
           })}
         </div>
 
+        {/* Pricing Disclaimer */}
+        <div className="mt-12 max-w-2xl mx-auto text-center p-6 rounded-2xl bg-card ring-1 ring-border/50">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            <span className="text-foreground font-semibold">All prices shown are starting estimates.</span> Final pricing is determined after a professional assessment 
+            considering property size, condition, location, labour, and materials. 
+            <span className="text-primary font-medium"> Request a free quote for your exact price.</span>
+          </p>
+        </div>
+
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-10">
           <p className="text-muted-foreground mb-6">
-            Need a custom solution? We tailor our services to your specific requirements.
+            Every project is unique. Let our experts assess your needs and provide a tailored quote.
           </p>
           <Button 
             onClick={() => navigate('/contact')}

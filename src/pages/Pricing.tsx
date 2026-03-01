@@ -63,20 +63,20 @@ const Pricing = () => {
   ];
 
   const services = [
-    { name: 'Home Cleaning (Standard)', price: 'ZMW 350' },
-    { name: 'Home Cleaning (Deep)', price: 'ZMW 550' },
-    { name: 'Move In/Out Cleaning', price: 'ZMW 750' },
-    { name: 'Basic Car Wash', price: 'ZMW 150' },
-    { name: 'Full Car Detail', price: 'ZMW 350' },
-    { name: 'Premium Car Detail', price: 'ZMW 500' },
-    { name: 'Residential Fumigation', price: 'ZMW 400' },
+    { name: 'Home Cleaning (Standard)', price: 'From ZMW 350' },
+    { name: 'Home Cleaning (Deep)', price: 'From ZMW 550' },
+    { name: 'Move In/Out Cleaning', price: 'From ZMW 750' },
+    { name: 'Basic Car Wash', price: 'From ZMW 150' },
+    { name: 'Full Car Detail', price: 'From ZMW 350' },
+    { name: 'Premium Car Detail', price: 'From ZMW 500' },
+    { name: 'Residential Fumigation', price: 'From ZMW 400' },
     { name: 'Commercial Fumigation', price: 'From ZMW 800' },
     { name: 'Termite Treatment', price: 'From ZMW 1,200' },
-    { name: 'Office Cleaning (Daily)', price: 'ZMW 200/day' },
-    { name: 'Office Cleaning (Weekly)', price: 'ZMW 800/week' },
-    { name: 'Office Cleaning (Monthly)', price: 'ZMW 2,800/month' },
-    { name: 'Maid Service (Daily)', price: 'ZMW 150/day' },
-    { name: 'Maid Service (Live-in)', price: 'ZMW 2,500/month' },
+    { name: 'Office Cleaning (Daily)', price: 'From ZMW 200/day' },
+    { name: 'Office Cleaning (Weekly)', price: 'From ZMW 800/week' },
+    { name: 'Office Cleaning (Monthly)', price: 'From ZMW 2,800/month' },
+    { name: 'Maid Service (Daily)', price: 'From ZMW 150/day' },
+    { name: 'Maid Service (Live-in)', price: 'From ZMW 2,500/month' },
     { name: 'Facility Management', price: 'From ZMW 2,500/month' },
   ];
 
@@ -103,8 +103,9 @@ const Pricing = () => {
               <span className="text-primary"> Pricing</span>
             </h1>
             <p className="text-xl text-muted-foreground">
-              Choose the package that fits your needs. All prices are in Zambian Kwacha (ZMW).
-              <span className="text-primary font-semibold"> Pay after service completion.</span>
+              All prices shown are <span className="text-wewash-gold font-semibold">starting estimates</span>. 
+              Final pricing is tailored after a professional assessment of your specific needs.
+              <span className="text-primary font-semibold"> Pay only after service completion.</span>
             </p>
           </div>
         </div>
@@ -192,10 +193,12 @@ const Pricing = () => {
       <section className="section-spacing bg-card/50">
         <div className="container-wewash">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="badge-success mb-4">Base Prices</span>
+            <span className="badge-success mb-4">Starting Prices</span>
             <h2 className="text-foreground mb-4">Service Price Guide</h2>
             <p className="text-lg text-muted-foreground">
-              Standard tier base prices. Multiply by tier multiplier for Premium (1.5x) or VIP (2x).
+              All prices shown are <span className="text-primary font-semibold">starting estimates</span> for standard-tier service. 
+              Final pricing is determined after a professional assessment of your specific requirements including 
+              property size, condition, location, labour, transport, and materials needed.
             </p>
           </div>
 
@@ -220,6 +223,25 @@ const Pricing = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            
+            {/* Important Disclaimer */}
+            <div className="mt-6 p-5 rounded-xl bg-primary/10 ring-1 ring-primary/20">
+              <p className="text-sm text-foreground font-semibold mb-2">⚠️ Important: Prices Are Starting Estimates</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                All prices listed above are <strong className="text-foreground">starting from</strong> rates for basic scope. 
+                Your final quote will be provided after a <strong className="text-foreground">professional on-site or virtual assessment</strong> that considers:
+              </p>
+              <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                <li>• <strong className="text-foreground">Property size</strong> — number of rooms, square footage, or vehicle type</li>
+                <li>• <strong className="text-foreground">Condition & workload</strong> — level of dirt, damage, or neglect</li>
+                <li>• <strong className="text-foreground">Location & transport</strong> — distance from our base of operations</li>
+                <li>• <strong className="text-foreground">Labour & materials</strong> — team size, specialist chemicals, and equipment required</li>
+                <li>• <strong className="text-foreground">Special requirements</strong> — windows, carpets, upholstery, or add-on services</li>
+              </ul>
+              <p className="mt-3 text-sm text-primary font-medium">
+                Request a free, no-obligation quote to get your exact price.
+              </p>
             </div>
           </div>
         </div>
