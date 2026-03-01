@@ -100,8 +100,8 @@ const GetQuote = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-7 w-7 text-green-400" />
+              <div className="w-14 h-14 rounded-2xl bg-success-light flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-7 w-7 text-success" />
               </div>
               <h3 className="font-semibold mb-2 text-foreground">3. Professional Confirmation</h3>
               <p className="text-sm text-muted-foreground">
