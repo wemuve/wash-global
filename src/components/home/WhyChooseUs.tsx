@@ -95,11 +95,11 @@ const WhyChooseUs = () => {
         {/* Trust Banner */}
         <div className="mt-20 bg-wewash-navy rounded-3xl p-8 md:p-12 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Trusted by Homes & Businesses Across Zambia
+            A Premium Service, Tailored to You
           </h3>
           <p className="text-white/70 max-w-2xl mx-auto mb-6">
-            From residential homes to corporate offices and government institutions, 
-            we deliver professional cleaning and property services you can count on.
+            We don't believe in one-size-fits-all. Every quote is customised after a thorough 
+            assessment of your property, requirements, and expectations. That's the WeWash difference.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex items-center gap-2 text-white/80">
