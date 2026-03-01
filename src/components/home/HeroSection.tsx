@@ -18,10 +18,10 @@ const HeroSection = () => {
   };
 
   const highlights = [
-    'Professional & Trained Staff',
-    'Eco-Friendly Products',
-    'Satisfaction Guaranteed',
-    'Pay After Service',
+    'Certified & Vetted Professionals',
+    'Premium Eco-Friendly Products',
+    'Bespoke Quotes After Assessment',
+    'Pay Only After Service Delivery',
   ];
 
   return (
@@ -59,8 +59,8 @@ const HeroSection = () => {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            From home cleaning to facility management, we deliver exceptional 
-            service. <span className="text-primary font-semibold">Book now, pay after service.</span>
+            Bespoke cleaning and property solutions, tailored to your exact requirements. 
+            <span className="text-primary font-semibold"> Get a personalised quote — pay only after service.</span>
           </p>
 
           {/* Highlights */}
@@ -76,11 +76,11 @@ const HeroSection = () => {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <Button 
-              onClick={() => navigate('/book')}
-              className="btn-primary text-lg px-8 py-6 gap-2"
+              onClick={() => navigate('/quote')}
+              className="btn-gold text-lg px-8 py-6 gap-2"
             >
               <Sparkles className="h-5 w-5" />
-              Book a Service
+              Get Your Free Quote
               <ArrowRight className="h-5 w-5" />
             </Button>
             <Button 

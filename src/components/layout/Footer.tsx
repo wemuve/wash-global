@@ -61,8 +61,8 @@ const Footer = () => {
               Ready to Experience Premium Service?
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Join thousands of satisfied customers across Zambia. 
-              Book your service today - pay after completion!
+              Every space deserves a bespoke approach. Request your free, no-obligation quote 
+              and let our experts tailor a solution to your exact needs.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button onClick={openWhatsApp} className="btn-whatsapp gap-2">
@@ -86,8 +86,9 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <img src="/lovable-uploads/eab6e2be-5d58-4fd1-8145-f8535ed2a78e.png" alt="WeWash Global" className="h-12 w-auto mb-6" />
             <p className="text-muted-foreground mb-6 max-w-sm">
-              WeWash Global delivers premium cleaning and facility management services 
-              for homes, businesses, and institutions across Zambia.
+              WeWash Global delivers bespoke, premium-grade cleaning and facility management services 
+              for discerning homes, businesses, and institutions across Zambia. All service pricing is 
+              tailored to your specific requirements.
             </p>
             
             {/* Trust Badges */}

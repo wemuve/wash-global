@@ -40,11 +40,12 @@ const GetQuote = () => {
           <div className="max-w-3xl mx-auto text-center">
             <span className="badge-gold mb-4">AI-Powered Pricing</span>
             <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Get Your Price in <span className="text-wewash-gold">Seconds</span>
+              Get Your <span className="text-wewash-gold">Starting Estimate</span>
             </h1>
             <p className="text-lg text-white/80">
-              Describe your cleaning job and our AI will calculate an instant estimate.
-              No waiting, no callbacks - just accurate pricing.
+              Describe your requirements and our AI will provide an indicative starting price. 
+              Your exact quote is confirmed after a professional assessment of the scope, 
+              condition, location, and materials required.
             </p>
           </div>
         </div>
