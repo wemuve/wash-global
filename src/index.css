@@ -26,10 +26,10 @@
     --primary-light: 210 100% 65%;
     --primary-muted: 210 60% 20%;
 
-    /* Secondary - Gold Accent */
-    --secondary: 45 95% 55%;
-    --secondary-foreground: 45 100% 10%;
-    --secondary-hover: 45 95% 60%;
+    /* Secondary - Rich Gold Accent */
+    --secondary: 42 75% 55%;
+    --secondary-foreground: 42 100% 8%;
+    --secondary-hover: 42 80% 60%;
 
     /* Success Green */
     --success: 150 80% 45%;
