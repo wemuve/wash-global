@@ -100,8 +100,8 @@ export default {
         glow: "var(--shadow-glow)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        display: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Barlow", "system-ui", "-apple-system", "sans-serif"],
+        display: ["Barlow Condensed", "Barlow", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

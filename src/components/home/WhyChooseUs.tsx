@@ -59,9 +59,9 @@ const WhyChooseUs = () => {
       <div className="container-wewash">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="badge-success mb-4">Why Choose WeWash</span>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary mb-4">Why Choose WeWash</span>
           <h2 className="text-foreground mb-4">
-            The WeWash Difference
+            The WeWash <span className="text-secondary">Difference</span>
           </h2>
           <p className="text-lg text-muted-foreground">
             We combine expertise, reliability, and exceptional customer service 
@@ -76,10 +76,10 @@ const WhyChooseUs = () => {
             return (
               <div 
                 key={index} 
-                className="feature-card text-center group hover:bg-primary-muted"
+                className="feature-card text-center group hover:border-secondary/30"
               >
-                <div className="w-14 h-14 rounded-2xl bg-primary-muted flex items-center justify-center mx-auto mb-4 group-hover:bg-primary transition-colors">
-                  <Icon className="h-7 w-7 text-primary group-hover:text-primary-foreground transition-colors" />
+                <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary transition-colors">
+                  <Icon className="h-7 w-7 text-secondary group-hover:text-secondary-foreground transition-colors" />
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   {feature.title}
@@ -93,25 +93,25 @@ const WhyChooseUs = () => {
         </div>
 
         {/* Trust Banner */}
-        <div className="mt-20 bg-wewash-navy rounded-3xl p-8 md:p-12 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            A Premium Service, Tailored to You
+        <div className="mt-20 rounded-3xl p-8 md:p-12 text-center border border-secondary/20 bg-gradient-to-br from-[hsl(220_30%_10%)] to-[hsl(220_35%_8%)]">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+            A Premium Service, <span className="text-secondary">Tailored to You</span>
           </h3>
-          <p className="text-white/70 max-w-2xl mx-auto mb-6">
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
             We don't believe in one-size-fits-all. Every quote is customised after a thorough 
             assessment of your property, requirements, and expectations. That's the WeWash difference.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
-            <div className="flex items-center gap-2 text-white/80">
-              <Shield className="h-5 w-5 text-wewash-gold" />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Shield className="h-5 w-5 text-secondary" />
               <span>Fully Insured</span>
             </div>
-            <div className="flex items-center gap-2 text-white/80">
-              <Award className="h-5 w-5 text-wewash-gold" />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Award className="h-5 w-5 text-secondary" />
               <span>Certified Professionals</span>
             </div>
-            <div className="flex items-center gap-2 text-white/80">
-              <Leaf className="h-5 w-5 text-wewash-gold" />
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Leaf className="h-5 w-5 text-secondary" />
               <span>Eco-Friendly</span>
             </div>
           </div>

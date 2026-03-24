@@ -26,10 +26,10 @@
     --primary-light: 210 100% 65%;
     --primary-muted: 210 60% 20%;
 
-    /* Secondary - Gold Accent */
-    --secondary: 45 95% 55%;
-    --secondary-foreground: 45 100% 10%;
-    --secondary-hover: 45 95% 60%;
+    /* Secondary - Rich Gold Accent */
+    --secondary: 42 75% 55%;
+    --secondary-foreground: 42 100% 8%;
+    --secondary-hover: 42 80% 60%;
 
     /* Success Green */
     --success: 150 80% 45%;
@@ -55,8 +55,8 @@
     --wewash-blue-dark: 210 100% 45%;
     --wewash-blue-light: 210 100% 65%;
     --wewash-navy: 220 35% 10%;
-    --wewash-gold: 45 95% 55%;
-    --wewash-gold-light: 45 60% 25%;
+    --wewash-gold: 42 75% 55%;
+    --wewash-gold-light: 42 40% 20%;
     --wewash-green: 150 80% 45%;
     --wewash-gray: 220 25% 15%;
     --wewash-dark-gray: 210 20% 60%;
@@ -66,7 +66,7 @@
     --gradient-header: linear-gradient(135deg, hsl(220 35% 8%), hsl(220 30% 15%));
     --gradient-hero: linear-gradient(135deg, hsl(210 100% 50% / 0.15), hsl(220 35% 8% / 0.95));
     --gradient-subtle: linear-gradient(180deg, hsl(220 25% 10%), hsl(220 25% 8%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 95% 55%), hsl(35 95% 50%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 75% 55%), hsl(38 70% 45%));
     --gradient-success: linear-gradient(135deg, hsl(150 80% 45%), hsl(160 80% 40%));
     --gradient-shine: linear-gradient(135deg, hsl(210 100% 60% / 0.2), hsl(210 100% 40% / 0.1));
     
@@ -137,7 +137,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Barlow', system-ui, -apple-system, sans-serif;
   }
 
   /* Typography System */
