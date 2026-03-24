@@ -5,10 +5,11 @@ import {
   ArrowRight, 
   MessageCircle, 
   CheckCircle2,
-  Star,
-  Sparkles
+  Sparkles,
+  Shield,
+  Award,
+  Leaf
 } from 'lucide-react';
-import heroImage from '@/assets/hero-diverse-team.jpg';
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -26,48 +27,50 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background">
-      {/* Background with gradient overlay */}
+      {/* Background layers */}
       <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-[hsl(220_35%_12%)]" />
+        {/* Decorative grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `linear-gradient(hsl(var(--secondary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--secondary)) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
       </div>
 
       {/* Animated glow effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px] animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/6 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        {/* Gold accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-secondary/50 to-transparent" />
       </div>
 
       {/* Content */}
       <div className="relative container-wewash py-20">
         <div className="max-w-3xl">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 ring-1 ring-primary/30 text-primary text-sm mb-6 animate-fade-up">
-            <Star className="h-4 w-4 fill-primary" />
-            <span>Premium Cleaning Services in Zambia</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 ring-1 ring-secondary/30 text-secondary text-sm mb-6 animate-fade-up">
+            <Sparkles className="h-4 w-4 fill-secondary" />
+            <span>Premium Cleaning & Property Services — Lusaka, Zambia</span>
           </div>
 
           {/* Headline */}
           <h1 className="text-foreground text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            Premium Cleaning &
-            <span className="block text-primary">Property Services</span>
+            Bespoke Cleaning.
+            <span className="block text-secondary">Unmatched Standards.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Bespoke cleaning and property solutions, tailored to your exact requirements. 
-            <span className="text-primary font-semibold"> Get a personalised quote — pay only after service.</span>
+            Managed cleaning and property services tailored to your exact requirements. 
+            <span className="text-secondary font-semibold"> Request a personalised quote — pay only after service.</span>
           </p>
 
           {/* Highlights */}
           <div className="grid grid-cols-2 gap-3 mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             {highlights.map((item, index) => (
               <div key={index} className="flex items-center gap-2 text-foreground">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
                 <span className="text-sm md:text-base">{item}</span>
               </div>
             ))}
@@ -95,16 +98,16 @@ const HeroSection = () => {
           {/* Trust indicators */}
           <div className="flex flex-wrap gap-6 animate-fade-up" style={{ animationDelay: '0.5s' }}>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <CheckCircle2 className="h-5 w-5 text-success" />
+              <Shield className="h-5 w-5 text-secondary" />
               <span className="text-sm">Licensed & Insured</span>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <CheckCircle2 className="h-5 w-5 text-success" />
+              <Award className="h-5 w-5 text-secondary" />
               <span className="text-sm">Background Checked Staff</span>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <CheckCircle2 className="h-5 w-5 text-success" />
-              <span className="text-sm">No Upfront Payment</span>
+              <Leaf className="h-5 w-5 text-secondary" />
+              <span className="text-sm">Eco-Friendly Products</span>
             </div>
           </div>
         </div>
@@ -112,8 +115,8 @@ const HeroSection = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 rounded-full border-2 border-primary/30 flex items-start justify-center p-2">
-          <div className="w-1 h-3 bg-primary rounded-full animate-pulse" />
+        <div className="w-8 h-12 rounded-full border-2 border-secondary/30 flex items-start justify-center p-2">
+          <div className="w-1 h-3 bg-secondary rounded-full animate-pulse" />
         </div>
       </div>
     </section>
