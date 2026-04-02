@@ -17,6 +17,7 @@ import GetQuote from "./pages/GetQuote";
 import AdminDashboard from "./pages/AdminDashboard";
 import VendorDashboard from "./pages/VendorDashboard";
 import VendorRegistration from "./pages/VendorRegistration";
+import WorkerOnboardingPage from "./pages/WorkerOnboarding";
 import NotFound from "./pages/NotFound";
 import AIReceptionist from "./components/ai/AIReceptionist";
 
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/vendor" element={<VendorDashboard />} />
             <Route path="/vendor-registration" element={<VendorRegistration />} />
+            <Route path="/worker-onboarding" element={<WorkerOnboardingPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AIReceptionist />

@@ -423,6 +423,112 @@ export type Database = {
           },
         ]
       }
+      job_checklist_completions: {
+        Row: {
+          assignment_id: string
+          checklist_id: string
+          completed_at: string | null
+          completed_items: Json | null
+          completion_percentage: number | null
+          created_at: string
+          id: string
+        }
+        Insert: {
+          assignment_id: string
+          checklist_id: string
+          completed_at?: string | null
+          completed_items?: Json | null
+          completion_percentage?: number | null
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          assignment_id?: string
+          checklist_id?: string
+          completed_at?: string | null
+          completed_items?: Json | null
+          completion_percentage?: number | null
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_checklist_completions_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "job_assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_checklist_completions_checklist_id_fkey"
+            columns: ["checklist_id"]
+            isOneToOne: false
+            referencedRelation: "service_checklists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_offers: {
+        Row: {
+          booking_id: string
+          created_at: string
+          decline_reason: string | null
+          expires_at: string
+          id: string
+          offered_at: string | null
+          priority_rank: number | null
+          responded_at: string | null
+          status: Database["public"]["Enums"]["job_offer_status"] | null
+          vendor_id: string
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string
+          decline_reason?: string | null
+          expires_at: string
+          id?: string
+          offered_at?: string | null
+          priority_rank?: number | null
+          responded_at?: string | null
+          status?: Database["public"]["Enums"]["job_offer_status"] | null
+          vendor_id: string
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string
+          decline_reason?: string | null
+          expires_at?: string
+          id?: string
+          offered_at?: string | null
+          priority_rank?: number | null
+          responded_at?: string | null
+          status?: Database["public"]["Enums"]["job_offer_status"] | null
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_offers_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_offers_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_offers_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           assigned_to: string | null
@@ -1068,6 +1174,59 @@ export type Database = {
         }
         Relationships: []
       }
+      service_checklists: {
+        Row: {
+          checklist_items: Json
+          created_at: string
+          expected_duration_minutes: number | null
+          id: string
+          is_active: boolean | null
+          quality_checkpoints: Json | null
+          required_tools: Json | null
+          requires_after_photos: boolean | null
+          requires_before_photos: boolean | null
+          service_id: string | null
+          service_name: string
+          updated_at: string
+        }
+        Insert: {
+          checklist_items?: Json
+          created_at?: string
+          expected_duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          quality_checkpoints?: Json | null
+          required_tools?: Json | null
+          requires_after_photos?: boolean | null
+          requires_before_photos?: boolean | null
+          service_id?: string | null
+          service_name: string
+          updated_at?: string
+        }
+        Update: {
+          checklist_items?: Json
+          created_at?: string
+          expected_duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          quality_checkpoints?: Json | null
+          required_tools?: Json | null
+          requires_after_photos?: boolean | null
+          requires_before_photos?: boolean | null
+          service_id?: string | null
+          service_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_checklists_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       services: {
         Row: {
           base_price: number
@@ -1108,6 +1267,209 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "service_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          base_price: number
+          cancellation_reason: string | null
+          cancelled_at: string | null
+          created_at: string
+          customer_address: string
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string
+          discount_percentage: number | null
+          final_price: number
+          frequency: Database["public"]["Enums"]["subscription_frequency"]
+          id: string
+          last_booking_date: string | null
+          next_booking_date: string | null
+          preferred_day: string | null
+          preferred_time: string | null
+          preferred_vendor_id: string | null
+          service_id: string | null
+          service_name: string
+          status: Database["public"]["Enums"]["subscription_status"] | null
+          total_bookings_made: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          base_price: number
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          customer_address: string
+          customer_email?: string | null
+          customer_name: string
+          customer_phone: string
+          discount_percentage?: number | null
+          final_price: number
+          frequency?: Database["public"]["Enums"]["subscription_frequency"]
+          id?: string
+          last_booking_date?: string | null
+          next_booking_date?: string | null
+          preferred_day?: string | null
+          preferred_time?: string | null
+          preferred_vendor_id?: string | null
+          service_id?: string | null
+          service_name: string
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          total_bookings_made?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          base_price?: number
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          customer_address?: string
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string
+          discount_percentage?: number | null
+          final_price?: number
+          frequency?: Database["public"]["Enums"]["subscription_frequency"]
+          id?: string
+          last_booking_date?: string | null
+          next_booking_date?: string | null
+          preferred_day?: string | null
+          preferred_time?: string | null
+          preferred_vendor_id?: string | null
+          service_id?: string | null
+          service_name?: string
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          total_bookings_made?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_preferred_vendor_id_fkey"
+            columns: ["preferred_vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_preferred_vendor_id_fkey"
+            columns: ["preferred_vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_modules: {
+        Row: {
+          content_type: string
+          content_url: string | null
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          is_active: boolean | null
+          passing_score: number | null
+          quiz_questions: Json | null
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content_type?: string
+          content_url?: string | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          passing_score?: number | null
+          quiz_questions?: Json | null
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content_type?: string
+          content_url?: string | null
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_active?: boolean | null
+          passing_score?: number | null
+          quiz_questions?: Json | null
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      training_progress: {
+        Row: {
+          completed: boolean | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          module_id: string
+          quiz_attempts: number | null
+          quiz_score: number | null
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          module_id: string
+          quiz_attempts?: number | null
+          quiz_score?: number | null
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          module_id?: string
+          quiz_attempts?: number | null
+          quiz_score?: number | null
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "training_modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_progress_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_progress_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
             referencedColumns: ["id"]
           },
         ]
@@ -1165,66 +1527,289 @@ export type Database = {
       }
       vendors: {
         Row: {
+          avg_rating: number | null
           bank_details: Json | null
           commission_rate: number | null
+          complaint_count: number | null
+          completion_rate: number | null
           created_at: string
           documents: Json | null
           email: string | null
           id: string
+          id_document_url: string | null
+          id_verified: boolean | null
           is_active: boolean | null
           is_verified: boolean | null
+          location_lat: number | null
+          location_lng: number | null
           name: string
+          onboarding_status:
+            | Database["public"]["Enums"]["onboarding_status"]
+            | null
           phone: string
           profile_image: string | null
+          punctuality_score: number | null
+          quiz_passed: boolean | null
+          quiz_passed_at: string | null
           rating: number | null
+          repeat_booking_rate: number | null
+          serious_complaint_count: number | null
           service_areas: string[] | null
           specializations: string[] | null
+          suspended_at: string | null
+          suspension_reason: string | null
+          terms_accepted: boolean | null
+          terms_accepted_at: string | null
+          tier: Database["public"]["Enums"]["worker_tier"] | null
+          total_completed_jobs: number | null
           total_jobs: number | null
           total_reviews: number | null
+          training_completed: boolean | null
+          training_completed_at: string | null
           updated_at: string
           user_id: string | null
         }
         Insert: {
+          avg_rating?: number | null
           bank_details?: Json | null
           commission_rate?: number | null
+          complaint_count?: number | null
+          completion_rate?: number | null
           created_at?: string
           documents?: Json | null
           email?: string | null
           id?: string
+          id_document_url?: string | null
+          id_verified?: boolean | null
           is_active?: boolean | null
           is_verified?: boolean | null
+          location_lat?: number | null
+          location_lng?: number | null
           name: string
+          onboarding_status?:
+            | Database["public"]["Enums"]["onboarding_status"]
+            | null
           phone: string
           profile_image?: string | null
+          punctuality_score?: number | null
+          quiz_passed?: boolean | null
+          quiz_passed_at?: string | null
           rating?: number | null
+          repeat_booking_rate?: number | null
+          serious_complaint_count?: number | null
           service_areas?: string[] | null
           specializations?: string[] | null
+          suspended_at?: string | null
+          suspension_reason?: string | null
+          terms_accepted?: boolean | null
+          terms_accepted_at?: string | null
+          tier?: Database["public"]["Enums"]["worker_tier"] | null
+          total_completed_jobs?: number | null
           total_jobs?: number | null
           total_reviews?: number | null
+          training_completed?: boolean | null
+          training_completed_at?: string | null
           updated_at?: string
           user_id?: string | null
         }
         Update: {
+          avg_rating?: number | null
           bank_details?: Json | null
           commission_rate?: number | null
+          complaint_count?: number | null
+          completion_rate?: number | null
           created_at?: string
           documents?: Json | null
           email?: string | null
           id?: string
+          id_document_url?: string | null
+          id_verified?: boolean | null
           is_active?: boolean | null
           is_verified?: boolean | null
+          location_lat?: number | null
+          location_lng?: number | null
           name?: string
+          onboarding_status?:
+            | Database["public"]["Enums"]["onboarding_status"]
+            | null
           phone?: string
           profile_image?: string | null
+          punctuality_score?: number | null
+          quiz_passed?: boolean | null
+          quiz_passed_at?: string | null
           rating?: number | null
+          repeat_booking_rate?: number | null
+          serious_complaint_count?: number | null
           service_areas?: string[] | null
           specializations?: string[] | null
+          suspended_at?: string | null
+          suspension_reason?: string | null
+          terms_accepted?: boolean | null
+          terms_accepted_at?: string | null
+          tier?: Database["public"]["Enums"]["worker_tier"] | null
+          total_completed_jobs?: number | null
           total_jobs?: number | null
           total_reviews?: number | null
+          training_completed?: boolean | null
+          training_completed_at?: string | null
           updated_at?: string
           user_id?: string | null
         }
         Relationships: []
+      }
+      worker_complaints: {
+        Row: {
+          assignment_id: string | null
+          booking_id: string | null
+          category: string
+          created_at: string
+          description: string
+          id: string
+          resolution: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: Database["public"]["Enums"]["complaint_severity"]
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          assignment_id?: string | null
+          booking_id?: string | null
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          resolution?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: Database["public"]["Enums"]["complaint_severity"]
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          assignment_id?: string | null
+          booking_id?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          resolution?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: Database["public"]["Enums"]["complaint_severity"]
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_complaints_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "job_assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_complaints_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_complaints_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_complaints_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      worker_performance_logs: {
+        Row: {
+          assignment_id: string | null
+          booking_id: string | null
+          complaint_severity:
+            | Database["public"]["Enums"]["complaint_severity"]
+            | null
+          created_at: string
+          customer_rating: number | null
+          had_complaint: boolean | null
+          id: string
+          notes: string | null
+          vendor_id: string
+          was_completed: boolean | null
+          was_on_time: boolean | null
+          was_repeat_customer: boolean | null
+        }
+        Insert: {
+          assignment_id?: string | null
+          booking_id?: string | null
+          complaint_severity?:
+            | Database["public"]["Enums"]["complaint_severity"]
+            | null
+          created_at?: string
+          customer_rating?: number | null
+          had_complaint?: boolean | null
+          id?: string
+          notes?: string | null
+          vendor_id: string
+          was_completed?: boolean | null
+          was_on_time?: boolean | null
+          was_repeat_customer?: boolean | null
+        }
+        Update: {
+          assignment_id?: string | null
+          booking_id?: string | null
+          complaint_severity?:
+            | Database["public"]["Enums"]["complaint_severity"]
+            | null
+          created_at?: string
+          customer_rating?: number | null
+          had_complaint?: boolean | null
+          id?: string
+          notes?: string | null
+          vendor_id?: string
+          was_completed?: boolean | null
+          was_on_time?: boolean | null
+          was_repeat_customer?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_performance_logs_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "job_assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_performance_logs_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_performance_logs_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_performance_logs_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors_public"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -1278,6 +1863,10 @@ export type Database = {
       }
     }
     Functions: {
+      check_vendor_suspension: {
+        Args: { vendor_uuid: string }
+        Returns: boolean
+      }
       generate_referral_code: { Args: { user_uuid: string }; Returns: string }
       has_role: {
         Args: {
@@ -1286,6 +1875,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_vendor_tier: { Args: { vendor_uuid: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "manager" | "vendor" | "customer"
@@ -1296,6 +1886,8 @@ export type Database = {
         | "completed"
         | "cancelled"
         | "rescheduled"
+      complaint_severity: "minor" | "major"
+      job_offer_status: "pending" | "accepted" | "declined" | "expired"
       lead_status:
         | "new"
         | "contacted"
@@ -1305,7 +1897,17 @@ export type Database = {
         | "won"
         | "lost"
         | "abandoned"
+      onboarding_status:
+        | "pending"
+        | "training"
+        | "quiz"
+        | "active"
+        | "suspended"
+        | "removed"
+      subscription_frequency: "weekly" | "biweekly" | "monthly"
+      subscription_status: "active" | "paused" | "cancelled"
       user_type: "home" | "business" | "government"
+      worker_tier: "bronze" | "silver" | "gold" | "elite"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1442,6 +2044,8 @@ export const Constants = {
         "cancelled",
         "rescheduled",
       ],
+      complaint_severity: ["minor", "major"],
+      job_offer_status: ["pending", "accepted", "declined", "expired"],
       lead_status: [
         "new",
         "contacted",
@@ -1452,7 +2056,18 @@ export const Constants = {
         "lost",
         "abandoned",
       ],
+      onboarding_status: [
+        "pending",
+        "training",
+        "quiz",
+        "active",
+        "suspended",
+        "removed",
+      ],
+      subscription_frequency: ["weekly", "biweekly", "monthly"],
+      subscription_status: ["active", "paused", "cancelled"],
       user_type: ["home", "business", "government"],
+      worker_tier: ["bronze", "silver", "gold", "elite"],
     },
   },
 } as const
