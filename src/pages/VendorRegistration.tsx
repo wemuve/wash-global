@@ -90,7 +90,7 @@ const VendorRegistration = () => {
         description: "We'll review your application and get back to you soon.",
       });
 
-      navigate('/');
+      navigate('/worker-onboarding');
     } catch (error) {
       console.error('Vendor registration error:', error);
       toast({
