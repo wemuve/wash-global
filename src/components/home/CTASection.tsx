@@ -67,10 +67,6 @@ const CTASection = () => {
               <Phone className="h-5 w-5 text-secondary" />
               <span>+260 768 671 420 (Zambia)</span>
             </a>
-            <a href="tel:+4560678193" className="flex items-center justify-center gap-2 hover:text-secondary transition-colors">
-              <Phone className="h-5 w-5 text-secondary" />
-              <span>+45 60 67 81 93 (Denmark)</span>
-            </a>
           </div>
         </div>
       </div>

@@ -103,10 +103,10 @@ const About = () => {
                     <p className="text-sm text-muted-foreground">Operations Headquarters</p>
                   </div>
                   <div className="bg-background rounded-2xl p-6 text-center shadow-card border-2 border-wewash-gold/30">
-                    <Building2 className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
-                    <h3 className="font-semibold text-foreground">WeMuve - Denmark</h3>
-                    <p className="text-sm text-muted-foreground">Parent Company</p>
-                    <p className="text-xs text-muted-foreground mt-1">International Standards & Support</p>
+                    <Globe className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
+                    <h3 className="font-semibold text-foreground">International Standards</h3>
+                    <p className="text-sm text-muted-foreground">World-Class Operations</p>
+                    <p className="text-xs text-muted-foreground mt-1">Global Best Practices & Training</p>
                   </div>
                 </div>
               </div>

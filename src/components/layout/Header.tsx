@@ -62,8 +62,6 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-4 text-foreground/70 text-xs">
               <span>🇿🇲 Premium Services Across Zambia</span>
-              <span className="opacity-30">|</span>
-              <span>🇩🇰 A WeMuve Company</span>
             </div>
           </div>
         </div>

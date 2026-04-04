@@ -6,7 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const WEWASH_CONTEXT = `You are the AI Receptionist for WeWash Global, a premium cleaning and property services company based in Lusaka, Zambia. WeWash is a daughter brand of WeMuve, our parent company in Denmark.
+const WEWASH_CONTEXT = `You are the AI Receptionist for WeWash Global, a premium cleaning and property services company based in Lusaka, Zambia.
 
 COMPANY INFORMATION:
 - Website: wewash.co.zm

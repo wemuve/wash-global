@@ -129,7 +129,7 @@ const Services = () => {
               <span className="text-primary"> Services</span>
             </h1>
             <p className="text-xl text-muted-foreground">
-              Professionally managed, structured operations backed by our Danish parent company WeMuve. 
+              Professionally managed, structured operations with international-grade standards. 
               All prices are <span className="text-secondary font-bold">starting estimates</span> — 
               final quotes confirmed after professional assessment.
             </p>
