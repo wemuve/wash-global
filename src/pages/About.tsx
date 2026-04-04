@@ -82,10 +82,9 @@ const About = () => {
                   genuine customer care.
                 </p>
                 <p>
-                  <strong className="text-foreground">WeWash is a proud daughter brand of WeMuve</strong>, 
-                  our parent company headquartered in Denmark. This international backing gives us 
-                  access to world-class operational standards, training methodologies, and technology 
-                  that we bring directly to the Zambian market.
+                  <strong className="text-foreground">WeWash operates with world-class standards</strong>, 
+                  leveraging international best practices in operational excellence, training methodologies, 
+                  and technology that we bring directly to the Zambian market.
                 </p>
                 <p>
                   Today, we serve homes, businesses, and institutions across Zambia, combining 
