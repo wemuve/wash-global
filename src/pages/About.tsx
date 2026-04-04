@@ -43,7 +43,7 @@ const About = () => {
     <Layout>
       <Helmet>
         <title>About WeWash Global | Our Story & Mission | Cleaning Services Zambia</title>
-        <meta name="description" content="Learn about WeWash Global, a daughter brand of WeMuve Denmark. We provide premium cleaning and property services across Zambia with international standards." />
+        <meta name="description" content="Learn about WeWash Global. We provide premium cleaning and property services across Zambia with the highest standards of excellence." />
         <link rel="canonical" href="https://wewash.co.zm/about" />
       </Helmet>
 
