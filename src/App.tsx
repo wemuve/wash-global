@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import VendorDashboard from "./pages/VendorDashboard";
 import VendorRegistration from "./pages/VendorRegistration";
 import WorkerOnboardingPage from "./pages/WorkerOnboarding";
+import BookNow from "./pages/BookNow";
 import NotFound from "./pages/NotFound";
 import AIReceptionist from "./components/ai/AIReceptionist";
 
