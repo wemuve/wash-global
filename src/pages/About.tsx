@@ -7,8 +7,7 @@ import {
   Heart, 
   MapPin,
   CheckCircle2,
-  ArrowRight,
-  Building2
+  ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +43,7 @@ const About = () => {
     <Layout>
       <Helmet>
         <title>About WeWash Global | Our Story & Mission | Cleaning Services Zambia</title>
-        <meta name="description" content="Learn about WeWash Global, a daughter brand of WeMuve Denmark. We provide premium cleaning and property services across Zambia with international standards." />
+        <meta name="description" content="Learn about WeWash Global. We provide premium cleaning and property services across Zambia with the highest standards of excellence." />
         <link rel="canonical" href="https://wewash.co.zm/about" />
       </Helmet>
 
@@ -83,10 +82,9 @@ const About = () => {
                   genuine customer care.
                 </p>
                 <p>
-                  <strong className="text-foreground">WeWash is a proud daughter brand of WeMuve</strong>, 
-                  our parent company headquartered in Denmark. This international backing gives us 
-                  access to world-class operational standards, training methodologies, and technology 
-                  that we bring directly to the Zambian market.
+                  <strong className="text-foreground">WeWash operates with world-class standards</strong>, 
+                  leveraging international best practices in operational excellence, training methodologies, 
+                  and technology that we bring directly to the Zambian market.
                 </p>
                 <p>
                   Today, we serve homes, businesses, and institutions across Zambia, combining 
@@ -105,10 +103,10 @@ const About = () => {
                     <p className="text-sm text-muted-foreground">Operations Headquarters</p>
                   </div>
                   <div className="bg-background rounded-2xl p-6 text-center shadow-card border-2 border-wewash-gold/30">
-                    <Building2 className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
-                    <h3 className="font-semibold text-foreground">WeMuve - Denmark</h3>
-                    <p className="text-sm text-muted-foreground">Parent Company</p>
-                    <p className="text-xs text-muted-foreground mt-1">International Standards & Support</p>
+                    <Globe className="h-8 w-8 text-wewash-gold mx-auto mb-3" />
+                    <h3 className="font-semibold text-foreground">International Standards</h3>
+                    <p className="text-sm text-muted-foreground">World-Class Operations</p>
+                    <p className="text-xs text-muted-foreground mt-1">Global Best Practices & Training</p>
                   </div>
                 </div>
               </div>
