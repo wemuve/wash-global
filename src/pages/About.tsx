@@ -7,8 +7,7 @@ import {
   Heart, 
   MapPin,
   CheckCircle2,
-  ArrowRight,
-  Building2
+  ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
