@@ -61,7 +61,7 @@ const Footer = () => {
             <WeWashLogo variant="light" className="mb-6" />
             <p className="text-muted-foreground mb-6 max-w-sm">
               WeWash Global delivers bespoke, premium-grade cleaning and facility management services
-              for discerning homes, businesses, and institutions across Zambia. A daughter company of WeMuve, Denmark.
+              for discerning homes, businesses, and institutions across Zambia.
             </p>
 
             {/* Trust Badges */}
