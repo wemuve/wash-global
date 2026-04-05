@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Phone, Menu, User, LogIn, MessageCircle } from 'lucide-react';
+import { Phone, Menu, User, LogIn, MessageCircle, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import WeWashLogo from '@/components/brand/WeWashLogo';
 
@@ -23,7 +23,6 @@ const Header = () => {
     supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
     });
-    
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
@@ -45,155 +44,119 @@ const Header = () => {
   };
 
   return (
-    <>
-      {/* Top Bar */}
-      <div className="hidden md:block bg-wewash-navy py-2 border-b border-border/30">
-        <div className="container-wewash">
-          <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center gap-6 text-foreground/80">
-              <a href="tel:+260768671420" className="flex items-center gap-2 hover:text-secondary transition-colors">
-                <Phone className="h-3.5 w-3.5 text-secondary" />
-                <span>+260 768 671 420</span>
-              </a>
-              <span className="opacity-30">|</span>
-              <a href="mailto:booking@wewashglobal.com" className="hover:text-secondary transition-colors">
-                booking@wewashglobal.com
-              </a>
-            </div>
-            <div className="flex items-center gap-4 text-foreground/70 text-xs">
-              <span>🇿🇲 Premium Services Across Zambia</span>
-            </div>
+    <nav className={`sticky top-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-xl border-b border-border/30' 
+        : 'bg-transparent'
+    }`}>
+      <div className="container-wewash">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <WeWashLogo variant="light" />
+          </Link>
+
+          {/* Desktop Navigation — centered */}
+          <div className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`relative text-[13px] uppercase tracking-[0.15em] font-medium transition-colors duration-300 ${
+                  isActive(link.href) 
+                    ? 'text-secondary' 
+                    : 'text-foreground/60 hover:text-foreground'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
+
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center gap-4">
+            {user ? (
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/dashboard')}
+                className="gap-2 text-foreground/70 hover:text-foreground"
+                size="sm"
+              >
+                <User className="h-4 w-4" />
+                Dashboard
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/auth')}
+                className="gap-2 text-foreground/70 hover:text-foreground"
+                size="sm"
+              >
+                <LogIn className="h-4 w-4" />
+                Sign In
+              </Button>
+            )}
+            
+            <Button 
+              onClick={() => navigate('/quote')}
+              className="btn-gold gap-2 text-xs uppercase tracking-wider"
+              size="sm"
+            >
+              Get Quote
+            </Button>
+          </div>
+
+          {/* Mobile Menu */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="ghost" size="icon" className="text-foreground/70">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full max-w-sm p-0 border-l border-border/30">
+              <div className="flex flex-col h-full">
+                <div className="p-8 flex justify-between items-center">
+                  <WeWashLogo variant="light" />
+                </div>
+                
+                <div className="flex-1 px-8 py-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block py-4 text-lg font-light tracking-wide border-b border-border/20 transition-colors ${
+                        isActive(link.href)
+                          ? 'text-secondary'
+                          : 'text-foreground/70 hover:text-foreground'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+                
+                <div className="p-8 space-y-3">
+                  <Button
+                    onClick={() => { openWhatsApp(); setIsOpen(false); }}
+                    className="w-full btn-whatsapp"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    WhatsApp
+                  </Button>
+                  <Button
+                    onClick={() => { navigate('/quote'); setIsOpen(false); }}
+                    className="w-full btn-gold"
+                  >
+                    Get Your Free Quote
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {/* Main Navigation */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/95 backdrop-blur-lg shadow-card border-b border-border/50' 
-          : 'bg-background/80 backdrop-blur-sm'
-      }`}>
-        <div className="container-wewash">
-          <div className="flex justify-between items-center h-16 md:h-20">
-            {/* Logo */}
-            <Link to="/" className="flex items-center">
-              <WeWashLogo variant="light" />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`relative text-sm font-medium transition-colors hover:text-secondary ${
-                    isActive(link.href) 
-                      ? 'text-secondary' 
-                      : 'text-foreground/80'
-                  }`}
-                >
-                  {link.label}
-                  {isActive(link.href) && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-secondary rounded-full" />
-                  )}
-                </Link>
-              ))}
-            </div>
-
-            {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-3">
-              <Button
-                onClick={openWhatsApp}
-                className="btn-whatsapp gap-2"
-                size="sm"
-              >
-                <MessageCircle className="h-4 w-4" />
-                WhatsApp
-              </Button>
-              
-              {user ? (
-                <Button
-                  variant="outline"
-                  onClick={() => navigate('/dashboard')}
-                  className="gap-2 border-border/50"
-                  size="sm"
-                >
-                  <User className="h-4 w-4" />
-                  Dashboard
-                </Button>
-              ) : (
-                <Button
-                  variant="outline"
-                  onClick={() => navigate('/auth')}
-                  className="gap-2 border-border/50"
-                  size="sm"
-                >
-                  <LogIn className="h-4 w-4" />
-                  Sign In
-                </Button>
-              )}
-              
-              <Button 
-                onClick={() => navigate('/quote')}
-                className="btn-gold gap-2"
-                size="sm"
-              >
-                Get Quote
-              </Button>
-            </div>
-
-            {/* Mobile Menu */}
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80 p-0">
-                <div className="flex flex-col h-full">
-                  <div className="p-6 border-b border-border">
-                    <WeWashLogo variant="light" />
-                  </div>
-                  
-                  <div className="flex-1 py-6">
-                    {navLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        to={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`block px-6 py-3 text-base font-medium transition-colors ${
-                          isActive(link.href)
-                            ? 'text-secondary bg-secondary/10'
-                            : 'text-foreground hover:bg-muted'
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                  
-                  <div className="p-6 border-t border-border space-y-3">
-                    <Button
-                      onClick={() => { openWhatsApp(); setIsOpen(false); }}
-                      className="w-full btn-whatsapp"
-                    >
-                      <MessageCircle className="h-4 w-4 mr-2" />
-                      WhatsApp Inquiry
-                    </Button>
-                    <Button
-                      onClick={() => { navigate('/quote'); setIsOpen(false); }}
-                      className="w-full btn-gold"
-                    >
-                      Get Your Free Quote
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </div>
-      </nav>
-    </>
+    </nav>
   );
 };
 
