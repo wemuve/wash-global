@@ -20,7 +20,7 @@ import VendorRegistration from "./pages/VendorRegistration";
 import WorkerOnboardingPage from "./pages/WorkerOnboarding";
 import BookNow from "./pages/BookNow";
 import NotFound from "./pages/NotFound";
-import AIReceptionist from "./components/ai/AIReceptionist";
+
 
 const queryClient = new QueryClient();
 
@@ -49,7 +49,7 @@ const App = () => (
             <Route path="/book-now" element={<BookNow />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <AIReceptionist />
+          
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
