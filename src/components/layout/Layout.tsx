@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import AIReceptionist from '@/components/ai/AIReceptionist';
+
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children, hideFooter = false }) => {
         {children}
       </main>
       {!hideFooter && <Footer />}
-      <AIReceptionist />
+      
     </div>
   );
 };
