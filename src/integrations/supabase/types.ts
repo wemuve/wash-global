@@ -1876,6 +1876,10 @@ export type Database = {
         Returns: boolean
       }
       update_vendor_tier: { Args: { vendor_uuid: string }; Returns: undefined }
+      validate_referral_code: {
+        Args: { code_to_check: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "manager" | "vendor" | "customer"

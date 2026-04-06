@@ -251,6 +251,20 @@ const AdminDashboard = () => {
     zamtel: 'Zamtel Money',
   };
 
+  if (authChecking) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <p className="text-muted-foreground">Checking access...</p>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!isAuthorized) {
+    return null;
+  }
+
   return (
     <Layout>
       <section className="bg-wewash-navy py-8">
