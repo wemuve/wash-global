@@ -133,11 +133,7 @@ export const useReferral = () => {
   const validateReferralCode = async (code: string): Promise<boolean> => {
     try {
       const { data, error } = await supabase
-        .from('referral_codes')
-        .select('*')
-        .eq('code', code.toUpperCase())
-        .eq('is_active', true)
-        .maybeSingle();
+        .rpc('validate_referral_code', { code_to_check: code.toUpperCase() });
 
       if (error) throw error;
 
