@@ -173,7 +173,7 @@ export const useReferral = () => {
       const { error: referralError } = await supabase
         .from('referrals')
         .insert({
-          referrer_id: codeData.user_id,
+          referrer_id: ownerId,
           referred_user_id: user?.id || null,
           referred_booking_id: bookingId,
           referral_code: code.toUpperCase(),
