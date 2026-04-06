@@ -87,11 +87,57 @@ const AdminDashboard = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedReceipt, setSelectedReceipt] = useState<Payment | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [authChecking, setAuthChecking] = useState(true);
+
+  // Auth guard: verify admin/manager role server-side
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          navigate('/auth');
+          return;
+        }
+
+        // Check role via server-side RLS-protected query
+        const { data: roles, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id);
+
+        if (error || !roles) {
+          navigate('/dashboard');
+          return;
+        }
+
+        const hasAdminAccess = roles.some(r => r.role === 'admin' || r.role === 'manager');
+        if (!hasAdminAccess) {
+          toast({
+            title: "Access denied",
+            description: "You don't have admin privileges.",
+            variant: "destructive",
+          });
+          navigate('/dashboard');
+          return;
+        }
+
+        setIsAuthorized(true);
+      } catch {
+        navigate('/auth');
+      } finally {
+        setAuthChecking(false);
+      }
+    };
+
+    checkAdminAccess();
+  }, [navigate, toast]);
 
   useEffect(() => {
+    if (!isAuthorized) return;
+
     fetchData();
     
-    // Set up realtime subscription for payments
     const channel = supabase
       .channel('payments-realtime')
       .on(
@@ -103,7 +149,7 @@ const AdminDashboard = () => {
           if (payload.eventType === 'INSERT' || (payload.eventType === 'UPDATE' && payload.new.status === 'completed')) {
             toast({
               title: '💰 New Payment Received!',
-              description: `${payload.new.customer_name} - ZMW ${payload.new.amount}`,
+              description: `Payment received - ${payload.new.currency} ${payload.new.amount}`,
             });
           }
         }
@@ -113,7 +159,7 @@ const AdminDashboard = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [isAuthorized]);
 
   const fetchData = async () => {
     setLoading(true);
