@@ -5,19 +5,58 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const validActions = ['match', 'check_expired', 'update_performance'];
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
+    // Require authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    const authSupabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: claims, error: authError } = await authSupabase.auth.getClaims(token);
+    if (authError || !claims?.claims) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Use service role for data operations
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { booking_id, action } = await req.json();
+    const body = await req.json();
+    const { booking_id, action, vendor_id } = body;
+
+    // Validate action
+    if (!action || !validActions.includes(action)) {
+      return new Response(JSON.stringify({ error: 'Invalid action' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
 
     if (action === 'match') {
-      // Get booking
+      if (!booking_id || !uuidRegex.test(booking_id)) {
+        return new Response(JSON.stringify({ error: 'Valid booking_id required' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
       const { data: booking, error: bErr } = await supabase
         .from('bookings')
         .select('*')
@@ -30,7 +69,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Get active vendors with onboarding complete
       const { data: vendors } = await supabase
         .from('vendors')
         .select('*')
@@ -43,7 +81,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Rank by: tier (Elite=4, Gold=3, Silver=2, Bronze=1) * 25 + avg_rating * 10 + completion_rate * 0.5
       const tierScore: Record<string, number> = { elite: 4, gold: 3, silver: 2, bronze: 1 };
       const ranked = vendors
         .map(v => ({
@@ -53,7 +90,6 @@ Deno.serve(async (req) => {
         .sort((a, b) => b.score - a.score)
         .slice(0, 5);
 
-      // Create offers with 15-min expiry
       const expiresAt = new Date(Date.now() + 15 * 60000).toISOString();
       const offers = ranked.map((v, i) => ({
         booking_id,
@@ -64,15 +100,11 @@ Deno.serve(async (req) => {
       }));
 
       await supabase.from('job_offers').insert(offers);
-
-      // Auto-assign to top ranked
       await supabase.from('job_assignments').insert({
         booking_id,
         vendor_id: ranked[0].id,
         status: 'assigned',
       });
-
-      // Update booking status
       await supabase.from('bookings').update({ status: 'confirmed' }).eq('id', booking_id);
 
       return new Response(JSON.stringify({
@@ -83,7 +115,6 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'check_expired') {
-      // Check for expired offers and reassign
       const { data: expired } = await supabase
         .from('job_offers')
         .select('*')
@@ -91,11 +122,9 @@ Deno.serve(async (req) => {
         .lt('expires_at', new Date().toISOString());
 
       if (expired && expired.length > 0) {
-        // Mark as expired
         const ids = expired.map(e => e.id);
         await supabase.from('job_offers').update({ status: 'expired' }).in('id', ids);
 
-        // For each booking with expired offers, check if there's a next available
         const bookingIds = [...new Set(expired.map(e => e.booking_id))];
         for (const bid of bookingIds) {
           const { data: nextOffer } = await supabase
@@ -125,15 +154,12 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'update_performance') {
-      // Recalculate vendor performance metrics
-      const { vendor_id } = await req.json().catch(() => ({ vendor_id: null }));
-      if (!vendor_id) {
-        return new Response(JSON.stringify({ error: 'vendor_id required' }), {
+      if (!vendor_id || !uuidRegex.test(vendor_id)) {
+        return new Response(JSON.stringify({ error: 'Valid vendor_id required' }), {
           status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
 
-      // Get performance logs
       const { data: logs } = await supabase
         .from('worker_performance_logs')
         .select('*')
@@ -158,9 +184,7 @@ Deno.serve(async (req) => {
           total_completed_jobs: logs.filter(l => l.was_completed).length,
         }).eq('id', vendor_id);
 
-        // Auto tier progression
         await supabase.rpc('update_vendor_tier', { vendor_uuid: vendor_id });
-        // Check suspension
         await supabase.rpc('check_vendor_suspension', { vendor_uuid: vendor_id });
       }
 
@@ -173,7 +197,7 @@ Deno.serve(async (req) => {
       status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: 'Internal error' }), {
       status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
   }
