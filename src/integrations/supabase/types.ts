@@ -1868,6 +1868,10 @@ export type Database = {
         Returns: boolean
       }
       generate_referral_code: { Args: { user_uuid: string }; Returns: string }
+      get_referral_code_owner: {
+        Args: { code_to_check: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
