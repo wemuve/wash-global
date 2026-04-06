@@ -133,11 +133,7 @@ export const useReferral = () => {
   const validateReferralCode = async (code: string): Promise<boolean> => {
     try {
       const { data, error } = await supabase
-        .from('referral_codes')
-        .select('*')
-        .eq('code', code.toUpperCase())
-        .eq('is_active', true)
-        .maybeSingle();
+        .rpc('validate_referral_code', { code_to_check: code.toUpperCase() });
 
       if (error) throw error;
 
@@ -150,15 +146,11 @@ export const useReferral = () => {
 
   const applyReferralCode = async (code: string, bookingId: string): Promise<boolean> => {
     try {
-      // First validate the code
-      const { data: codeData, error: codeError } = await supabase
-        .from('referral_codes')
-        .select('*')
-        .eq('code', code.toUpperCase())
-        .eq('is_active', true)
-        .maybeSingle();
+      // Validate and get code owner via secure RPC
+      const { data: ownerId, error: ownerError } = await supabase
+        .rpc('get_referral_code_owner', { code_to_check: code.toUpperCase() });
 
-      if (codeError || !codeData) {
+      if (ownerError || !ownerId) {
         toast({
           title: 'Invalid code',
           description: 'This referral code is not valid.',
@@ -168,7 +160,7 @@ export const useReferral = () => {
       }
 
       // Don't allow self-referral
-      if (user?.id && codeData.user_id === user.id) {
+      if (user?.id && ownerId === user.id) {
         toast({
           title: 'Cannot use own code',
           description: 'You cannot use your own referral code.',
@@ -181,7 +173,7 @@ export const useReferral = () => {
       const { error: referralError } = await supabase
         .from('referrals')
         .insert({
-          referrer_id: codeData.user_id,
+          referrer_id: ownerId,
           referred_user_id: user?.id || null,
           referred_booking_id: bookingId,
           referral_code: code.toUpperCase(),
