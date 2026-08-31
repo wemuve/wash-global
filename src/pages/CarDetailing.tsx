@@ -77,15 +77,16 @@ const CarDetailing = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/services/car-detailing" />
 
-        <script type="application/ld+json">{{JSON.stringify({{
+        <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" }},
-            {{ "@type": "ListItem", "position": 2, "name": "Services", "item": "https://wewashglobal.com/services" }},
-            {{ "@type": "ListItem", "position": 3, "name": "Car Detailing", "item": "https://wewashglobal.com/services/car-detailing" }}
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://wewashglobal.com/services" },
+            { "@type": "ListItem", "position": 3, "name": "Car Detailing", "item": "https://wewashglobal.com/services/car-detailing" }
           ]
-        }})}}</script>
+        })}</script>
+
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
