@@ -11,6 +11,7 @@ import Booking from "./pages/Booking";
 import BookingConfirmation from "./pages/BookingConfirmation";
 import About from "./pages/About";
 import Pools from "./pages/Pools";
+import CarDetailing from "./pages/CarDetailing";
 import Services from "./pages/Services";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
