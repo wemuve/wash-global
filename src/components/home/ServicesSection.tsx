@@ -63,7 +63,16 @@ const ServicesSection = () => {
       price: 'From K150',
       priceNote: 'Per day',
     },
+    {
+      icon: Waves,
+      title: 'Swimming pools',
+      description: 'We build pools from the ground up, then service, clean and repair them after.',
+      image: poolAsset.url,
+      price: 'From K800',
+      priceNote: 'Pool service & clean',
+    },
   ];
+
 
   return (
     <section className="section-spacing" id="services">
