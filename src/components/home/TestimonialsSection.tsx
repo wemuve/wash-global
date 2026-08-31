@@ -6,19 +6,19 @@ const TestimonialsSection = () => {
     {
       name: 'Grace Mwanza',
       role: 'Homeowner, Lusaka',
-      text: "WeWash has transformed how I manage my home. Their team is professional, punctual, and the quality is exceptional.",
+      text: "They came for a deep clean before my in-laws visited and finished the whole flat in a day. Nothing was moved out of place afterwards.",
       initials: 'GM',
     },
     {
       name: 'David Chishimba',
       role: 'Property Manager, Kitwe',
-      text: "Managing multiple properties became so much easier. Their facility management service is top-notch.",
+      text: "I hand them four properties between tenants. They send photos when they finish, so I do not have to drive out to check.",
       initials: 'DC',
     },
     {
       name: 'Thandiwe Phiri',
       role: 'Business Owner, Ndola',
-      text: "Finding a reliable cleaning service was challenging until we found WeWash. They always deliver excellence.",
+      text: "We had two cleaning companies before this one. WeWash is the first that turns up at the same time every week.",
       initials: 'TP',
     },
   ];
@@ -30,7 +30,7 @@ const TestimonialsSection = () => {
         <div className="max-w-xl mb-16">
           <p className="text-secondary text-xs uppercase tracking-[0.25em] font-medium mb-4">Testimonials</p>
           <h2 className="text-foreground font-light">
-            What Our Clients <span className="font-bold">Say</span>
+            What clients actually <span className="font-bold">tell us</span>
           </h2>
         </div>
 
@@ -66,11 +66,11 @@ const TestimonialsSection = () => {
 
         {/* Locations */}
         <div className="mt-16 flex flex-wrap gap-8 text-xs uppercase tracking-[0.15em] text-muted-foreground">
-          <span>Trusted across</span>
+          <span>Working across</span>
           <span className="text-foreground">Lusaka</span>
           <span className="text-foreground">Copperbelt</span>
           <span className="text-foreground">Livingstone</span>
-          <span className="text-muted-foreground/50">& expanding nationally</span>
+          <span className="text-muted-foreground/50">and growing</span>
         </div>
       </div>
     </section>

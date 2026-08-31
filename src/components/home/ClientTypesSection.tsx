@@ -9,25 +9,25 @@ const ClientTypesSection = () => {
   const clientTypes = [
     {
       label: 'B2C',
-      title: 'Home Clients',
-      description: 'Premium cleaning and maintenance for homeowners and tenants.',
-      features: ['Flexible scheduling', 'Pay per service', 'Loyalty rewards', 'Family-safe products'],
-      cta: 'Book for Home',
+      title: 'Homes',
+      description: 'Flats, houses and move-outs. Book a one-off or keep us coming weekly.',
+      features: ['Pick your own times', 'Pay after the clean', 'Discount when you book again', 'Safe around kids and pets'],
+      cta: 'Book for home',
     },
     {
       label: 'B2B',
       title: 'Businesses',
-      description: 'Scalable facility management for offices, hotels, and commercial properties.',
-      features: ['Contract pricing', 'Dedicated account manager', 'SLA guarantees', 'Monthly invoicing'],
-      cta: 'Business Inquiry',
+      description: 'Offices, lodges and retail. Fixed monthly rates and one person to call.',
+      features: ['Fixed contract pricing', 'One account manager', 'Agreed response times', 'Monthly invoicing'],
+      cta: 'Talk to us',
       featured: true,
     },
     {
       label: 'B2G',
       title: 'Government',
-      description: 'Compliant solutions for schools, hospitals, and public institutions.',
-      features: ['Tender-ready proposals', 'Compliance certified', 'Bulk pricing', 'Audit reports'],
-      cta: 'Request Proposal',
+      description: 'Schools, clinics and public buildings. Tender paperwork handled properly.',
+      features: ['Tender-ready proposals', 'Compliance documents', 'Volume pricing', 'Written audit reports'],
+      cta: 'Request a proposal',
     },
   ];
 
@@ -36,9 +36,9 @@ const ClientTypesSection = () => {
       <div className="container-wewash">
         {/* Header */}
         <div className="max-w-xl mb-16">
-          <p className="text-secondary text-xs uppercase tracking-[0.25em] font-medium mb-4">Solutions</p>
+          <p className="text-secondary text-xs uppercase tracking-[0.25em] font-medium mb-4">Who we serve</p>
           <h2 className="text-foreground font-light">
-            Tailored for <span className="font-bold">Every Client</span>
+            Who we <span className="font-bold">work for</span>
           </h2>
         </div>
 

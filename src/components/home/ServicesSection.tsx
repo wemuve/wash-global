@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 'lucide-react';
 
 import diverseHomeCleaningImage from '@/assets/diverse-home-cleaning.jpg';
 import diverseCarDetailingImage from '@/assets/diverse-car-detailing.jpg';
@@ -15,109 +15,121 @@ const ServicesSection = () => {
 
   const services = [
     {
-      title: 'Home Cleaning',
-      description: 'General, deep, and post-construction cleaning for homes of all sizes.',
+      icon: SprayCan,
+      title: 'Home cleaning',
+      description: 'Regular cleans, deep cleans, and the heavy work after builders leave.',
       image: diverseHomeCleaningImage,
       price: 'From K550',
-      note: '1 Bed – Light Condition',
+      priceNote: '1 bedroom, light condition',
     },
     {
-      title: 'Mobile Car Detailing',
-      description: 'Premium detailing delivered to your location by trained professionals.',
+      icon: Car,
+      title: 'Mobile car detailing',
+      description: 'We come to your house or office and do the car properly, inside and out.',
       image: diverseCarDetailingImage,
       price: 'From K450',
-      note: 'Small Car – Interior',
+      priceNote: 'Small car, interior',
     },
     {
+      icon: Bug,
       title: 'Fumigation',
-      description: 'Professional-grade pest control with certified methods.',
+      description: 'Roaches, termites, rodents — treated with licensed chemicals and a follow-up.',
       image: diversePestControlImage,
       price: 'From K400',
-      note: 'Residential',
+      priceNote: 'Residential',
     },
     {
-      title: 'Facility Management',
-      description: 'Comprehensive managed property operations for commercial clients.',
+      icon: Building2,
+      title: 'Facility management',
+      description: 'We run the day-to-day upkeep of buildings, grounds and site staff.',
       image: diverseFacilityImage,
       price: 'From K2,500',
-      note: 'Monthly Contract',
+      priceNote: 'Monthly contract',
     },
     {
-      title: 'Office Cleaning',
-      description: 'Reliable, structured cleaning with supervised teams.',
+      icon: Briefcase,
+      title: 'Office cleaning',
+      description: 'Daily or weekly teams with a supervisor and a checklist you can see.',
       image: diverseOfficeImage,
       price: 'From K200',
-      note: 'Per Day',
+      priceNote: 'Per day',
     },
     {
-      title: 'Trained Maids',
-      description: 'Vetted, professionally trained domestic staff with ongoing supervision.',
+      icon: UserCheck,
+      title: 'Trained maids',
+      description: 'Vetted domestic staff, trained by us and still checked on after placement.',
       image: diverseMaidImage,
       price: 'From K150',
-      note: 'Per Day',
+      priceNote: 'Per day',
     },
   ];
 
   return (
-    <section className="py-24 md:py-32" id="services">
+    <section className="section-spacing" id="services">
       <div className="container-wewash">
-        {/* Section Header */}
-        <div className="max-w-xl mb-16">
-          <p className="text-secondary text-xs uppercase tracking-[0.25em] font-medium mb-4">Our Services</p>
-          <h2 className="text-foreground font-light mb-4">
-            Premium Property <span className="font-bold">Care Solutions</span>
-          </h2>
-          <p className="text-muted-foreground font-light">
-            All prices are starting estimates. Final pricing confirmed after professional assessment.
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <div className="max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-secondary mb-4">What we do</p>
+            <h2 className="text-foreground mb-4">Six services, one team you can call</h2>
+            <p className="text-lg text-muted-foreground">
+              Prices below are starting points for a light job. Yours may be more or less — we
+              confirm it after we&apos;ve looked.
+            </p>
+          </div>
+          <Button variant="outline" onClick={() => navigate('/services')} className="gap-2 shrink-0">
+            See all services
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
 
-        {/* Services Grid — clean cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/30">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="group bg-background p-1"
-            >
-              <div className="overflow-hidden">
-                {/* Image */}
-                <div className="aspect-[3/2] relative overflow-hidden">
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${service.image})` }}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => {
+            const Icon = service.icon;
+            return (
+              <article
+                key={service.title}
+                className="group rounded-3xl overflow-hidden bg-card border border-border/40 transition-all duration-300 hover:border-secondary/40"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={`${service.title} in Lusaka by WeWash`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                  
-                  {/* Price overlay */}
-                  <div className="absolute bottom-4 left-4">
-                    <span className="text-secondary text-sm font-semibold">{service.price}</span>
-                    <span className="text-foreground/40 text-xs ml-2">{service.note}</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_35%_8%)] via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-background/70 backdrop-blur-sm flex items-center justify-center">
+                    <Icon className="h-5 w-5 text-secondary" />
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="py-6 px-1">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{service.title}</h3>
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed mb-4">{service.description}</p>
-                  <button 
-                    onClick={() => navigate('/quote')}
-                    className="text-xs uppercase tracking-[0.15em] text-secondary hover:text-secondary-hover transition-colors inline-flex items-center gap-2"
-                  >
-                    Get Estimate
-                    <ArrowRight className="h-3 w-3" />
-                  </button>
+                <div className="p-6">
+                  <h3 className="text-foreground mb-2">{service.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+
+                  <div className="flex items-end justify-between pt-5 border-t border-border/40">
+                    <div>
+                      <p className="font-display text-lg text-secondary">{service.price}</p>
+                      <p className="text-xs text-muted-foreground">{service.priceNote}</p>
+                    </div>
+                    <Button size="sm" variant="ghost" className="gap-1 text-foreground" onClick={() => navigate('/quote')}>
+                      Get price
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
-        {/* Disclaimer */}
-        <div className="mt-12 pt-8 border-t border-border/30">
-          <p className="text-xs text-muted-foreground font-light text-center max-w-xl mx-auto">
-            Starting estimates only — final quote confirmed after assessment of condition, transport, labour, and materials.
-          </p>
-        </div>
+        <p className="mt-10 text-sm text-muted-foreground max-w-2xl">
+          Starting prices assume a light-condition job. Transport, hours on site, materials and how
+          dirty the space actually is all change the final figure — which we agree with you before
+          we start.
+        </p>
       </div>
     </section>
   );
