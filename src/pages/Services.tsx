@@ -223,10 +223,10 @@ const Services = () => {
                           {service.pricing}
                         </span>
                         <Button 
-                          onClick={() => navigate('/quote')}
+                          onClick={() => navigate(service.id === 'car-detailing' ? '/services/car-detailing' : '/quote')}
                           className="btn-gold gap-2"
                         >
-                          Get Your Estimate
+                          {service.id === 'car-detailing' ? 'View Car Detailing' : 'Get Your Estimate'}
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       </div>
