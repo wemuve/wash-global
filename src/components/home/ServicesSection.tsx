@@ -80,7 +80,7 @@ const ServicesSection = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div className="max-w-2xl">
             <p className="text-[11px] uppercase tracking-[0.28em] text-secondary mb-4">What we do</p>
-            <h2 className="text-foreground mb-4">Six services, one team you can call</h2>
+            <h2 className="text-foreground mb-4">Seven services, one team you can call</h2>
             <p className="text-lg text-muted-foreground">
               Prices below are starting points for a light job. Yours may be more or less — we
               confirm it after we&apos;ve looked.
