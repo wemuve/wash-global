@@ -140,6 +140,13 @@ const Pricing = () => {
       <Helmet>
         <title>Pricing | WeWash Global – Premium Service Pricing in Zambia</title>
         <meta name="description" content="View starting prices for all WeWash Global premium services. All prices are estimates – final quotes confirmed after professional assessment." />
+        <link rel="canonical" href="https://wewashglobal.com/pricing" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/pricing" />
+        <meta property="og:title" content="Pricing | Starting Prices for Cleaning Services in Zambia" />
+        <meta property="og:description" content="Starting prices in Kwacha for cleaning, detailing, fumigation and pool care. Final quote confirmed after assessment." />
+        <meta name="twitter:title" content="Pricing | WeWash Global" />
+        <meta name="twitter:description" content="Starting prices in Kwacha for every WeWash service. Final quote after assessment." />
       </Helmet>
 
       {/* Hero */}
