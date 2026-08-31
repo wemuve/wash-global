@@ -8,6 +8,7 @@ import HowItWorksSection from '@/components/home/HowItWorksSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ClientTypesSection from '@/components/home/ClientTypesSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import LocalInfoSection from '@/components/LocalInfoSection';
 import CTASection from '@/components/home/CTASection';
 import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 
@@ -23,6 +24,7 @@ const Index = () => {
       <ClientTypesSection />
       <TestimonialsSection />
       <ReferralPromoSection />
+      <LocalInfoSection />
       <CTASection />
     </Layout>
   );
