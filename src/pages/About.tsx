@@ -47,6 +47,15 @@ const About = () => {
         <link rel="canonical" href="https://wewashglobal.com/about" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/about" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://wewashglobal.com/about" }
+          ]
+        })}</script>
         <meta property="og:title" content="About WeWash Global | Our Story & Mission" />
         <meta property="og:description" content="Who we are, how we work, and why families and businesses across Zambia trust WeWash Global with their homes and offices." />
         <meta name="twitter:title" content="About WeWash Global | Our Story & Mission" />

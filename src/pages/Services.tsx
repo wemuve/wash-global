@@ -145,6 +145,15 @@ const Services = () => {
         <link rel="canonical" href="https://wewashglobal.com/services" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/services" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://wewashglobal.com/services" }
+          ]
+        })}</script>
         <meta property="og:title" content="Our Services | Cleaning, Car Detailing & Facility Management in Lusaka" />
         <meta property="og:description" content="Deep cleaning, sofa and carpet care, mobile car detailing, fumigation, swimming pools and facility management across Zambia." />
         <meta name="twitter:title" content="Our Services | WeWash Global" />

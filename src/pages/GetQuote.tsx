@@ -34,6 +34,15 @@ const GetQuote = () => {
         <link rel="canonical" href="https://wewashglobal.com/quote" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/quote" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Get a Free Quote", "item": "https://wewashglobal.com/quote" }
+          ]
+        })}</script>
         <meta property="og:title" content="Get a Starting Estimate | WeWash Global" />
         <meta property="og:description" content="Estimate your cleaning cost in Kwacha, including transport from our Kabulonga office. Final price confirmed after assessment." />
       </Helmet>
