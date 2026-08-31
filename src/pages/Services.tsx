@@ -278,7 +278,10 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      <LocalInfoSection />
     </Layout>
+
   );
 };
 
