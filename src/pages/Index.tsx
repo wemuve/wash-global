@@ -16,6 +16,9 @@ import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 const Index = () => {
   return (
     <Layout>
+      <Helmet>
+        <link rel="canonical" href="https://wewashglobal.com/" />
+      </Helmet>
       <HeroSection />
       <ServicesSection />
       <BeforeAfterSection />
