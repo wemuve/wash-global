@@ -8,18 +8,19 @@ import { Label } from '@/components/ui/label';
 import { useBookingSimple } from '@/hooks/useBookingSimple';
 import { useNavigate } from 'react-router-dom';
 import {
-  Home, Car, Bug, Building2, Briefcase, Users,
+  Home, Car, Bug, Building2, Briefcase, Users, Waves,
   Calendar, Clock, User, Phone, MapPin, Mail,
   CheckCircle2, ArrowRight, Loader2, Sparkles
 } from 'lucide-react';
 
 const serviceOptions = [
-  { id: 'home-cleaning', name: 'Home Cleaning', icon: Home, from: 650 },
+  { id: 'home-cleaning', name: 'Home Cleaning', icon: Home, from: 550 },
   { id: 'car-detailing', name: 'Car Detailing', icon: Car, from: 450 },
   { id: 'fumigation', name: 'Fumigation', icon: Bug, from: 400 },
   { id: 'facility', name: 'Facility Management', icon: Building2, from: 2500 },
-  { id: 'office', name: 'Office Cleaning', icon: Briefcase, from: 1200 },
-  { id: 'maids', name: 'Trained Maids', icon: Users, from: 850 },
+  { id: 'office', name: 'Office Cleaning', icon: Briefcase, from: 200 },
+  { id: 'maids', name: 'Trained Maids', icon: Users, from: 150 },
+  { id: 'swimming-pools', name: 'Swimming Pools', icon: Waves, from: 800 },
 ];
 
 const timeSlots = [
