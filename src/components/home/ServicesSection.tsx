@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 'lucide-react';
+import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves } from 'lucide-react';
 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
@@ -9,6 +9,7 @@ import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
 import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
 import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
 import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
+import poolAsset from '@/assets/pools/pool-34.jpg.asset.json';
 
 const ServicesSection = () => {
   const navigate = useNavigate();
@@ -62,7 +63,16 @@ const ServicesSection = () => {
       price: 'From K150',
       priceNote: 'Per day',
     },
+    {
+      icon: Waves,
+      title: 'Swimming pools',
+      description: 'We build pools from the ground up, then service, clean and repair them after.',
+      image: poolAsset.url,
+      price: 'From K800',
+      priceNote: 'Pool service & clean',
+    },
   ];
+
 
   return (
     <section className="section-spacing" id="services">
@@ -70,7 +80,7 @@ const ServicesSection = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div className="max-w-2xl">
             <p className="text-[11px] uppercase tracking-[0.28em] text-secondary mb-4">What we do</p>
-            <h2 className="text-foreground mb-4">Six services, one team you can call</h2>
+            <h2 className="text-foreground mb-4">Seven services, one team you can call</h2>
             <p className="text-lg text-muted-foreground">
               Prices below are starting points for a light job. Yours may be more or less — we
               confirm it after we&apos;ve looked.
