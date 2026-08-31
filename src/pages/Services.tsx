@@ -14,7 +14,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import cleaningImage from '@/assets/cleaning-services.jpg';
+import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
+const cleaningImage = homeCleaningAsset.url;
 import carDetailingAsset from '@/assets/car-detailing-team.jpg.asset.json';
 const carDetailingImage = carDetailingAsset.url;
 import fumigationImage from '@/assets/fumigation-services.jpg';

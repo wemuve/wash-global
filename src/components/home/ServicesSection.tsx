@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 'lucide-react';
 
-import diverseHomeCleaningImage from '@/assets/diverse-home-cleaning.jpg';
+import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
 import diversePestControlImage from '@/assets/diverse-pest-control.jpg';
 import diverseFacilityImage from '@/assets/diverse-facility-management.jpg';
@@ -18,7 +18,7 @@ const ServicesSection = () => {
       icon: SprayCan,
       title: 'Home cleaning',
       description: 'Regular cleans, deep cleans, and the heavy work after builders leave.',
-      image: diverseHomeCleaningImage,
+      image: homeCleaningAsset.url,
       price: 'From K550',
       priceNote: '1 bedroom, light condition',
     },
