@@ -76,6 +76,15 @@ const Pools = () => {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/pools" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Swimming Pool Services", "item": "https://wewashglobal.com/pools" }
+          ]
+        })}</script>
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',

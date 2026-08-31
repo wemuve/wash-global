@@ -83,6 +83,15 @@ const BookNow = () => {
         <link rel="canonical" href="https://wewashglobal.com/book-now" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/book-now" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Book Now", "item": "https://wewashglobal.com/book-now" }
+          ]
+        })}</script>
         <meta property="og:title" content="Book Now | WeWash Global" />
         <meta property="og:description" content="Book cleaning in Lusaka in under a minute. No payment upfront — you pay after the job." />
       </Helmet>

@@ -118,6 +118,15 @@ const Contact = () => {
         <meta property="og:description" content="Get in touch with our team for quotes and bookings. Response within 24 hours." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/contact" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://wewashglobal.com/contact" }
+          ]
+        })}</script>
       </Helmet>
 
       {/* Hero */}

@@ -143,6 +143,15 @@ const Pricing = () => {
         <link rel="canonical" href="https://wewashglobal.com/pricing" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/pricing" />
+
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wewashglobal.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://wewashglobal.com/pricing" }
+          ]
+        })}</script>
         <meta property="og:title" content="Pricing | Starting Prices for Cleaning Services in Zambia" />
         <meta property="og:description" content="Starting prices in Kwacha for cleaning, detailing, fumigation and pool care. Final quote confirmed after assessment." />
         <meta name="twitter:title" content="Pricing | WeWash Global" />
