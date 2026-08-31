@@ -7,48 +7,44 @@ const CTASection = () => {
   const navigate = useNavigate();
 
   const openWhatsApp = () => {
-    window.open('https://wa.me/260768671420?text=Hello, I would like to get a quote for your services.', '_blank');
+    window.open('https://wa.me/260768671420?text=Hi WeWash, can I get a quote?', '_blank');
   };
 
   return (
-    <section className="py-24 md:py-32 bg-card/50">
-      {/* Single gold line */}
-      <div className="container-wewash">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-secondary text-xs uppercase tracking-[0.25em] font-medium mb-6">Get Started</p>
+    <section className="relative overflow-hidden bg-gradient-to-b from-background to-[hsl(220_30%_11%)]">
+      <div className="container-wewash section-spacing">
+        <div className="rounded-[2rem] border border-secondary/25 bg-card/60 px-8 py-14 md:px-16 md:py-20">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.28em] text-secondary mb-4">Get a price</p>
+              <h2 className="text-foreground mb-5">
+                Tell us about the space.
+                <span className="block text-secondary">We&apos;ll tell you the price.</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-xl">
+                It takes about a minute. We come back with a proper quote — not a range, not a
+                surprise at the end.
+              </p>
+            </div>
 
-          <h2 className="text-foreground text-4xl md:text-5xl font-light mb-6">
-            Ready for
-            <span className="block font-bold text-secondary">Premium Service?</span>
-          </h2>
-
-          <p className="text-muted-foreground font-light leading-relaxed mb-10 max-w-lg mx-auto">
-            Every space is unique. Our experts deliver a tailored quote that reflects 
-            your exact requirements — no surprises, no hidden costs.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-            <Button 
-              onClick={() => navigate('/quote')}
-              className="btn-gold text-sm uppercase tracking-wider px-10 py-6 gap-3"
-            >
-              Request a Free Quote
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button 
-              onClick={openWhatsApp}
-              variant="outline"
-              className="border-border/40 text-foreground/70 hover:text-foreground text-sm uppercase tracking-wider px-10 py-6 gap-3"
-            >
-              <MessageCircle className="h-4 w-4" />
-              WhatsApp
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Button onClick={() => navigate('/quote')} className="btn-gold text-base px-8 py-6 gap-2 w-full">
+                Request a quote
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button onClick={openWhatsApp} className="btn-whatsapp text-base px-8 py-6 gap-2 w-full">
+                <MessageCircle className="h-4 w-4" />
+                Message us on WhatsApp
+              </Button>
+              <a
+                href="tel:+260768671420"
+                className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-secondary transition-colors"
+              >
+                <Phone className="h-4 w-4 text-secondary" />
+                <span>+260 768 671 420</span>
+              </a>
+            </div>
           </div>
-
-          <a href="tel:+260768671420" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-secondary transition-colors">
-            <Phone className="h-3.5 w-3.5" />
-            +260 768 671 420
-          </a>
         </div>
       </div>
     </section>
