@@ -79,6 +79,11 @@ const BookNow = () => {
       <Helmet>
         <title>Book Now | WeWash Global - Quick & Easy Booking</title>
         <meta name="description" content="Book professional cleaning services in Lusaka, Zambia. Simple booking, no upfront payment. WeWash Global." />
+        <link rel="canonical" href="https://wewashglobal.com/book-now" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/book-now" />
+        <meta property="og:title" content="Book Now | WeWash Global" />
+        <meta property="og:description" content="Book cleaning in Lusaka in under a minute. No payment upfront — you pay after the job." />
       </Helmet>
 
       <section className="py-12 md:py-16">
