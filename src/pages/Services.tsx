@@ -23,10 +23,13 @@ import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
 import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
 import gardenAfterAsset from '@/assets/work/garden-after.jpg.asset.json';
 import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
+import poolBuildAsset from '@/assets/pools/pool-32.jpg.asset.json';
 const fumigationImage = gardenBeforeAsset.url;
 const facilityImage = floorVacuumAsset.url;
 const maintenanceImage = gardenAfterAsset.url;
 const maidsImage = sofaRestoredAsset.url;
+const poolImage = poolBuildAsset.url;
+
 
 const Services = () => {
   const navigate = useNavigate();
