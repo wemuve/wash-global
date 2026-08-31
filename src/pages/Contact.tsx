@@ -117,6 +117,7 @@ const Contact = () => {
         <meta property="og:title" content="Contact WeWash Global" />
         <meta property="og:description" content="Get in touch with our team for quotes and bookings. Response within 24 hours." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/contact" />
       </Helmet>
 
       {/* Hero */}

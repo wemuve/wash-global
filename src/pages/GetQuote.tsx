@@ -31,6 +31,11 @@ const GetQuote = () => {
       <Helmet>
         <title>Get Starting Estimate | WeWash Global AI Price Estimator</title>
         <meta name="description" content="Get a starting price estimate for premium cleaning services in Zambia. AI-powered estimator with transport and condition multipliers. Final quote after professional assessment." />
+        <link rel="canonical" href="https://wewashglobal.com/quote" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/quote" />
+        <meta property="og:title" content="Get a Starting Estimate | WeWash Global" />
+        <meta property="og:description" content="Estimate your cleaning cost in Kwacha, including transport from our Kabulonga office. Final price confirmed after assessment." />
       </Helmet>
 
       {/* Hero */}

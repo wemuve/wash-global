@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
@@ -15,6 +16,9 @@ import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 const Index = () => {
   return (
     <Layout>
+      <Helmet>
+        <link rel="canonical" href="https://wewashglobal.com/" />
+      </Helmet>
       <HeroSection />
       <ServicesSection />
       <BeforeAfterSection />

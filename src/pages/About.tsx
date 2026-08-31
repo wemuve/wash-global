@@ -44,7 +44,13 @@ const About = () => {
       <Helmet>
         <title>About WeWash Global | Our Story & Mission | Cleaning Services Zambia</title>
         <meta name="description" content="Learn about WeWash Global. We provide premium cleaning and property services across Zambia with the highest standards of excellence." />
-        <link rel="canonical" href="https://wewash.co.zm/about" />
+        <link rel="canonical" href="https://wewashglobal.com/about" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/about" />
+        <meta property="og:title" content="About WeWash Global | Our Story & Mission" />
+        <meta property="og:description" content="Who we are, how we work, and why families and businesses across Zambia trust WeWash Global with their homes and offices." />
+        <meta name="twitter:title" content="About WeWash Global | Our Story & Mission" />
+        <meta name="twitter:description" content="Who we are, how we work, and why families and businesses across Zambia trust WeWash Global." />
       </Helmet>
 
       {/* Hero */}

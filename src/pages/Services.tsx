@@ -142,6 +142,13 @@ const Services = () => {
       <Helmet>
         <title>Our Services | WeWash Global – Premium Cleaning & Facility Management</title>
         <meta name="description" content="Professional cleaning, car detailing, fumigation, and facility management services in Zambia. All prices are starting estimates – final quote after assessment." />
+        <link rel="canonical" href="https://wewashglobal.com/services" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://wewashglobal.com/services" />
+        <meta property="og:title" content="Our Services | Cleaning, Car Detailing & Facility Management in Lusaka" />
+        <meta property="og:description" content="Deep cleaning, sofa and carpet care, mobile car detailing, fumigation, swimming pools and facility management across Zambia." />
+        <meta name="twitter:title" content="Our Services | WeWash Global" />
+        <meta name="twitter:description" content="Deep cleaning, car detailing, fumigation, pools and facility management across Zambia." />
       </Helmet>
 
       {/* Hero */}
