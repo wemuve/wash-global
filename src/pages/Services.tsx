@@ -15,7 +15,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import cleaningImage from '@/assets/cleaning-services.jpg';
-import carDetailingImage from '@/assets/mobile-car-detailing.jpg';
+import carDetailingAsset from '@/assets/car-detailing-team.jpg.asset.json';
+const carDetailingImage = carDetailingAsset.url;
 import fumigationImage from '@/assets/fumigation-services.jpg';
 import facilityImage from '@/assets/facility-management.jpg';
 import maintenanceImage from '@/assets/home-maintenance.jpg';

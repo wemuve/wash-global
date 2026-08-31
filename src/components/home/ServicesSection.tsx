@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 'lucide-react';
 
 import diverseHomeCleaningImage from '@/assets/diverse-home-cleaning.jpg';
-import diverseCarDetailingImage from '@/assets/diverse-car-detailing.jpg';
+import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
 import diversePestControlImage from '@/assets/diverse-pest-control.jpg';
 import diverseFacilityImage from '@/assets/diverse-facility-management.jpg';
 import diverseOfficeImage from '@/assets/diverse-office-cleaning.jpg';
@@ -26,7 +26,7 @@ const ServicesSection = () => {
       icon: Car,
       title: 'Mobile car detailing',
       description: 'We come to your house or office and do the car properly, inside and out.',
-      image: diverseCarDetailingImage,
+      image: carDetailingAsset.url,
       price: 'From K450',
       priceNote: 'Small car, interior',
     },
