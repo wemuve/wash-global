@@ -8,6 +8,7 @@ import {
   Building2, 
   Briefcase, 
   Users,
+  Waves,
   CheckCircle2,
   ArrowRight,
   AlertTriangle
