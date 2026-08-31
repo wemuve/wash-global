@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -1868,6 +1868,10 @@ export type Database = {
         Returns: boolean
       }
       generate_referral_code: { Args: { user_uuid: string }; Returns: string }
+      get_referral_code_owner: {
+        Args: { code_to_check: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1876,6 +1880,10 @@ export type Database = {
         Returns: boolean
       }
       update_vendor_tier: { Args: { vendor_uuid: string }; Returns: undefined }
+      validate_referral_code: {
+        Args: { code_to_check: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "manager" | "vendor" | "customer"
