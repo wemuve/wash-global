@@ -18,10 +18,14 @@ import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 const cleaningImage = homeCleaningAsset.url;
 import carDetailingAsset from '@/assets/car-detailing-team.jpg.asset.json';
 const carDetailingImage = carDetailingAsset.url;
-import fumigationImage from '@/assets/fumigation-services.jpg';
-import facilityImage from '@/assets/facility-management.jpg';
-import maintenanceImage from '@/assets/home-maintenance.jpg';
-import maidsImage from '@/assets/trained-maids.jpg';
+import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
+import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
+import gardenAfterAsset from '@/assets/work/garden-after.jpg.asset.json';
+import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
+const fumigationImage = gardenBeforeAsset.url;
+const facilityImage = floorVacuumAsset.url;
+const maintenanceImage = gardenAfterAsset.url;
+const maidsImage = sofaRestoredAsset.url;
 
 const Services = () => {
   const navigate = useNavigate();

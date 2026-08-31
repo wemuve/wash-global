@@ -5,10 +5,10 @@ import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 
 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
-import diversePestControlImage from '@/assets/diverse-pest-control.jpg';
-import diverseFacilityImage from '@/assets/diverse-facility-management.jpg';
-import diverseOfficeImage from '@/assets/diverse-office-cleaning.jpg';
-import diverseMaidImage from '@/assets/diverse-professional-maid.jpg';
+import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
+import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
+import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
+import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
 
 const ServicesSection = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const ServicesSection = () => {
       icon: Bug,
       title: 'Fumigation',
       description: 'Roaches, termites, rodents — treated with licensed chemicals and a follow-up.',
-      image: diversePestControlImage,
+      image: gardenBeforeAsset.url,
       price: 'From K400',
       priceNote: 'Residential',
     },
@@ -42,7 +42,7 @@ const ServicesSection = () => {
       icon: Building2,
       title: 'Facility management',
       description: 'We run the day-to-day upkeep of buildings, grounds and site staff.',
-      image: diverseFacilityImage,
+      image: floorVacuumAsset.url,
       price: 'From K2,500',
       priceNote: 'Monthly contract',
     },
@@ -50,7 +50,7 @@ const ServicesSection = () => {
       icon: Briefcase,
       title: 'Office cleaning',
       description: 'Daily or weekly teams with a supervisor and a checklist you can see.',
-      image: diverseOfficeImage,
+      image: loungeFinishedAsset.url,
       price: 'From K200',
       priceNote: 'Per day',
     },
@@ -58,7 +58,7 @@ const ServicesSection = () => {
       icon: UserCheck,
       title: 'Trained maids',
       description: 'Vetted domestic staff, trained by us and still checked on after placement.',
-      image: diverseMaidImage,
+      image: sofaRestoredAsset.url,
       price: 'From K150',
       priceNote: 'Per day',
     },
