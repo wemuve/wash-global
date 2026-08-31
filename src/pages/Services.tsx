@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
+import LocalInfoSection from '@/components/LocalInfoSection';
 import { 
   Home, 
   Car, 
@@ -277,7 +278,10 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      <LocalInfoSection />
     </Layout>
+
   );
 };
 
