@@ -119,7 +119,22 @@ const Services = () => {
       ],
       pricing: 'Starting from K150/day',
     },
+    {
+      id: 'swimming-pools',
+      icon: Waves,
+      title: 'Swimming Pool Construction, Service & Repair',
+      description: 'We build swimming pools from excavation to tiling, then keep them running with routine servicing, cleaning, chemical balancing and repairs.',
+      image: poolImage,
+      features: [
+        'New Pool Construction – Custom quote',
+        'Pool Cleaning & Servicing – From K800/visit',
+        'Monthly Maintenance Contract – From K2,500/month',
+        'Leak, Pump & Tile Repairs – From K1,200',
+      ],
+      pricing: 'Starting from K800 (Service & Clean)',
+    },
   ];
+
 
   return (
     <Layout>
