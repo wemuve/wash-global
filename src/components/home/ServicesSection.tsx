@@ -5,10 +5,10 @@ import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck } from 
 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
-import diversePestControlImage from '@/assets/diverse-pest-control.jpg';
-import diverseFacilityImage from '@/assets/diverse-facility-management.jpg';
-import diverseOfficeImage from '@/assets/diverse-office-cleaning.jpg';
-import diverseMaidImage from '@/assets/diverse-professional-maid.jpg';
+import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
+import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
+import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
+import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
 
 const ServicesSection = () => {
   const navigate = useNavigate();
