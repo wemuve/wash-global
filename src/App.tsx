@@ -21,7 +21,11 @@ import VendorDashboard from "./pages/VendorDashboard";
 import VendorRegistration from "./pages/VendorRegistration";
 import WorkerOnboardingPage from "./pages/WorkerOnboarding";
 import BookNow from "./pages/BookNow";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+
+
 
 
 const queryClient = new QueryClient();
@@ -51,6 +55,8 @@ const App = () => (
             <Route path="/vendor-registration" element={<VendorRegistration />} />
             <Route path="/worker-onboarding" element={<WorkerOnboardingPage />} />
             <Route path="/book-now" element={<BookNow />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           
