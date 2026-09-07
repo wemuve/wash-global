@@ -280,7 +280,36 @@ const BookNow = () => {
               </div>
             </div>
 
-            {/* 4. Special Instructions */}
+            {/* 4. Payment */}
+            <div>
+              <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">4</span>
+                How you'll pay (after the job)
+              </h2>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {paymentMethods.map(pm => {
+                  const selected = form.payment === pm.id;
+                  return (
+                    <button
+                      key={pm.id}
+                      type="button"
+                      onClick={() => update('payment', pm.id)}
+                      className={`p-4 rounded-xl border-2 text-left transition-all ${
+                        selected ? 'border-primary bg-primary/10 ring-1 ring-primary' : 'border-border bg-card hover:border-primary/40'
+                      }`}
+                    >
+                      <p className="font-medium text-foreground text-sm">{pm.label}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{pm.hint}</p>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">
+                Nothing is charged now. You pay only once the work is finished and you're happy with it.
+              </p>
+            </div>
+
+            {/* 5. Special Instructions */}
             <div>
               <Label className="text-sm mb-1.5 block text-muted-foreground">Special Instructions (Optional)</Label>
               <Textarea
@@ -304,6 +333,22 @@ const BookNow = () => {
               </div>
             )}
 
+            {/* Confirmation */}
+            <label className="flex items-start gap-3 text-sm text-muted-foreground cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={e => setAgreed(e.target.checked)}
+                className="mt-1 h-4 w-4 accent-[hsl(var(--primary))]"
+              />
+              <span>
+                I confirm my booking details and agree to WeWash's{' '}
+                <a href="/terms" className="text-secondary hover:underline">Terms of Service</a> and{' '}
+                <a href="/privacy" className="text-secondary hover:underline">Privacy Policy</a>. The final price is
+                confirmed before work starts, and I pay after the service.
+              </span>
+            </label>
+
             {/* Submit */}
             <Button
               type="submit"
@@ -323,9 +368,20 @@ const BookNow = () => {
               )}
             </Button>
 
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => window.open(whatsappLink(), '_blank')}
+              className="w-full h-12 gap-2"
+            >
+              <MessageCircle className="h-5 w-5" />
+              Book on WhatsApp instead
+            </Button>
+
             <p className="text-center text-xs text-muted-foreground">
-              No upfront payment required. Pay via Mobile Money after service completion.
+              No upfront payment required. Pay by mobile money, cash or transfer after the job is done.
             </p>
+
           </form>
         </div>
       </section>
