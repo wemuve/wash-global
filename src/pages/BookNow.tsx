@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Home, Car, Bug, Building2, Briefcase, Users, Waves,
   Calendar, Clock, User, Phone, MapPin, Mail,
-  CheckCircle2, ArrowRight, Loader2, Sparkles
+  CheckCircle2, ArrowRight, Loader2, Sparkles, MessageCircle
 } from 'lucide-react';
 
 const serviceOptions = [
