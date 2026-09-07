@@ -28,6 +28,12 @@ const timeSlots = [
   '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
 ];
 
+const paymentMethods = [
+  { id: 'mobile-money', label: 'Mobile Money', hint: 'MTN or Airtel, after the job' },
+  { id: 'cash', label: 'Cash', hint: 'Paid to the supervisor on completion' },
+  { id: 'bank-transfer', label: 'Bank Transfer', hint: 'Invoice sent after the job' },
+];
+
 const BookNow = () => {
   const navigate = useNavigate();
   const { createBooking, isLoading } = useBookingSimple();
@@ -41,10 +47,33 @@ const BookNow = () => {
     date: '',
     time: '',
     instructions: '',
+    payment: '',
   });
+  const [agreed, setAgreed] = useState(false);
 
   const selectedService = serviceOptions.find(s => s.id === form.service);
-  const isValid = form.service && form.name.length >= 2 && form.phone.length >= 9 && form.address.length >= 5 && form.date && form.time;
+  const selectedPayment = paymentMethods.find(p => p.id === form.payment);
+  const isValid = Boolean(
+    form.service && form.name.length >= 2 && form.phone.length >= 9 &&
+    form.address.length >= 5 && form.date && form.time && form.payment && agreed
+  );
+
+  const whatsappLink = () => {
+    const lines = [
+      'Hello WeWash! I would like to book:',
+      '',
+      `Service: ${selectedService?.name || '—'}`,
+      `Date & time: ${form.date || '—'} ${form.time || ''}`,
+      `Name: ${form.name || '—'}`,
+      `Phone: ${form.phone || '—'}`,
+      `Address: ${form.address || '—'}`,
+      `Payment: ${selectedPayment?.label || 'To be agreed'} (after service)`,
+      form.instructions ? `Notes: ${form.instructions}` : '',
+      '',
+      'Please confirm the final price after assessment.',
+    ].filter(Boolean);
+    return `https://wa.me/260768671420?text=${encodeURIComponent(lines.join('\n'))}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +87,10 @@ const BookNow = () => {
       customerAddress: form.address,
       scheduledDate: form.date,
       scheduledTime: form.time,
-      specialInstructions: form.instructions || undefined,
+      specialInstructions: [
+        form.instructions,
+        `Preferred payment after service: ${selectedPayment?.label}`,
+      ].filter(Boolean).join(' | '),
       totalAmount: selectedService.from,
       currency: 'ZMW',
     });
@@ -74,6 +106,7 @@ const BookNow = () => {
   };
 
   const update = (key: string, value: string) => setForm(f => ({ ...f, [key]: value }));
+
 
   return (
     <Layout>
