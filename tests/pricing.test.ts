@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { calculatePrice } from './pricing';
+import { calculatePrice } from '../src/lib/pricing';
 
 describe('deterministic pricing engine', () => {
   it('TEST 1 — small car, full detail, normal condition, drop-off = K650', () => {
