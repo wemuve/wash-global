@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Domain guard: hide wash-global.lovable.app from search and redirect visitors to the canonical domain -->
+    <script>
+      (function () {
+        var host = window.location.hostname;
+        if (host && host.indexOf('lovable.app') !== -1) {
+          // Tell crawlers not to index this Lovable subdomain mirror
+          var meta = document.createElement('meta');
+          meta.name = 'robots';
+          meta.content = 'noindex, nofollow';
+          document.head.appendChild(meta);
+          // Redirect human visitors to the professional domain, preserving path and query
+          var target = 'https://wewashglobal.com' + window.location.pathname + window.location.search + window.location.hash;
+          if (window.location.href !== target) {
+            window.location.replace(target);
+          }
+        }
+      })();
+    </script>
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EEHFSP76CK"></script>
     <script>
