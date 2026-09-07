@@ -10,10 +10,15 @@
         var host = window.location.hostname;
         if (host && host.indexOf('lovable.app') !== -1) {
           // Tell crawlers not to index this Lovable subdomain mirror
-          var meta = document.createElement('meta');
-          meta.name = 'robots';
-          meta.content = 'noindex, nofollow';
-          document.head.appendChild(meta);
+          var robots = document.createElement('meta');
+          robots.name = 'robots';
+          robots.content = 'noindex, nofollow';
+          document.head.appendChild(robots);
+          // Inject Search Console verification token only on the Lovable mirror
+          var verify = document.createElement('meta');
+          verify.name = 'google-site-verification';
+          verify.content = 'scVP2lkJ33g3zDzwWjfEllCeR-DlLzridamMxTGkxTg';
+          document.head.appendChild(verify);
           // Redirect real visitors to the professional domain, but let crawlers/verifiers stay to see the noindex
           var isBot = /bot|crawl|spider|Googlebot|Site-Verification|bingbot|yandex|baidu/i.test(navigator.userAgent || '');
           if (!isBot) {
