@@ -8,8 +8,9 @@ import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
 import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
 import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
 import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
-import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
 import poolAsset from '@/assets/pools/pool-34.jpg.asset.json';
+import trainedMaidAsset from '@/assets/services/trained-maid-ironing.jpeg.asset.json';
+import facilityHotelAsset from '@/assets/services/facility-hotel-corridor.jpeg.asset.json';
 
 const ServicesSection = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const ServicesSection = () => {
       icon: Building2,
       title: 'Facility management',
       description: 'We run the day-to-day upkeep of buildings, grounds and site staff.',
-      image: floorVacuumAsset.url,
+      image: facilityHotelAsset.url,
       price: 'From K2,500',
       priceNote: 'Monthly contract',
     },
@@ -59,7 +60,7 @@ const ServicesSection = () => {
       icon: UserCheck,
       title: 'Trained maids',
       description: 'Vetted domestic staff, trained by us and still checked on after placement.',
-      image: sofaRestoredAsset.url,
+      image: trainedMaidAsset.url,
       price: 'From K150',
       priceNote: 'Per day',
     },

@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
 import LocalInfoSection from '@/components/LocalInfoSection';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 import { 
   Home, 
   Car, 
@@ -21,14 +22,15 @@ const cleaningImage = homeCleaningAsset.url;
 import carDetailingAsset from '@/assets/car-detailing-team.jpg.asset.json';
 const carDetailingImage = carDetailingAsset.url;
 import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
-import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
 import gardenAfterAsset from '@/assets/work/garden-after.jpg.asset.json';
-import sofaRestoredAsset from '@/assets/work/sofa-restored.jpg.asset.json';
 import poolBuildAsset from '@/assets/pools/pool-32.jpg.asset.json';
+import trainedMaidAsset from '@/assets/services/trained-maid-ironing.jpeg.asset.json';
+import trainedMaidVideoAsset from '@/assets/services/trained-maid-ironing.mov.asset.json';
+import facilityHotelAsset from '@/assets/services/facility-hotel-corridor.jpeg.asset.json';
+import facilityWindowsAsset from '@/assets/services/facility-windows.jpeg.asset.json';
+import { aggregateRating, reviewSchema } from '@/data/customerReviews';
 const fumigationImage = gardenBeforeAsset.url;
-const facilityImage = floorVacuumAsset.url;
 const maintenanceImage = gardenAfterAsset.url;
-const maidsImage = sofaRestoredAsset.url;
 const poolImage = poolBuildAsset.url;
 
 
@@ -83,7 +85,8 @@ const Services = () => {
       icon: Building2,
       title: 'Facility Management',
       description: 'Comprehensive, managed property operations for commercial and institutional clients with quality control systems.',
-      image: facilityImage,
+      image: facilityHotelAsset.url,
+      secondaryImage: facilityWindowsAsset.url,
       features: [
         'Building Maintenance',
         'Grounds Keeping',
@@ -111,7 +114,8 @@ const Services = () => {
       icon: Users,
       title: 'Trained Maids & Housekeepers',
       description: 'Vetted, professionally trained domestic staff managed through our structured placement and supervision system.',
-      image: maidsImage,
+      image: trainedMaidAsset.url,
+      video: trainedMaidVideoAsset.url,
       features: [
         'Background Checked & Verified',
         'Professionally Trained',
@@ -158,6 +162,20 @@ const Services = () => {
         <meta property="og:description" content="Deep cleaning, sofa and carpet care, mobile car detailing, fumigation, swimming pools and facility management across Zambia." />
         <meta name="twitter:title" content="Our Services | WeWash Global" />
         <meta name="twitter:description" content="Deep cleaning, car detailing, fumigation, pools and facility management across Zambia." />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'LocalBusiness',
+          '@id': 'https://wewashglobal.com/#organization',
+          name: 'WeWash Zambia',
+          url: 'https://wewashglobal.com/services',
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: aggregateRating.ratingValue,
+            reviewCount: aggregateRating.reviewCount,
+            bestRating: 5,
+          },
+          review: reviewSchema,
+        })}</script>
       </Helmet>
 
       {/* Hero */}
@@ -194,12 +212,24 @@ const Services = () => {
                 >
                   <div className={isReversed ? 'lg:order-2' : ''}>
                     <div className="relative rounded-2xl overflow-hidden aspect-[4/3] ring-1 ring-primary/20">
-                      <img 
-                        src={service.image} 
-                        alt={service.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                      {'video' in service && service.video ? (
+                        <video
+                          src={service.video}
+                          poster={service.image}
+                          className="w-full h-full object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                          aria-label="WeWash trained maid ironing during practical training"
+                        />
+                      ) : (
+                        <img 
+                          src={service.image} 
+                          alt={`${service.title} service by WeWash in Lusaka`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                       <div className="absolute top-4 left-4">
                         <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-glow">
@@ -207,6 +237,16 @@ const Services = () => {
                         </div>
                       </div>
                     </div>
+                    {'secondaryImage' in service && service.secondaryImage && (
+                      <div className="mt-4 overflow-hidden rounded-xl border border-border/40 aspect-[16/7]">
+                        <img
+                          src={service.secondaryImage}
+                          alt="Hotel windows maintained by WeWash facility management in Lusaka"
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                   </div>
                   
                   <div className={isReversed ? 'lg:order-1' : ''}>
@@ -267,6 +307,8 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection />
 
       {/* CTA */}
       <section className="section-spacing bg-gradient-to-br from-primary/20 via-card to-background">

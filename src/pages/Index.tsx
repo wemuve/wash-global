@@ -12,6 +12,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import LocalInfoSection from '@/components/LocalInfoSection';
 import CTASection from '@/components/home/CTASection';
 import ReferralPromoSection from '@/components/home/ReferralPromoSection';
+import { aggregateRating, reviewSchema } from '@/data/customerReviews';
 
 const Index = () => {
   return (
@@ -23,6 +24,20 @@ const Index = () => {
         <meta property="og:url" content="https://wewashglobal.com/" />
         <meta property="og:title" content="WeWash Zambia | Premium Cleaning & Property Services" />
         <meta property="og:description" content="Deep cleaning, car detailing, pool services, fumigation & trained maids across Lusaka. Real crew, real results. Book online — pay after the job." />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'LocalBusiness',
+          '@id': 'https://wewashglobal.com/#organization',
+          name: 'WeWash Zambia',
+          url: 'https://wewashglobal.com/',
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: aggregateRating.ratingValue,
+            reviewCount: aggregateRating.reviewCount,
+            bestRating: 5,
+          },
+          review: reviewSchema,
+        })}</script>
       </Helmet>
       <HeroSection />
       <ServicesSection />
