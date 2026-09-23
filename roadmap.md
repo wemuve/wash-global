@@ -6,3 +6,6 @@
 - [x] Fill Privacy and Terms with real Zambian data protection policy + contact details
 - [x] Book Now: date, service, payment confirmation, WhatsApp booking link
 - [ ] Manual: submit Search Console removal for the lovable.app prefix
+- [ ] Replace homepage and Services testimonials with the three verified Google reviews and ratings
+- [ ] Add honest review and aggregate-rating structured data to homepage and Services
+- [ ] Place uploaded maid image/video and facility-management hotel/window photos
