@@ -208,6 +208,7 @@ const Services = () => {
               return (
                 <div 
                   key={service.id}
+                  id={service.id}
                   className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}
                 >
                   <div className={isReversed ? 'lg:order-2' : ''}>
