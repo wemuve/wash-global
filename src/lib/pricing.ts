@@ -157,6 +157,24 @@ export const SERVICES: ServiceDefinition[] = [
       { id: 'large', label: 'Large Pool / Green Recovery', base: 1500 },
     ],
   },
+  {
+    id: 'facility-management',
+    label: 'Facility Management',
+    allowsDropOff: false,
+    addOnIds: ['windows-interior', 'windows-exterior', 'carpet-clean'],
+    sizes: [
+      { id: 'monthly', label: 'Monthly contract', base: 2500 },
+    ],
+  },
+  {
+    id: 'other',
+    label: 'Other / Multiple Services (custom quote)',
+    allowsDropOff: false,
+    addOnIds: ['windows-interior', 'windows-exterior', 'sofa-clean', 'carpet-clean', 'fridge-oven'],
+    sizes: [
+      { id: 'custom', label: 'Custom scope — describe below', base: 550 },
+    ],
+  },
 ];
 
 /** Transport bands: Yango return trip from D13 Antelope Close, Kabulonga. */
