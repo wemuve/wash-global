@@ -6,7 +6,6 @@ import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
 import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
-import floorVacuumAsset from '@/assets/gallery/floor-vacuum.jpg.asset.json';
 import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
 import poolAsset from '@/assets/pools/pool-34.jpg.asset.json';
 import trainedMaidAsset from '@/assets/services/trained-maid-ironing.jpeg.asset.json';

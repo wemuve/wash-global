@@ -230,7 +230,7 @@ const Services = () => {
                           loading="lazy"
                         />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                       <div className="absolute top-4 left-4">
                         <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-glow">
                           <Icon className="h-6 w-6 text-primary-foreground" />
