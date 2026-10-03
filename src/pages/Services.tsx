@@ -144,8 +144,8 @@ const Services = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Our Services | WeWash Global – Premium Cleaning & Facility Management</title>
-        <meta name="description" content="Professional cleaning, car detailing, fumigation, and facility management services in Zambia. All prices are starting estimates – final quote after assessment." />
+        <title>Maid Services Lusaka, Cleaning & Facility Management | WeWash Zambia</title>
+        <meta name="description" content="Trained maid services in Lusaka from K150/day, house cleaning, car detailing, pool cleaning, fumigation and facility management across Zambia. Starting prices, final quote after assessment." />
         <link rel="canonical" href="https://wewashglobal.com/services" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/services" />

@@ -63,13 +63,13 @@ const Pools = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Swimming Pool Construction, Cleaning & Repairs in Lusaka | WeWash</title>
+        <title>Swimming Pool Cleaning Kabulonga & Lusaka | WeWash Zambia</title>
         <meta
           name="description"
-          content="Swimming pool construction, servicing, cleaning and repairs in Lusaka. Pool cleaning from K800 per visit, maintenance from K2,500/month. Kabulonga office, open Mon–Sat."
+          content="Swimming pool cleaning in Kabulonga and across Lusaka, plus servicing, repairs and construction. Cleaning from K800 per visit. Based at D13 Antelope Close, Kabulonga."
         />
         <link rel="canonical" href="https://wewashglobal.com/pools" />
-        <meta property="og:title" content="Swimming Pool Construction, Cleaning & Repairs in Lusaka | WeWash" />
+        <meta property="og:title" content="Swimming Pool Cleaning Kabulonga & Lusaka | WeWash Zambia" />
         <meta
           property="og:description"
           content="We build, service, clean and repair swimming pools across Lusaka. Real projects, honest starting prices."
