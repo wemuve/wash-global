@@ -26,6 +26,15 @@ const entries: SitemapEntry[] = [
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/vendor-registration", changefreq: "monthly", priority: "0.4" },
   { path: "/worker-onboarding", changefreq: "monthly", priority: "0.4" },
+  { path: "/advice", changefreq: "monthly", priority: "0.6" },
+  ...[
+    "cleaning-habits-lusaka",
+    "how-to-hire-a-maid-lusaka",
+    "prepare-for-deep-clean",
+    "rainy-season-home-care",
+    "moving-house-cleaning-checklist",
+    "choosing-a-cleaning-service-lusaka",
+  ].map((s) => ({ path: `/advice/${s}`, changefreq: "monthly" as const, priority: "0.6" })),
 ]
 
 function generateSitemap(entries: SitemapEntry[]) {
