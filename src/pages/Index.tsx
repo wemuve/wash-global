@@ -13,6 +13,7 @@ import LocalInfoSection from '@/components/LocalInfoSection';
 import CTASection from '@/components/home/CTASection';
 import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 import { aggregateRating, reviewSchema } from '@/data/customerReviews';
+import AdviceSection from '@/components/home/AdviceSection';
 
 const Index = () => {
   return (
@@ -48,6 +49,7 @@ const Index = () => {
       <ClientTypesSection />
       <TestimonialsSection />
       <ReferralPromoSection />
+      <AdviceSection />
       <LocalInfoSection />
       <CTASection />
     </Layout>

@@ -26,6 +26,8 @@ import Privacy from "./pages/Privacy";
 import ElderlySupport from "./pages/ElderlySupport";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import Advice from "./pages/Advice";
+import AdviceArticle from "./pages/AdviceArticle";
 
 
 
@@ -60,6 +62,8 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/elderly-home-support-lusaka" element={<ElderlySupport />} />
+            <Route path="/advice" element={<Advice />} />
+            <Route path="/advice/:slug" element={<AdviceArticle />} />
             <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
