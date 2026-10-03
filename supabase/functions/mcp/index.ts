@@ -233,7 +233,7 @@ var list_services_default = defineTool({
 
 // src/lib/mcp/tools/estimate-price.ts
 import { defineTool as defineTool2, ToolError } from "npm:@lovable.dev/mcp-js@3.0.4";
-import { z } from "npm:zod@^3.23.8";
+import { z } from "npm:zod@^3.25";
 var estimate_price_default = defineTool2({
   name: "estimate_price",
   title: "Estimate price",
@@ -268,7 +268,7 @@ var estimate_price_default = defineTool2({
 
 // src/lib/mcp/tools/list-my-bookings.ts
 import { defineTool as defineTool3 } from "npm:@lovable.dev/mcp-js@3.0.4";
-import { z as z2 } from "npm:zod@^3.23.8";
+import { z as z2 } from "npm:zod@^3.25";
 
 // src/lib/mcp/supabase.ts
 import { createClient } from "npm:@supabase/supabase-js@^2.87.1";
