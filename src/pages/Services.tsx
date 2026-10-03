@@ -21,16 +21,12 @@ import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 const cleaningImage = homeCleaningAsset.url;
 import carDetailingAsset from '@/assets/car-detailing-team.jpg.asset.json';
 const carDetailingImage = carDetailingAsset.url;
-import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
-import gardenAfterAsset from '@/assets/work/garden-after.jpg.asset.json';
 import poolBuildAsset from '@/assets/pools/pool-32.jpg.asset.json';
 import trainedMaidAsset from '@/assets/services/trained-maid-ironing.jpeg.asset.json';
 import trainedMaidVideoAsset from '@/assets/services/trained-maid-ironing.mov.asset.json';
 import facilityHotelAsset from '@/assets/services/facility-hotel-corridor.jpeg.asset.json';
 import facilityWindowsAsset from '@/assets/services/facility-windows.jpeg.asset.json';
 import { aggregateRating, reviewSchema } from '@/data/customerReviews';
-const fumigationImage = gardenBeforeAsset.url;
-const maintenanceImage = gardenAfterAsset.url;
 const poolImage = poolBuildAsset.url;
 
 
@@ -44,6 +40,7 @@ const Services = () => {
       title: 'Home Cleaning',
       description: 'Professional residential cleaning managed by trained, supervised teams. From regular maintenance to deep cleaning and post-construction.',
       image: cleaningImage,
+      imageAlt: 'WeWash technician pressure washing a window at a Lusaka home',
       features: [
         'General Cleaning – From K550 (1 Bed)',
         'Deep Cleaning – From K850 (1 Bed)',
@@ -58,6 +55,7 @@ const Services = () => {
       title: 'Mobile Car Detailing',
       description: 'Premium mobile car detailing delivered to your location by our professionally trained detailing team.',
       image: carDetailingImage,
+      imageAlt: 'WeWash detailing crew working on a customer car in Lusaka',
       features: [
         'Interior Deep Clean – From K450 (Small Car)',
         'Full Detailing – From K650 (Small Car)',
@@ -71,7 +69,8 @@ const Services = () => {
       icon: Bug,
       title: 'Fumigation & Pest Control',
       description: 'Structured pest control solutions with professional-grade chemicals and certified application methods.',
-      image: fumigationImage,
+      image: '',
+      imageAlt: '',
       features: [
         'Residential Fumigation – From K400',
         'Commercial Fumigation – From K800',
@@ -86,6 +85,7 @@ const Services = () => {
       title: 'Facility Management',
       description: 'Comprehensive, managed property operations for commercial and institutional clients with quality control systems.',
       image: facilityHotelAsset.url,
+      imageAlt: 'Hotel corridor with patterned carpet maintained by WeWash',
       secondaryImage: facilityWindowsAsset.url,
       features: [
         'Building Maintenance',
@@ -100,7 +100,8 @@ const Services = () => {
       icon: Briefcase,
       title: 'Office & Commercial Cleaning',
       description: 'Reliable, structured cleaning operations for workplaces with supervised teams and quality audits.',
-      image: maintenanceImage,
+      image: '',
+      imageAlt: '',
       features: [
         'Daily Cleaning – From K200/day',
         'Weekly Cleaning – From K800/week',
@@ -115,6 +116,7 @@ const Services = () => {
       title: 'Trained Maids & Housekeepers',
       description: 'Vetted, professionally trained domestic staff managed through our structured placement and supervision system.',
       image: trainedMaidAsset.url,
+      imageAlt: 'WeWash trained maid ironing during practical training',
       video: trainedMaidVideoAsset.url,
       features: [
         'Background Checked & Verified',
@@ -130,6 +132,7 @@ const Services = () => {
       title: 'Swimming Pool Construction, Service & Repair',
       description: 'We build swimming pools from excavation to tiling, then keep them running with routine servicing, cleaning, chemical balancing and repairs.',
       image: poolImage,
+      imageAlt: 'Swimming pool built by WeWash in Lusaka',
       features: [
         'New Pool Construction – Custom quote',
         'Pool Cleaning & Servicing – From K800/visit',
@@ -223,10 +226,15 @@ const Services = () => {
                           preload="metadata"
                           aria-label="WeWash trained maid ironing during practical training"
                         />
+                      ) : !service.image ? (
+                        <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-card text-muted-foreground">
+                          <Icon className="h-14 w-14 text-secondary" />
+                          <span className="text-sm">Photos from our own jobs coming soon</span>
+                        </div>
                       ) : (
                         <img 
                           src={service.image} 
-                          alt={`${service.title} service by WeWash in Lusaka`}
+                          alt={service.imageAlt}
                           className="w-full h-full object-cover"
                           loading="lazy"
                         />
