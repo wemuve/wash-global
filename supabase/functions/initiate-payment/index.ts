@@ -139,6 +139,27 @@ serve(async (req) => {
 
     const { amount, currency, customerName, customerPhone, customerEmail, serviceName, bookingId, paymentMethod, returnUrl } = validation.sanitized!;
 
+    // Linking a payment to a booking requires the signed-in owner (or staff).
+    if (bookingId) {
+      const authHeader = req.headers.get('Authorization') ?? '';
+      const token = authHeader.replace('Bearer ', '');
+      const { data: userData } = token ? await supabase.auth.getUser(token) : { data: { user: null } };
+      const userId = userData?.user?.id;
+      if (!userId) {
+        return new Response(JSON.stringify({ error: 'Authentication required' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+      const [{ data: booking }, { data: roles }] = await Promise.all([
+        supabase.from('bookings').select('user_id').eq('id', bookingId).maybeSingle(),
+        supabase.from('user_roles').select('role').eq('user_id', userId).in('role', ['admin', 'manager']),
+      ]);
+      const isStaff = !!roles && roles.length > 0;
+      if (!booking || (booking.user_id !== userId && !isStaff)) {
+        return new Response(JSON.stringify({ error: 'Forbidden' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+    }
+
     console.log('Initiating payment:', { amount, customerName: customerName.substring(0, 20), paymentMethod, serviceName });
 
     // Generate a unique transaction reference

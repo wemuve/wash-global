@@ -40,6 +40,18 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
+    // Matching and performance updates are staff-only operations.
+    const { data: staffRoles } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', claims.claims.sub as string)
+      .in('role', ['admin', 'manager']);
+    if (!staffRoles || staffRoles.length === 0) {
+      return new Response(JSON.stringify({ error: 'Forbidden' }), {
+        status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const body = await req.json();
     const { booking_id, action, vendor_id } = body;
 

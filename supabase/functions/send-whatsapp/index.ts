@@ -140,6 +140,22 @@ serve(async (req) => {
           { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
+
+      // Reminders and promos may go to any customer number: staff only.
+      if (type === 'reminder' || type === 'promo') {
+        const userId = claims.claims.sub as string;
+        const { data: roles } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', userId)
+          .in('role', ['admin', 'manager']);
+        if (!roles || roles.length === 0) {
+          return new Response(
+            JSON.stringify({ error: 'Forbidden' }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
     }
 
     const webhookUrl = Deno.env.get('WHATSAPP_WEBHOOK_URL');

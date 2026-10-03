@@ -32,9 +32,6 @@ enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false
 
-[functions.ai-receptionist]
-verify_jwt = false
-
 [functions.booking-webhook]
 verify_jwt = false
 

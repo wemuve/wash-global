@@ -367,9 +367,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     let webhookResult = { success: false, error: "No webhook URL provided" };
     
-    if (webhookData.n8n_webhook_url) {
+    // Destination is fixed server-side; caller-supplied URLs are ignored.
+    const configuredWebhookUrl = Deno.env.get("N8N_WEBHOOK_URL");
+    if (configuredWebhookUrl) {
       console.log("=== SENDING TO N8N WEBHOOK ===");
-      webhookResult = await sendWebhookWithRetry(webhookData.n8n_webhook_url, n8nPayload);
+      webhookResult = await sendWebhookWithRetry(configuredWebhookUrl, n8nPayload);
       
       if (webhookResult.success) {
         console.log("✅ Webhook delivered successfully to n8n");
