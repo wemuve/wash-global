@@ -2,6 +2,7 @@
 
 import { writeFileSync } from "fs"
 import { resolve } from "path"
+import { imageLibrary } from "../src/data/imageLibrary"
 
 const BASE_URL = "https://wewashglobal.com"
 
@@ -21,6 +22,7 @@ const entries: SitemapEntry[] = [
   { path: "/book-now", changefreq: "monthly", priority: "0.8" },
   { path: "/book", changefreq: "monthly", priority: "0.7" },
   { path: "/about", changefreq: "monthly", priority: "0.6" },
+  { path: "/elderly-home-support-lusaka", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/vendor-registration", changefreq: "monthly", priority: "0.4" },
   { path: "/worker-onboarding", changefreq: "monthly", priority: "0.4" },
@@ -33,6 +35,9 @@ function generateSitemap(entries: SitemapEntry[]) {
       `    <loc>${BASE_URL}${e.path}</loc>`,
       e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
       e.priority ? `    <priority>${e.priority}</priority>` : null,
+      ...imageLibrary
+        .filter((img) => img.url && img.pageUrl === e.path)
+        .map((img) => `    <image:image><image:loc>${BASE_URL}${img.url}</image:loc></image:image>`),
       `  </url>`,
     ]
       .filter(Boolean)
@@ -41,7 +46,7 @@ function generateSitemap(entries: SitemapEntry[]) {
 
   return [
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
     ...urls,
     `</urlset>`,
   ].join("\n")

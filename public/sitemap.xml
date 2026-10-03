@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://wewashglobal.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/946a99e6-3718-4628-ac4a-8da2e6220336/lounge-evening.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/8c61eace-4cd4-47ed-b280-2b914d26b21e/living-room-lounge.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/1b952971-ac0c-4465-9ad8-357ceda5a427/lounge-finished.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/216f8542-efc0-4cf6-9c91-10c2ee24bece/floor-vacuum.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/8315ac60-4817-43d0-980f-69caac608f23/sofa-cleaned.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/3283937c-9a10-4e9f-9b2a-b757331fe989/sofa-upholstery.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/eecd2285-f6e1-4976-98a5-5b470caffbdd/kitchen-units.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/7e50e70c-01e7-41ea-8c2f-bcff9b6ba7c6/kitchen-blinds.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/921d2992-7fab-4adc-93b1-0dc04c60ccb6/bedroom-strip.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://wewashglobal.com/services</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/b6998544-25b2-4b08-beb7-802fc8028b1e/home-cleaning-crew.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/9952431c-969f-43b4-a4a4-f792319a410b/trained-maid-ironing.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/b61d8cac-0ac3-4c70-b37f-434198c9870b/facility-hotel-corridor.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/a4607412-9871-4c94-a136-2bef34d41482/facility-windows.jpeg</image:loc></image:image>
   </url>
   <url>
     <loc>https://wewashglobal.com/services/car-detailing</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/9b6bbb29-220f-444c-83bd-65c124174874/car-detailing-team.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/3bd9ba4d-a815-471e-b783-d1e865294926/car-detailing-seats.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/8936c3e3-8aeb-4e6a-8ad8-3d063bb08042/car-exterior-done.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/1206d8d3-97e7-4077-bf33-596f718c3d99/car-interior-clean.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://wewashglobal.com/pools</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/73799575-b3eb-43db-9535-b4eb55e68896/pool-29.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/b998377e-9f93-49ca-a614-975e8041b46f/pool-32.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/33e18ca0-f222-4ba2-b0ed-16052c11bea5/pool-34.jpg</image:loc></image:image>
+    <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/6b108dd4-9a33-41b9-ac8e-0900b13d704a/pool-37.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://wewashglobal.com/pricing</loc>
@@ -44,6 +65,11 @@
     <loc>https://wewashglobal.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wewashglobal.com/elderly-home-support-lusaka</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://wewashglobal.com/contact</loc>
