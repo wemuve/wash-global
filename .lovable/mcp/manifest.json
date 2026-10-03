@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "sdk_version": "3.0.4",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://ouggluzwawtvyxwighsk.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "wewash-global",
+      "version": "0.1.0",
+      "title": "WeWash Global"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "List services and options",
+        "description": "List WeWash services, sizes, add-ons, conditions and transport zones with starting prices in ZMW.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "estimate_price",
+        "title": "Estimate price",
+        "description": "Calculate a 'starting from' WeWash price estimate in ZMW. The team must confirm the final price.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "serviceId": {
+              "type": "string",
+              "description": "Service id from list_services."
+            },
+            "sizeId": {
+              "type": "string",
+              "description": "Size id for that service."
+            },
+            "conditionId": {
+              "type": "string",
+              "description": "Condition id, if known."
+            },
+            "addOnIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Add-on ids."
+            },
+            "serviceMode": {
+              "type": "string",
+              "enum": [
+                "mobile",
+                "dropoff"
+              ],
+              "default": "mobile"
+            },
+            "transportZoneId": {
+              "type": "string",
+              "description": "Transport zone id for mobile service."
+            }
+          },
+          "required": [
+            "serviceId",
+            "sizeId"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_bookings",
+        "title": "List my bookings",
+        "description": "List the signed-in customer's WeWash bookings, newest first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

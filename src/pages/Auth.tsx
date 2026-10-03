@@ -36,11 +36,19 @@ const Auth = () => {
   const navigate = useNavigate();
   const { signIn, signUp, isLoading, isAuthenticated } = useAuth();
 
+  const rawNext = new URLSearchParams(window.location.search).get('next');
+  const nextPath = rawNext && rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : null;
+  const goAfterLogin = () => {
+    if (nextPath) window.location.href = nextPath;
+    else navigate('/dashboard');
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard');
+      goAfterLogin();
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -63,7 +71,7 @@ const Auth = () => {
   const onLogin = async (data: LoginFormData) => {
     const result = await signIn(data.email, data.password);
     if (result.success) {
-      navigate('/dashboard');
+      goAfterLogin();
     }
   };
 
