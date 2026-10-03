@@ -108,7 +108,21 @@ serve(async (req) => {
   }
 
   try {
+    // Paid AI estimate: signed-in users only.
+    const authHeader = req.headers.get('Authorization') ?? '';
+    const token = authHeader.replace('Bearer ', '');
+    const authClient = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!);
+    const { data: claims } = token ? await authClient.auth.getClaims(token) : { data: null };
+    if (!claims?.claims?.sub || claims.claims.role !== 'authenticated') {
+      return new Response(JSON.stringify({ error: 'Please sign in to get an AI estimate' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
+
     const { jobDescription, location, serviceType } = await req.json();
+    if (typeof jobDescription !== 'string' || jobDescription.length < 3 || jobDescription.length > 2000) {
+      return new Response(JSON.stringify({ error: 'Invalid job description' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     if (!LOVABLE_API_KEY) {
