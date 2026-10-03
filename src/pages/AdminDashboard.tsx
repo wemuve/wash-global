@@ -417,7 +417,7 @@ const AdminDashboard = () => {
                   {bookings.map((booking) => (
                     <TableRow key={booking.id}>
                       <TableCell className="font-medium">{booking.customer_name}</TableCell>
-                      <TableCell>{booking.customer_phone}</TableCell>
+                      <TableCell><a className="text-accent underline" target="_blank" rel="noopener noreferrer" href={`https://wa.me/${booking.customer_phone.replace(/\D/g,"").replace(/^0/,"260")}`}>{booking.customer_phone}</a></TableCell>
                       <TableCell>{booking.scheduled_date} at {booking.scheduled_time}</TableCell>
                       <TableCell>ZMW {booking.total_amount}</TableCell>
                       <TableCell>
@@ -540,7 +540,7 @@ const AdminDashboard = () => {
                   {leads.map((lead) => (
                     <TableRow key={lead.id}>
                       <TableCell className="font-medium">{lead.customer_name}</TableCell>
-                      <TableCell>{lead.customer_phone}</TableCell>
+                      <TableCell><a className="text-accent underline" target="_blank" rel="noopener noreferrer" href={`https://wa.me/${lead.customer_phone.replace(/\D/g,"").replace(/^0/,"260")}`}>{lead.customer_phone}</a></TableCell>
                       <TableCell>{lead.source}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[lead.status] || 'bg-gray-100'}`}>

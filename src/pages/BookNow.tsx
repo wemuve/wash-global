@@ -111,8 +111,8 @@ const BookNow = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Book Now | WeWash Global - Quick & Easy Booking</title>
-        <meta name="description" content="Book professional cleaning services in Lusaka, Zambia. Simple booking, no upfront payment. WeWash Global." />
+        <title>Book Cleaning, Maids & Car Detailing in Lusaka | WeWash</title>
+        <meta name="description" content="Book house cleaning, maid services, pool cleaning or car detailing in Lusaka, Zambia. Pick a date, pay after the job. Confirm on WhatsApp." />
         <link rel="canonical" href="https://wewashglobal.com/book-now" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/book-now" />

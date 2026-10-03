@@ -63,13 +63,13 @@ const CarDetailing = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Mobile Car Detailing in Lusaka – We Come to You | WeWash</title>
+        <title>Car Detailing Lusaka, Zambia – Mobile Valet | WeWash</title>
         <meta
           name="description"
           content="Mobile car detailing in Lusaka. Interior detailing from K450, exterior wash & polish from K350, full valet from K700. We come to your home or office. Book today."
         />
         <link rel="canonical" href="https://wewashglobal.com/services/car-detailing" />
-        <meta property="og:title" content="Mobile Car Detailing in Lusaka – We Come to You | WeWash" />
+        <meta property="og:title" content="Car Detailing Lusaka, Zambia – Mobile Valet | WeWash" />
         <meta
           property="og:description"
           content="Professional mobile car detailing across Lusaka. Interior, exterior and full valet packages done at your doorstep."
