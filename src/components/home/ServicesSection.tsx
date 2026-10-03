@@ -5,7 +5,6 @@ import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves 
 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
-import gardenBeforeAsset from '@/assets/work/garden-before.jpg.asset.json';
 import loungeFinishedAsset from '@/assets/gallery/lounge-finished.jpg.asset.json';
 import poolAsset from '@/assets/pools/pool-34.jpg.asset.json';
 import trainedMaidAsset from '@/assets/services/trained-maid-ironing.jpeg.asset.json';
@@ -35,7 +34,7 @@ const ServicesSection = () => {
       icon: Bug,
       title: 'Fumigation',
       description: 'Roaches, termites, rodents — treated with licensed chemicals and a follow-up.',
-      image: gardenBeforeAsset.url,
+      image: '',
       price: 'From K400',
       priceNote: 'Residential',
     },
@@ -101,12 +100,16 @@ const ServicesSection = () => {
                 className="group rounded-3xl overflow-hidden bg-card border border-border/40 transition-all duration-300 hover:border-secondary/40"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={`${service.title} in Lusaka by WeWash`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                  {service.image ? (
+                    <img
+                      src={service.image}
+                      alt={`${service.title} job by the WeWash team in Lusaka`}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted text-sm text-muted-foreground">Photos coming soon</div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_35%_8%)] via-transparent to-transparent" />
                   <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-background/70 backdrop-blur-sm flex items-center justify-center">
                     <Icon className="h-5 w-5 text-secondary" />

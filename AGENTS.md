@@ -1,0 +1,1 @@
+- Real WeWash photos are registered in src/data/imageLibrary.ts (alt, caption, service, page); the sitemap script reads it for image entries — add new photos there.
