@@ -22,6 +22,7 @@ import VendorRegistration from "./pages/VendorRegistration";
 import WorkerOnboardingPage from "./pages/WorkerOnboarding";
 import BookNow from "./pages/BookNow";
 import Privacy from "./pages/Privacy";
+import ElderlySupport from "./pages/ElderlySupport";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/book-now" element={<BookNow />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/elderly-home-support-lusaka" element={<ElderlySupport />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           
