@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
+import { Helmet } from 'react-helmet-async';
 import { 
   User, 
   Phone, 
@@ -105,6 +106,11 @@ const VendorRegistration = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Partner With WeWash | Vendor Registration Lusaka</title>
+        <meta name="description" content="Register as a WeWash Zambia service partner in Lusaka. Join our vetted network of cleaning, pool and car detailing professionals." />
+        <link rel="canonical" href="https://wewashglobal.com/vendor-registration" />
+      </Helmet>
       {/* Hero */}
       <section className="relative bg-wewash-navy py-20">
         <div className="absolute inset-0 bg-gradient-to-br from-wewash-navy via-wewash-navy to-primary/20" />

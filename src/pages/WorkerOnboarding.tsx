@@ -9,6 +9,7 @@ const WorkerOnboardingPage = () => {
       <Helmet>
         <title>Worker Onboarding | WeWash Zambia</title>
         <meta name="description" content="Complete your WeWash onboarding to start accepting jobs" />
+        <link rel="canonical" href="https://wewashglobal.com/worker-onboarding" />
       </Helmet>
       <section className="bg-wewash-navy py-8">
         <div className="container-wewash">
