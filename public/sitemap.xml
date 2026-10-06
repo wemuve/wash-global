@@ -57,11 +57,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wewashglobal.com/book</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://wewashglobal.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -75,16 +70,6 @@
     <loc>https://wewashglobal.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://wewashglobal.com/vendor-registration</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://wewashglobal.com/worker-onboarding</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://wewashglobal.com/advice</loc>

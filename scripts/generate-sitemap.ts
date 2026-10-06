@@ -20,12 +20,9 @@ const entries: SitemapEntry[] = [
   { path: "/pricing", changefreq: "weekly", priority: "0.8" },
   { path: "/quote", changefreq: "monthly", priority: "0.8" },
   { path: "/book-now", changefreq: "monthly", priority: "0.8" },
-  { path: "/book", changefreq: "monthly", priority: "0.7" },
   { path: "/about", changefreq: "monthly", priority: "0.6" },
   { path: "/elderly-home-support-lusaka", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
-  { path: "/vendor-registration", changefreq: "monthly", priority: "0.4" },
-  { path: "/worker-onboarding", changefreq: "monthly", priority: "0.4" },
   { path: "/advice", changefreq: "monthly", priority: "0.6" },
   ...[
     "cleaning-habits-lusaka",

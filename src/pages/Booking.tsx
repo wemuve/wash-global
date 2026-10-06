@@ -180,7 +180,9 @@ const Booking = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Book a Service | WeWash Global - Schedule Your Cleaning</title>
+        <title>Book a Cleaning Service in Lusaka | WeWash Zambia</title>
+        <link rel="canonical" href="https://wewashglobal.com/book" />
+        <meta property="og:url" content="https://wewashglobal.com/book" />
         <meta name="description" content="Book professional cleaning services with WeWash Global. Easy online booking, no upfront payment required. Pay after service completion." />
       </Helmet>
 
