@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves } from 'lucide-react';
 
@@ -16,7 +16,7 @@ const ServicesSection = () => {
   const services = [
     {
       icon: SprayCan,
-      title: 'Home cleaning',
+      title: 'Home cleaning', href: '/services#cleaning',
       description: 'Regular cleans, deep cleans, and the heavy work after builders leave.',
       image: homeCleaningAsset.url,
       price: 'From K550',
@@ -24,7 +24,7 @@ const ServicesSection = () => {
     },
     {
       icon: Car,
-      title: 'Mobile car detailing',
+      title: 'Mobile car detailing', href: '/services/car-detailing',
       description: 'We come to your house or office and do the car properly, inside and out.',
       image: carDetailingAsset.url,
       price: 'From K450',
@@ -32,7 +32,7 @@ const ServicesSection = () => {
     },
     {
       icon: Bug,
-      title: 'Fumigation',
+      title: 'Fumigation', href: '/services#fumigation',
       description: 'Roaches, termites, rodents — treated with licensed chemicals and a follow-up.',
       image: '',
       price: 'From K400',
@@ -40,7 +40,7 @@ const ServicesSection = () => {
     },
     {
       icon: Building2,
-      title: 'Facility management',
+      title: 'Facility management', href: '/services#facility',
       description: 'We run the day-to-day upkeep of buildings, grounds and site staff.',
       image: facilityHotelAsset.url,
       price: 'From K2,500',
@@ -48,7 +48,7 @@ const ServicesSection = () => {
     },
     {
       icon: Briefcase,
-      title: 'Office cleaning',
+      title: 'Office cleaning', href: '/services#office',
       description: 'Daily or weekly teams with a supervisor and a checklist you can see.',
       image: loungeFinishedAsset.url,
       price: 'From K200',
@@ -56,7 +56,7 @@ const ServicesSection = () => {
     },
     {
       icon: UserCheck,
-      title: 'Trained maids',
+      title: 'Trained maids', href: '/services#maids',
       description: 'Vetted domestic staff, trained by us and still checked on after placement.',
       image: trainedMaidAsset.url,
       price: 'From K150',
@@ -117,7 +117,7 @@ const ServicesSection = () => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-foreground mb-2">{service.title}</h3>
+                  <h3 className="text-foreground mb-2"><Link to={service.href} className="hover:text-secondary transition-colors">{service.title}</Link></h3>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6">
                     {service.description}
                   </p>
