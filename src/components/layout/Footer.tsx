@@ -8,7 +8,9 @@ const Footer = () => {
 
   const services = [
     { name: 'Home Cleaning', href: '/services#cleaning' },
-    { name: 'Car Detailing', href: '/services#car-detailing' },
+    { name: 'Car Detailing', href: '/services/car-detailing' },
+    { name: 'Swimming Pools', href: '/pools' },
+    { name: 'Trained Maids', href: '/services#maids' },
     { name: 'Fumigation', href: '/services#fumigation' },
     { name: 'Facility Management', href: '/services#facility' },
     { name: 'Office Cleaning', href: '/services#office' },

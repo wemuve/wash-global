@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { imageLibrary } from '@/data/imageLibrary';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import LocalInfoSection, { MAPS_URL } from '@/components/LocalInfoSection';
@@ -106,6 +107,8 @@ const Pools = () => {
               },
               openingHours: ['Mo-Sa 07:00-19:00', 'Su 08:00-16:00'],
             },
+            url: 'https://wewashglobal.com/pools',
+            image: imageLibrary.filter((i) => i.pageUrl === '/pools' && i.url).map((i) => `https://wewashglobal.com${i.url}`),
             areaServed: { '@type': 'City', name: 'Lusaka' },
             offers: {
               '@type': 'Offer',
