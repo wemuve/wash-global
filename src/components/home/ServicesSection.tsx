@@ -16,7 +16,7 @@ const ServicesSection = () => {
   const services = [
     {
       icon: SprayCan,
-      title: 'Home cleaning', href: '/services#cleaning',
+      title: 'Home cleaning', href: '/services#home-cleaning',
       description: 'Regular cleans, deep cleans, and the heavy work after builders leave.',
       image: homeCleaningAsset.url,
       price: 'From K550',
@@ -40,7 +40,7 @@ const ServicesSection = () => {
     },
     {
       icon: Building2,
-      title: 'Facility management', href: '/services#facility',
+      title: 'Facility management', href: '/services#facility-management',
       description: 'We run the day-to-day upkeep of buildings, grounds and site staff.',
       image: facilityHotelAsset.url,
       price: 'From K2,500',
@@ -48,7 +48,7 @@ const ServicesSection = () => {
     },
     {
       icon: Briefcase,
-      title: 'Office cleaning', href: '/services#office',
+      title: 'Office cleaning', href: '/services#office-cleaning',
       description: 'Daily or weekly teams with a supervisor and a checklist you can see.',
       image: loungeFinishedAsset.url,
       price: 'From K200',
@@ -56,7 +56,7 @@ const ServicesSection = () => {
     },
     {
       icon: UserCheck,
-      title: 'Trained maids', href: '/services#maids',
+      title: 'Trained maids', href: '/services#trained-maids',
       description: 'Vetted domestic staff, trained by us and still checked on after placement.',
       image: trainedMaidAsset.url,
       price: 'From K150',

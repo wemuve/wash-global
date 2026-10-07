@@ -7,13 +7,13 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const services = [
-    { name: 'Home Cleaning', href: '/services#cleaning' },
+    { name: 'Home Cleaning', href: '/services#home-cleaning' },
     { name: 'Car Detailing', href: '/services/car-detailing' },
     { name: 'Swimming Pools', href: '/pools' },
-    { name: 'Trained Maids', href: '/services#maids' },
+    { name: 'Trained Maids', href: '/services#trained-maids' },
     { name: 'Fumigation', href: '/services#fumigation' },
-    { name: 'Facility Management', href: '/services#facility' },
-    { name: 'Office Cleaning', href: '/services#office' },
+    { name: 'Facility Management', href: '/services#facility-management' },
+    { name: 'Office Cleaning', href: '/services#office-cleaning' },
   ];
 
   const company = [
