@@ -32,6 +32,7 @@ const Header = () => {
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
     { href: '/pools', label: 'Pools' },
+    { href: '/elderly-home-support-lusaka', label: 'Elderly Support' },
     { href: '/quote', label: 'Get Quote' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/about', label: 'About' },
@@ -58,12 +59,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation — centered */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden xl:flex items-center gap-7 2xl:gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`relative text-[13px] uppercase tracking-[0.15em] font-medium transition-colors duration-300 ${
+                className={`relative whitespace-nowrap text-[13px] uppercase tracking-[0.12em] font-medium transition-colors duration-300 ${
                   isActive(link.href) 
                     ? 'text-secondary' 
                     : 'text-foreground/60 hover:text-foreground'
@@ -109,8 +110,8 @@ const Header = () => {
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-foreground/70">
+            <SheetTrigger asChild className="xl:hidden">
+              <Button variant="ghost" size="icon" className="text-foreground/70" aria-label="open menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
