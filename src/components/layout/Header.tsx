@@ -59,12 +59,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation — centered */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-7 xl:gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`relative text-[13px] uppercase tracking-[0.15em] font-medium transition-colors duration-300 ${
+                className={`relative whitespace-nowrap text-[13px] uppercase tracking-[0.12em] font-medium transition-colors duration-300 ${
                   isActive(link.href) 
                     ? 'text-secondary' 
                     : 'text-foreground/60 hover:text-foreground'
