@@ -32,6 +32,7 @@ const Header = () => {
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
     { href: '/pools', label: 'Pools' },
+    { href: '/elderly-home-support-lusaka', label: 'Elderly Support' },
     { href: '/quote', label: 'Get Quote' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/about', label: 'About' },
