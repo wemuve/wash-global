@@ -1,5 +1,10 @@
 # Roadmap
 
+## SEO and visitor growth
+- [ ] Fix missing worker-dashboard description and homepage social title
+- [ ] Refine homepage search title/description (awaiting approval of scan opportunity)
+- [ ] Prepare social and search growth recommendations (awaiting existing accounts and audience details)
+
 ## SolarCare
 - [x] Addendum: extend estimator with SolarCare inputs and approval-controlled admin pricing
 - [x] Addendum: test independent calculations, regression and live sitemap/indexing; deliver verified report
