@@ -1,13 +1,15 @@
 # Roadmap
 
 ## SolarCare
-- [ ] Addendum: extend estimator with SolarCare inputs and approval-controlled admin pricing
-- [ ] Addendum: test independent calculations, regression and live sitemap/indexing; deliver verified report
+- [x] Addendum: extend estimator with SolarCare inputs and approval-controlled admin pricing
+- [x] Addendum: test independent calculations, regression and live sitemap/indexing; deliver verified report
 - [x] Add SolarCare page, five packages, enquiry form and private optional photo
 - [x] Add navigation, contextual service links, metadata and sitemap entry
 - [x] Prepare eight-topic editorial plan and implementation report
 - [x] Test mobile layouts, real enquiry delivery and existing public pages
-- [ ] Publish and validate SolarCare in Search Console (requires publication)
+- [x] Publish SolarCare, verify live content and submit updated sitemap in Search Console
+- [ ] Search Console official live URL test and Request indexing (connector cannot perform these)
+- [ ] Approve SolarCare operating rates (requires actual pilot costs from WeWash)
 - [ ] Enable SolarCare owner-email notifications (requires verified sending domain)
 
 - [x] Rebuild price estimator with deterministic engine (base × condition, then add-ons, then transport)
