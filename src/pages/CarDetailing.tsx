@@ -75,6 +75,10 @@ const CarDetailing = () => {
           property="og:description"
           content="Professional mobile car detailing across Lusaka. Interior, exterior and full valet packages done at your doorstep."
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Car Detailing Lusaka, Zambia – Mobile Valet | WeWash" />
+        <meta name="twitter:description" content="Professional mobile car detailing across Lusaka. Interior, exterior and full valet packages done at your doorstep." />
+        <meta name="twitter:url" content="https://wewashglobal.com/services/car-detailing" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/services/car-detailing" />
 

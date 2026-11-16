@@ -1,5 +1,8 @@
 # Roadmap
 
+## Metadata cleanup
+- [ ] Remove duplicate route metadata, isolate homepage schemas, and verify direct visits and navigation
+
 ## SEO and visitor growth
 - [x] Fix missing worker-dashboard description and homepage social title; verified in preview
 - [ ] Refine homepage search title/description (awaiting approval of scan opportunity)
