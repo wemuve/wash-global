@@ -14,6 +14,7 @@ import CTASection from '@/components/home/CTASection';
 import ReferralPromoSection from '@/components/home/ReferralPromoSection';
 import { aggregateRating, reviewSchema } from '@/data/customerReviews';
 import AdviceSection from '@/components/home/AdviceSection';
+import { homepageBusinessSchema, homepageFaqSchema } from '@/data/homepageSchema';
 
 const Index = () => {
   return (
@@ -22,15 +23,16 @@ const Index = () => {
         <title>WeWash Zambia | Premium Cleaning, Car Detailing & Pool Services in Lusaka</title>
         <meta name="description" content="Zambia's premium cleaning company. Deep cleaning from K550, sofa & carpet cleaning, mobile car detailing from K450, pool servicing from K800, fumigation & trained maids. Serving Lusaka — book online or WhatsApp +260768671420." />
         <link rel="canonical" href="https://wewashglobal.com/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="WeWash Zambia | Premium Cleaning, Car Detailing & Pools in Lusaka" />
+        <meta name="twitter:description" content="Deep cleaning, car detailing, pool services, fumigation & trained maids across Lusaka. Book online — pay after the job." />
+        <meta name="twitter:url" content="https://wewashglobal.com/" />
         <meta property="og:url" content="https://wewashglobal.com/" />
         <meta property="og:title" content="WeWash Zambia | Premium Cleaning, Car Detailing & Pools in Lusaka" />
         <meta property="og:description" content="Deep cleaning, car detailing, pool services, fumigation & trained maids across Lusaka. Real crew, real results. Book online — pay after the job." />
         <script type="application/ld+json">{JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'LocalBusiness',
-          '@id': 'https://wewashglobal.com/#organization',
-          name: 'WeWash Zambia',
-          url: 'https://wewashglobal.com/',
+          ...homepageBusinessSchema,
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: aggregateRating.ratingValue,
@@ -39,6 +41,7 @@ const Index = () => {
           },
           review: reviewSchema,
         })}</script>
+        <script type="application/ld+json">{JSON.stringify(homepageFaqSchema)}</script>
       </Helmet>
       <HeroSection />
       <ServicesSection />

@@ -5,3 +5,5 @@
 - Keep SolarCare package definitions and enquiry validation shared between its page and server handler; this prevents quote-only packages from drifting or gaining invented prices.
 - Store SolarCare enquiries in the existing leads workflow with structured notes and private attachments; guest submissions must never require public read access.
 - SolarCare estimates use a shared deterministic engine and private app_settings approved by admins through a server function; never send SolarCare to unrelated AI price prompts or trust client-supplied rates.
+
+- Route-sensitive static metadata is Helmet-owned via data-rh; homepage LocalBusiness and FAQ schemas render only on the homepage, while a minimal Organization remains sitewide to keep service provider references valid.

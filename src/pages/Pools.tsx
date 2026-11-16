@@ -75,6 +75,10 @@ const Pools = () => {
           property="og:description"
           content="We build, service, clean and repair swimming pools across Lusaka. Real projects, honest starting prices."
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Swimming Pool Cleaning Kabulonga & Lusaka | WeWash Zambia" />
+        <meta name="twitter:description" content="We build, service, clean and repair swimming pools across Lusaka. Real projects, honest starting prices." />
+        <meta name="twitter:url" content="https://wewashglobal.com/pools" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wewashglobal.com/pools" />
 
