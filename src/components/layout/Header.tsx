@@ -32,6 +32,7 @@ const Header = () => {
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
     { href: '/pools', label: 'Pools' },
+    { href: '/solar-panel-cleaning-lusaka', label: 'SolarCare' },
     { href: '/elderly-home-support-lusaka', label: 'Elderly Support' },
     { href: '/quote', label: 'Get Quote' },
     { href: '/pricing', label: 'Pricing' },
@@ -59,12 +60,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation — centered */}
-          <div className="hidden xl:flex items-center gap-7 2xl:gap-8">
+          <div className="hidden xl:flex items-center gap-4 2xl:gap-5">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`relative whitespace-nowrap text-[13px] uppercase tracking-[0.12em] font-medium transition-colors duration-300 ${
+                className={`relative whitespace-nowrap text-xs uppercase tracking-normal font-medium transition-colors duration-300 ${
                   isActive(link.href) 
                     ? 'text-secondary' 
                     : 'text-foreground/60 hover:text-foreground'
@@ -76,7 +77,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden 2xl:flex items-center gap-2">
             {user ? (
               <Button
                 variant="ghost"
@@ -116,7 +117,7 @@ const Header = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-sm p-0 border-l border-border/30">
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col h-full overflow-y-auto">
                 <div className="p-8 flex justify-between items-center">
                   <WeWashLogo variant="light" />
                 </div>
@@ -127,7 +128,7 @@ const Header = () => {
                       key={link.href}
                       to={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`block py-4 text-lg font-light tracking-wide border-b border-border/20 transition-colors ${
+                      className={`block py-3 text-lg font-light tracking-normal border-b border-border/20 transition-colors ${
                         isActive(link.href)
                           ? 'text-secondary'
                           : 'text-foreground/70 hover:text-foreground'
@@ -139,6 +140,9 @@ const Header = () => {
                 </div>
                 
                 <div className="p-8 space-y-3">
+                  <Button variant="outline" className="w-full" onClick={() => { navigate(user ? '/dashboard' : '/auth'); setIsOpen(false); }}>
+                    <User className="h-4 w-4 mr-2" />{user ? 'Dashboard' : 'Sign In'}
+                  </Button>
                   <Button
                     onClick={() => { openWhatsApp(); setIsOpen(false); }}
                     className="w-full btn-whatsapp"

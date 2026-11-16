@@ -28,6 +28,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import Advice from "./pages/Advice";
 import AdviceArticle from "./pages/AdviceArticle";
+import SolarCare from "./pages/SolarCare";
 
 
 
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/pools" element={<Pools />} />
+            <Route path="/solar-panel-cleaning-lusaka" element={<SolarCare />} />
             <Route path="/services/car-detailing" element={<CarDetailing />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />

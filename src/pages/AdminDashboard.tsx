@@ -51,6 +51,9 @@ interface Lead {
   source: string;
   status: string;
   created_at: string;
+  customer_email: string | null;
+  message: string | null;
+  notes: unknown;
 }
 
 interface Vendor {
@@ -89,6 +92,24 @@ const AdminDashboard = () => {
   const [selectedReceipt, setSelectedReceipt] = useState<Payment | null>(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [leadPhotoUrl, setLeadPhotoUrl] = useState('');
+  const [leadPhotoLoading, setLeadPhotoLoading] = useState(false);
+
+  const viewLead = async (lead: Lead) => {
+    setSelectedLead(lead);
+    setLeadPhotoUrl('');
+    if (!lead.source.startsWith('solarcare_')) return;
+    const notes = lead.notes as { solarcare?: { photoPath?: string } } | null;
+    if (!notes?.solarcare?.photoPath) return;
+    setLeadPhotoLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('solarcare-enquiry', { body: { action: 'photo', leadId: lead.id } });
+      if (error || !data?.url) throw new Error('Photo unavailable');
+      setLeadPhotoUrl(data.url);
+    } catch { toast({ title: 'The private site photo could not be opened.', variant: 'destructive' }); }
+    finally { setLeadPhotoLoading(false); }
+  };
 
   // Auth guard: verify admin/manager role server-side
   useEffect(() => {
@@ -534,6 +555,7 @@ const AdminDashboard = () => {
                     <TableHead>Source</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Created</TableHead>
+                    <TableHead>Enquiry</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -541,13 +563,14 @@ const AdminDashboard = () => {
                     <TableRow key={lead.id}>
                       <TableCell className="font-medium">{lead.customer_name}</TableCell>
                       <TableCell><a className="text-accent underline" target="_blank" rel="noopener noreferrer" href={`https://wa.me/${lead.customer_phone.replace(/\D/g,"").replace(/^0/,"260")}`}>{lead.customer_phone}</a></TableCell>
-                      <TableCell>{lead.source}</TableCell>
+                      <TableCell>{lead.source.startsWith('solarcare_') ? <span className="text-secondary font-medium">SolarCare · {lead.source.replace('solarcare_', '').replaceAll('_', ' ')}</span> : lead.source}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[lead.status] || 'bg-gray-100'}`}>
                           {lead.status}
                         </span>
                       </TableCell>
                       <TableCell>{new Date(lead.created_at).toLocaleDateString()}</TableCell>
+                      <TableCell><Button size="icon" variant="ghost" aria-label={`View enquiry from ${lead.customer_name}`} onClick={() => viewLead(lead)}><Eye className="h-4 w-4" /></Button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -597,6 +620,20 @@ const AdminDashboard = () => {
       </section>
 
       {/* Receipt Modal */}
+      <Dialog open={!!selectedLead} onOpenChange={open => { if (!open) { setSelectedLead(null); setLeadPhotoUrl(''); } }}>
+        <DialogContent className="max-w-xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>{selectedLead?.source.startsWith('solarcare_') ? 'SolarCare enquiry' : 'Customer enquiry'}</DialogTitle></DialogHeader>
+          {selectedLead && <div className="space-y-4">
+            <p className="font-medium">{selectedLead.customer_name}</p>
+            <p className="text-sm text-muted-foreground">{selectedLead.source}</p>
+            {selectedLead.customer_email && <p className="text-sm break-all">{selectedLead.customer_email}</p>}
+            <p className="text-sm whitespace-pre-wrap break-words">{selectedLead.message}</p>
+            {leadPhotoLoading && <p className="text-sm text-muted-foreground">Loading private site photo…</p>}
+            {leadPhotoUrl && <img src={leadPhotoUrl} alt="Customer-uploaded solar installation for site assessment" className="w-full rounded-lg" />}
+            <Button asChild variant="outline"><a href={`https://wa.me/${selectedLead.customer_phone.replace(/\D/g, '').replace(/^0/, '260')}`} target="_blank" rel="noopener noreferrer">WhatsApp customer</a></Button>
+          </div>}
+        </DialogContent>
+      </Dialog>
       <Dialog open={!!selectedReceipt} onOpenChange={() => setSelectedReceipt(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
