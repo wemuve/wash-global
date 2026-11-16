@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { solarScopeSchema } from './solarcare-pricing';
+import { solarScopeSchema } from './solarcare-pricing.ts';
 
 export const SOLARCARE_PATH = '/solar-panel-cleaning-lusaka';
 export const solarPackages = [
