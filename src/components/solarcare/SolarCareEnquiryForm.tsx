@@ -22,7 +22,7 @@ export default function SolarCareEnquiryForm({ preferredPackage, onPackageChange
   const [failure, setFailure] = useState('');
   const [scope, setScope] = useState(() => solarScopeSchema.parse({}));
   const [estimate, setEstimate] = useState<ReturnType<typeof calculateSolarEstimate> | null>(null);
-  const changeScope = (key: keyof typeof scope, value: unknown) => { setEstimate(null); setScope(previous => solarScopeSchema.parse({ ...previous, [key]: value })); };
+  const changeScope = (key: keyof typeof scope, value: string | typeof scope.additionalServices) => { setEstimate(null); setScope(previous => ({ ...previous, [key]: value })); };
   const scopeSelect = (key: keyof typeof scope, label: string, options: string[]) => <div className="space-y-2 min-w-0"><Label>{label}</Label><Select value={String(scope[key])} onValueChange={value => changeScope(key, value)}><SelectTrigger aria-label={label}><SelectValue /></SelectTrigger><SelectContent>{options.map(value => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></div>;
   const scopeInput = (key: 'surfaceArea' | 'roofHeight' | 'returnDistance' | 'labourHours' | 'contractMonths' | 'equipment', label: string) => <div className="space-y-2"><Label>{label}</Label><Input aria-label={label} value={scope[key]} maxLength={key === 'equipment' ? 300 : 16} onChange={e => { setEstimate(null); setScope(previous => ({ ...previous, [key]: e.target.value })); }} /></div>;
   const set = (field: keyof typeof form, value: string | boolean) => { setEstimate(null); setForm(previous => ({ ...previous, [field]: value })); };
