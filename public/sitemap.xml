@@ -42,6 +42,11 @@
     <image:image><image:loc>https://wewashglobal.com/__l5e/assets-v1/6b108dd4-9a33-41b9-ac8e-0900b13d704a/pool-37.jpg</image:loc></image:image>
   </url>
   <url>
+    <loc>https://wewashglobal.com/solar-panel-cleaning-lusaka</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wewashglobal.com/pricing</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
