@@ -1,7 +1,7 @@
 # Roadmap
 
 ## SEO and visitor growth
-- [ ] Fix missing worker-dashboard description and homepage social title
+- [x] Fix missing worker-dashboard description and homepage social title; verified in preview
 - [ ] Refine homepage search title/description (awaiting approval of scan opportunity)
 - [ ] Prepare social and search growth recommendations (awaiting existing accounts and audience details)
 
