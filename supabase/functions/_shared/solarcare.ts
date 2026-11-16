@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { solarScopeSchema } from './solarcare-pricing';
 
 export const SOLARCARE_PATH = '/solar-panel-cleaning-lusaka';
 export const solarPackages = [
@@ -25,6 +26,7 @@ export const solarEnquirySchema = z.object({
   frequency: z.enum(serviceFrequencies),
   information: z.string().trim().max(1000),
   consent: z.literal(true, { errorMap: () => ({ message: 'Please agree to be contacted about this enquiry.' }) }),
+  scope: solarScopeSchema.optional(),
 });
 export type SolarEnquiry = z.infer<typeof solarEnquirySchema>;
 export function solarEnquirySource(enquiry: Pick<SolarEnquiry, 'package' | 'installationType'>) {
@@ -34,7 +36,7 @@ export function solarEnquirySource(enquiry: Pick<SolarEnquiry, 'package' | 'inst
   return 'solarcare_residential';
 }
 export function solarEnquirySummary(enquiry: SolarEnquiry) {
-  return [`${solarPackages.find(p => p.id === enquiry.package)?.name} — ${enquiry.installationType}`, `Contact: ${enquiry.contactPerson || enquiry.customerName}`, `Site: ${enquiry.location}`, `Panels: ${enquiry.panelCount || 'Not known'}`, `Capacity: ${enquiry.capacity ? `${enquiry.capacity} kWp` : 'Not known'}`, `Schedule: ${enquiry.frequency}`, enquiry.information].filter(Boolean).join('\n');
+  return [`${solarPackages.find(p => p.id === enquiry.package)?.name} — ${enquiry.installationType}`, `Contact: ${enquiry.contactPerson || enquiry.customerName}`, `Site: ${enquiry.location}`, `Panels: ${enquiry.panelCount || 'Not known'}`, `Capacity: ${enquiry.capacity ? `${enquiry.capacity} ${enquiry.scope?.capacityUnit || 'kWp'}` : 'Not known'}`, `Schedule: ${enquiry.frequency}`, enquiry.scope ? `Installation scope: ${JSON.stringify(enquiry.scope)}` : '', enquiry.information].filter(Boolean).join('\n');
 }
 export const MAX_SOLAR_PHOTO_BYTES = 5 * 1024 * 1024;
 export function validateSolarPhoto(size: number, type: string) {

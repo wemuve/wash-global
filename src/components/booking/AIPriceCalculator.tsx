@@ -4,6 +4,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import SolarCareEnquiryForm from '@/components/solarcare/SolarCareEnquiryForm';
+import { SolarEnquiry } from '@/data/solarcare';
 import {
   MessageCircle,
   MapPin,
@@ -44,11 +46,14 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
   const [serviceMode, setServiceMode] = useState<ServiceMode>('mobile');
   const [transportZoneId, setTransportZoneId] = useState('');
   const [notes, setNotes] = useState('');
+  const [solarPackage, setSolarPackage] = useState<SolarEnquiry['package']>('home');
 
-  const service = useMemo(() => SERVICES.find((s) => s.id === serviceId)!, [serviceId]);
+  const service = useMemo(() => SERVICES.find((s) => s.id === serviceId), [serviceId]);
 
   const handleServiceChange = (value: string) => {
-    const next = SERVICES.find((s) => s.id === value)!;
+    if (value === 'solarcare') { setServiceId(value); return; }
+    const next = SERVICES.find((s) => s.id === value);
+    if (!next?.sizes[0]) return;
     setServiceId(value);
     setSizeId(next.sizes[0].id);
     setAddOnIds([]);
@@ -121,10 +126,12 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
               {SERVICES.map((s) => (
                 <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
               ))}
+              <SelectItem value="solarcare">SolarCare</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
+        {serviceId === 'solarcare' ? <SolarCareEnquiryForm estimatorMode preferredPackage={solarPackage} onPackageChange={setSolarPackage} /> : service && <>
         {/* Size */}
         <div>
           <Label className="mb-2 block font-medium">Size / Package *</Label>
@@ -162,7 +169,8 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
             <Label className="mb-2 block font-medium">Optional Add-ons</Label>
             <div className="grid sm:grid-cols-2 gap-2">
               {service.addOnIds.map((id) => {
-                const addOn = ADD_ONS.find((a) => a.id === id)!;
+                const addOn = ADD_ONS.find((a) => a.id === id);
+                if (!addOn) return null;
                 const selected = addOnIds.includes(id);
                 return (
                   <button
@@ -314,6 +322,7 @@ const AIPriceCalculator: React.FC<AIPriceCalculatorProps> = ({ onPriceCalculated
             </div>
           </div>
         )}
+        </>}
       </CardContent>
     </Card>
   );
