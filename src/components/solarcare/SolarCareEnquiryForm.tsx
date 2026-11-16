@@ -11,7 +11,7 @@ import { CheckCircle2, Send, MessageCircle, Upload } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { solarPackages, installationTypes, serviceFrequencies, solarEnquirySchema, solarEnquirySource, validateSolarPhoto, SolarEnquiry } from '@/data/solarcare';
 import { trackSolarCare } from '@/lib/solarcareAnalytics';
-import { solarScopeSchema, chargeLabels, calculateSolarEstimate, emptySolarPricing } from '@/lib/solarcarePricing';
+import { solarScopeSchema, chargeLabels, calculateSolarEstimate } from '@/lib/solarcarePricing';
 
 export default function SolarCareEnquiryForm({ preferredPackage, onPackageChange, estimatorMode = false }: { preferredPackage: SolarEnquiry['package']; onPackageChange: (value: SolarEnquiry['package']) => void; estimatorMode?: boolean }) {
   const [form, setForm] = useState({ customerName: '', contactPerson: '', phone: '', email: '', location: '', installationType: 'Residential', panelCount: '', capacity: '', frequency: 'One-off cleaning', information: '', consent: false });
@@ -25,7 +25,7 @@ export default function SolarCareEnquiryForm({ preferredPackage, onPackageChange
   const changeScope = (key: keyof typeof scope, value: unknown) => { setEstimate(null); setScope(previous => solarScopeSchema.parse({ ...previous, [key]: value })); };
   const scopeSelect = (key: keyof typeof scope, label: string, options: string[]) => <div className="space-y-2 min-w-0"><Label>{label}</Label><Select value={String(scope[key])} onValueChange={value => changeScope(key, value)}><SelectTrigger aria-label={label}><SelectValue /></SelectTrigger><SelectContent>{options.map(value => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></div>;
   const scopeInput = (key: 'surfaceArea' | 'roofHeight' | 'returnDistance' | 'labourHours' | 'contractMonths' | 'equipment', label: string) => <div className="space-y-2"><Label>{label}</Label><Input aria-label={label} value={scope[key]} maxLength={key === 'equipment' ? 300 : 16} onChange={e => { setEstimate(null); setScope(previous => ({ ...previous, [key]: e.target.value })); }} /></div>;
-  const set = (field: keyof typeof form, value: string | boolean) => setForm(previous => ({ ...previous, [field]: value }));
+  const set = (field: keyof typeof form, value: string | boolean) => { setEstimate(null); setForm(previous => ({ ...previous, [field]: value })); };
   const input = (field: 'customerName' | 'contactPerson' | 'phone' | 'email' | 'location' | 'panelCount' | 'capacity', label: string, type = 'text', required = true, maxLength = 100) => (
     <div className="min-w-0 space-y-2">
       <Label htmlFor={`solar-${field}`}>{label}</Label>
@@ -109,7 +109,7 @@ export default function SolarCareEnquiryForm({ preferredPackage, onPackageChange
         {scopeInput('contractMonths', 'Contract duration in months (optional)')}
       </div><div className="space-y-3"><Label>Additional site-care services</Label>{(['bird', 'vegetation', 'debris', 'roof', 'monitoring'] as const).map(key => <Label key={key} className="flex items-center gap-3 font-normal"><Checkbox checked={scope.additionalServices.includes(key)} onCheckedChange={checked => changeScope('additionalServices', checked ? [...scope.additionalServices, key] : scope.additionalServices.filter(v => v !== key))} />{chargeLabels[key]}</Label>)}</div></fieldset>}
       <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2"><Label htmlFor="solar-package">Preferred package</Label><Select value={preferredPackage} onValueChange={value => { const selected = solarPackages.find(p => p.id === value); if (selected) onPackageChange(selected.id); }}><SelectTrigger id="solar-package"><SelectValue /></SelectTrigger><SelectContent>{solarPackages.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent></Select></div>
+        <div className="space-y-2"><Label htmlFor="solar-package">Preferred package</Label><Select value={preferredPackage} onValueChange={value => { const selected = solarPackages.find(p => p.id === value); if (selected) { setEstimate(null); onPackageChange(selected.id); } }}><SelectTrigger id="solar-package"><SelectValue /></SelectTrigger><SelectContent>{solarPackages.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent></Select></div>
         <div className="space-y-2"><Label htmlFor="solar-frequency">One-off or recurring service</Label><Select value={form.frequency} onValueChange={value => set('frequency', value)}><SelectTrigger id="solar-frequency"><SelectValue /></SelectTrigger><SelectContent>{serviceFrequencies.map(frequency => <SelectItem key={frequency} value={frequency}>{frequency}</SelectItem>)}</SelectContent></Select></div>
       </div>
       <div className="space-y-2"><Label htmlFor="solar-information">Additional information (optional)</Label><Textarea id="solar-information" value={form.information} onChange={event => set('information', event.target.value)} maxLength={1000} rows={4} placeholder="Access arrangements, water availability, contamination or partnership requirements" /></div>
