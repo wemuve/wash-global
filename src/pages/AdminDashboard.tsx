@@ -563,7 +563,7 @@ const AdminDashboard = () => {
                     <TableRow key={lead.id}>
                       <TableCell className="font-medium">{lead.customer_name}</TableCell>
                       <TableCell><a className="text-accent underline" target="_blank" rel="noopener noreferrer" href={`https://wa.me/${lead.customer_phone.replace(/\D/g,"").replace(/^0/,"260")}`}>{lead.customer_phone}</a></TableCell>
-                      <TableCell>{lead.source.startsWith('solarcare_') ? <span className="text-secondary font-medium">SolarCare · {lead.source.replace('solarcare_', '').replaceAll('_', ' ')}</span> : lead.source}</TableCell>
+                      <TableCell>{lead.source.startsWith('solarcare_') ? <span className="text-secondary font-medium">SolarCare · {lead.source.replace('solarcare_', '').replace(/_/g, ' ')}</span> : lead.source}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[lead.status] || 'bg-gray-100'}`}>
                           {lead.status}

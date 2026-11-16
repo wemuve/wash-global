@@ -77,16 +77,17 @@ const Header = () => {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden 2xl:flex items-center gap-2">
+          <div className="hidden xl:flex items-center gap-2">
             {user ? (
               <Button
                 variant="ghost"
                 onClick={() => navigate('/dashboard')}
                 className="gap-2 text-foreground/70 hover:text-foreground"
                 size="sm"
+                aria-label="Dashboard"
               >
                 <User className="h-4 w-4" />
-                Dashboard
+                <span className="hidden 2xl:inline">Dashboard</span>
               </Button>
             ) : (
               <Button
@@ -94,9 +95,10 @@ const Header = () => {
                 onClick={() => navigate('/auth')}
                 className="gap-2 text-foreground/70 hover:text-foreground"
                 size="sm"
+                aria-label="Sign In"
               >
                 <LogIn className="h-4 w-4" />
-                Sign In
+                <span className="hidden 2xl:inline">Sign In</span>
               </Button>
             )}
             
