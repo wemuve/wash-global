@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves } from 'lucide-react';
+import { ArrowRight, SprayCan, Car, Bug, Building2, Briefcase, UserCheck, Waves, Sun } from 'lucide-react';
 
 import homeCleaningAsset from '@/assets/home-cleaning-crew.jpg.asset.json';
 import carDetailingAsset from '@/assets/car-detailing-seats.jpg.asset.json';
@@ -64,11 +64,19 @@ const ServicesSection = () => {
     },
     {
       icon: Waves,
-      title: 'Swimming pools',
+      title: 'Swimming pools', href: '/pools',
       description: 'We build pools from the ground up, then service, clean and repair them after.',
       image: poolAsset.url,
       price: 'From K800',
       priceNote: 'Pool service & clean',
+    },
+    {
+      icon: Sun,
+      title: 'WeWash SolarCare', href: '/solar-panel-cleaning-lusaka',
+      description: 'Solar panel cleaning and visual site reporting for homes and commercial installations, subject to assessment.',
+      image: '',
+      price: 'Site-specific quote',
+      priceNote: 'No fixed prices',
     },
   ];
 
@@ -79,7 +87,7 @@ const ServicesSection = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div className="max-w-2xl">
             <p className="text-[11px] uppercase tracking-[0.28em] text-secondary mb-4">What we do</p>
-            <h2 className="text-foreground mb-4">Seven services, one team you can call</h2>
+            <h2 className="text-foreground mb-4">Services for your home, property and solar installation</h2>
             <p className="text-lg text-muted-foreground">
               Prices below are starting points for a light job. Yours may be more or less — we
               confirm it after we&apos;ve looked.
@@ -127,8 +135,8 @@ const ServicesSection = () => {
                       <p className="font-display text-lg text-secondary">{service.price}</p>
                       <p className="text-xs text-muted-foreground">{service.priceNote}</p>
                     </div>
-                    <Button size="sm" variant="ghost" className="gap-1 text-foreground" onClick={() => navigate('/quote')}>
-                      Get price
+                    <Button size="sm" variant="ghost" className="gap-1 text-foreground" onClick={() => navigate(service.title === 'WeWash SolarCare' ? '/solar-panel-cleaning-lusaka#solar-assessment' : '/quote')}>
+                      {service.title === 'WeWash SolarCare' ? 'Enquire' : 'Get price'}
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Button>
                   </div>

@@ -10,6 +10,7 @@ const Footer = () => {
     { name: 'Home Cleaning', href: '/services#home-cleaning' },
     { name: 'Car Detailing', href: '/services/car-detailing' },
     { name: 'Swimming Pools', href: '/pools' },
+    { name: 'WeWash SolarCare', href: '/solar-panel-cleaning-lusaka' },
     { name: 'Trained Maids', href: '/services#trained-maids' },
     { name: 'Fumigation', href: '/services#fumigation' },
     { name: 'Facility Management', href: '/services#facility-management' },

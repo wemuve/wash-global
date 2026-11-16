@@ -13,7 +13,8 @@ import {
   Waves,
   CheckCircle2,
   ArrowRight,
-  AlertTriangle
+  AlertTriangle,
+  Sun
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -27,6 +28,7 @@ import trainedMaidVideoAsset from '@/assets/services/trained-maid-ironing.mov.as
 import facilityHotelAsset from '@/assets/services/facility-hotel-corridor.jpeg.asset.json';
 import facilityWindowsAsset from '@/assets/services/facility-windows.jpeg.asset.json';
 import { aggregateRating, reviewSchema } from '@/data/customerReviews';
+import SolarCareContextLink from '@/components/solarcare/SolarCareContextLink';
 const poolImage = poolBuildAsset.url;
 
 
@@ -34,6 +36,13 @@ const Services = () => {
   const navigate = useNavigate();
 
   const services = [
+    {
+      id: 'solarcare', icon: Sun, title: 'WeWash SolarCare',
+      description: 'Solar Panel Cleaning & Maintenance Support. A WeWash Zambia specialist service division for homes, businesses and assessed industrial or utility-scale projects.',
+      image: '', imageAlt: '',
+      features: ['Home, Business, Industrial, Farm and Partner packages', 'Panel surface cleaning and visual condition reporting', 'Scheduled cleaning programmes', 'Larger projects subject to assessment, mobilisation and availability'],
+      pricing: 'Request a Site-Specific Quotation',
+    },
     {
       id: 'home-cleaning',
       icon: Home,
@@ -281,17 +290,21 @@ const Services = () => {
                           {service.pricing}
                         </span>
                         <Button 
-                          onClick={() => navigate(service.id === 'car-detailing' ? '/services/car-detailing' : '/quote')}
+                          onClick={() => navigate(service.id === 'solarcare' ? '/solar-panel-cleaning-lusaka' : service.id === 'car-detailing' ? '/services/car-detailing' : '/quote')}
                           className="btn-gold gap-2"
                         >
-                          {service.id === 'car-detailing' ? 'View Car Detailing' : 'Get Your Estimate'}
+                          {service.id === 'solarcare' ? 'Explore SolarCare' : service.id === 'car-detailing' ? 'View Car Detailing' : 'Get Your Estimate'}
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       </div>
                       <p className="text-xs text-muted-foreground italic">
+                        {service.id === 'solarcare' ? 'No fixed prices. Cleaning and visual reporting only; electrical work requires qualified solar technicians.' :
+                        <>
                         * Starting estimate only. Final price confirmed after assessment of condition, transport, labour & materials.
+                        </>}
                       </p>
                     </div>
+                    {['facility-management', 'office-cleaning', 'home-cleaning'].includes(service.id) && <SolarCareContextLink />}
                   </div>
                 </div>
               );

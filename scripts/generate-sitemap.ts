@@ -17,6 +17,7 @@ const entries: SitemapEntry[] = [
   { path: "/services", changefreq: "weekly", priority: "0.9" },
   { path: "/services/car-detailing", changefreq: "weekly", priority: "0.8" },
   { path: "/pools", changefreq: "monthly", priority: "0.8" },
+  { path: "/solar-panel-cleaning-lusaka", changefreq: "monthly", priority: "0.8" },
   { path: "/pricing", changefreq: "weekly", priority: "0.8" },
   { path: "/quote", changefreq: "monthly", priority: "0.8" },
   { path: "/book-now", changefreq: "monthly", priority: "0.8" },

@@ -1,5 +1,12 @@
 # Roadmap
 
+## SolarCare
+- [ ] Add SolarCare page, five packages, enquiry form and private optional photo
+- [ ] Add navigation, contextual service links, metadata and sitemap entry
+- [ ] Prepare eight-topic editorial plan and implementation report
+- [ ] Test mobile layouts, real enquiry delivery and existing public pages
+- [ ] Publish and validate SolarCare in Search Console (requires publication)
+
 - [x] Rebuild price estimator with deterministic engine (base × condition, then add-ons, then transport)
 - [x] Mobile service vs customer drop-off (drop-off = K0 transport)
 - [x] Automated pricing tests (5 cases)
