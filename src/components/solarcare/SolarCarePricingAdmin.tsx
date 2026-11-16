@@ -1,0 +1,41 @@
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { FunctionsHttpError } from '@supabase/supabase-js';
+import { emptySolarPricing, chargeLabels, primaryMethods, SolarPricingConfig, solarPricingConfigSchema } from '@/lib/solarcarePricing';
+import { solarPackages } from '@/data/solarcare';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Save, RefreshCw } from 'lucide-react';
+
+export default function SolarCarePricingAdmin() {
+  const [config, setConfig] = useState<SolarPricingConfig>(emptySolarPricing);
+  const [packageId, setPackageId] = useState<keyof SolarPricingConfig['packages']>('home');
+  const [busy, setBusy] = useState(false), [notice, setNotice] = useState('');
+  const [override, setOverride] = useState({ leadId: '', amount: '', reason: '' });
+  const current = config.packages[packageId];
+  const call = async (body: object) => {
+    const { data, error } = await supabase.functions.invoke('solarcare-pricing', { body });
+    if (error) { const details = error instanceof FunctionsHttpError ? await error.context.json().catch(() => null) : null; throw new Error(details?.error || 'Pricing could not be loaded or saved.'); }
+    return data;
+  };
+  const load = async () => { setBusy(true); try { const data = await call({ action: 'read' }); const result = solarPricingConfigSchema.safeParse(data.config); if (!result.success) throw new Error('Stored configuration needs review.'); setConfig(result.data); setNotice(''); } catch (e) { setNotice(e instanceof Error ? e.message : 'Unable to load.'); } finally { setBusy(false); } };
+  useEffect(() => { void load(); }, []);
+  const update = (change: Partial<typeof current>) => setConfig(previous => ({ ...previous, packages: { ...previous.packages, [packageId]: { ...previous.packages[packageId], ...change } } }));
+  const numeric = (label: string, value: number | null, onChange: (n: number | null) => void, max = 100000000) => <div className="space-y-2"><Label>{label}</Label><Input aria-label={label} type="number" min="0" max={max} step="0.01" value={value ?? ''} onChange={e => onChange(e.target.value === '' ? null : Number(e.target.value))} /></div>;
+  const save = async () => { setBusy(true); setNotice(''); try { const parsed = solarPricingConfigSchema.safeParse(config); if (!parsed.success) throw new Error(parsed.error.issues.map(i => i.message).join(' ')); await call({ action: 'save', config: parsed.data }); setNotice('SolarCare pricing saved.'); } catch (e) { setNotice(e instanceof Error ? e.message : 'Unable to save.'); } finally { setBusy(false); } };
+  return <div className="space-y-8">
+    <div className="flex flex-wrap justify-between gap-4"><div><h2 className="tracking-normal">SolarCare pricing configuration</h2><p className="text-muted-foreground mt-3">ZMW · Pending pilot validation until approved. Blank rates are unknown, not free. Explicit zero means no charge.</p></div><Button variant="outline" onClick={load} disabled={busy}><RefreshCw className="h-4 w-4 mr-2" />Reload</Button></div>
+    <div className="grid sm:grid-cols-2 gap-5"><div className="space-y-2"><Label>Package</Label><Select value={packageId} onValueChange={v => { const p = solarPackages.find(p => p.id === v); if (p) setPackageId(p.id); }}><SelectTrigger aria-label="Pricing package"><SelectValue /></SelectTrigger><SelectContent>{solarPackages.map(p => <SelectItem value={p.id} key={p.id}>{p.name}</SelectItem>)}</SelectContent></Select></div><div className="space-y-2"><Label>Rate approval</Label><Select value={current.status} onValueChange={v => update({ status: v === 'approved' ? 'approved' : 'pending' })}><SelectTrigger aria-label="Rate approval"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="pending">Pending pilot validation</SelectItem><SelectItem value="approved">Administrator approved</SelectItem></SelectContent></Select></div></div>
+    <div className="space-y-2"><Label>Pilot cost validation / approval evidence</Label><Textarea aria-label="Pilot cost validation / approval evidence" value={current.evidence} onChange={e => update({ evidence: e.target.value })} maxLength={1000} /></div>
+    <h3 className="tracking-normal">Primary cleaning methods</h3><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">{primaryMethods.map(m => <div key={m} className="space-y-3 border border-border rounded-lg p-4"><Label className="flex gap-2 items-center"><Checkbox checked={current.methods[m].active} onCheckedChange={v => update({ methods: { ...current.methods, [m]: { ...current.methods[m], active: v === true } } })} />Activate {m}</Label>{numeric(`ZMW per ${m}`, current.methods[m].rate, rate => update({ methods: { ...current.methods, [m]: { ...current.methods[m], rate } } }))}</div>)}</div>
+    <h3 className="tracking-normal">Charges and tax</h3><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">{(Object.keys(chargeLabels) as (keyof typeof chargeLabels)[]).map(key => <div key={key}>{numeric(`${chargeLabels[key]} (ZMW)`, current.charges[key], n => update({ charges: { ...current.charges, [key]: n } }))}</div>)}{numeric('Minimum project charge (ZMW)', current.minimum, minimum => update({ minimum }))}{numeric('Recurring discount (%)', current.recurringDiscount, n => update({ recurringDiscount: n ?? 0 }), 100)}{numeric('Approved commercial discount (%)', current.commercialDiscount, n => update({ commercialDiscount: n ?? 0 }), 100)}{numeric('VAT / tax (%)', current.taxPercent, taxPercent => update({ taxPercent }), 100)}{numeric('Quotation validity (days)', current.validityDays, validityDays => update({ validityDays }), 365)}<div className="space-y-2"><Label>Tax treatment</Label><Select value={current.taxTreatment} onValueChange={v => { if (v === 'pending' || v === 'inclusive' || v === 'exclusive' || v === 'not-applicable') update({ taxTreatment: v }); }}><SelectTrigger aria-label="Tax treatment"><SelectValue /></SelectTrigger><SelectContent>{['pending', 'inclusive', 'exclusive', 'not-applicable'].map(v => <SelectItem key={v} value={v}>{v}</SelectItem>)}</SelectContent></Select></div></div>
+    <div className="space-y-2"><Label>Recurring operational savings evidence</Label><Textarea aria-label="Recurring operational savings evidence" value={current.savingsEvidence} onChange={e => update({ savingsEvidence: e.target.value })} maxLength={1000} /></div>
+    <Button onClick={save} disabled={busy}><Save className="h-4 w-4 mr-2" />Save SolarCare pricing</Button>
+    <div className="border-t border-border pt-8 space-y-4"><h3 className="tracking-normal">Site-specific commercial quotation override</h3><Input aria-label="SolarCare enquiry reference" placeholder="SolarCare enquiry reference" value={override.leadId} onChange={e => setOverride({ ...override, leadId: e.target.value })} /><Input aria-label="Override amount in ZMW" type="number" min="0" step="0.01" placeholder="Amount in ZMW" value={override.amount} onChange={e => setOverride({ ...override, amount: e.target.value })} /><Textarea aria-label="Assessment and override reason" placeholder="Assessment findings, agreed scope and override reason" value={override.reason} maxLength={1000} onChange={e => setOverride({ ...override, reason: e.target.value })} /><Button variant="outline" disabled={busy || !override.amount} onClick={async () => { setBusy(true); try { await call({ action: 'override', ...override, amount: Number(override.amount) }); setNotice('Site-specific quotation override saved to the enquiry.'); } catch (e) { setNotice(e instanceof Error ? e.message : 'Unable to save.'); } finally { setBusy(false); } }}>Save assessed quotation override</Button></div>
+    {notice && <p role="status" className="text-sm text-secondary">{notice}</p>}
+  </div>;
+}
