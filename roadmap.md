@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Metadata cleanup
-- [ ] Remove duplicate route metadata, isolate homepage schemas, and verify direct visits and navigation
+- [x] Remove duplicate route metadata and isolate homepage schemas; verified homepage, SolarCare, Car Detailing and Pools plus homepage-to-SolarCare navigation (publish pending)
 
 ## SEO and visitor growth
 - [x] Fix missing worker-dashboard description and homepage social title; verified in preview
