@@ -1,0 +1,2 @@
+CREATE POLICY "SolarCare staff can read site photos" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'solarcare-enquiries' AND (public.has_role(auth.uid(), 'admin') OR public.has_role(auth.uid(), 'manager')));
+CREATE POLICY "SolarCare staff can remove site photos" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'solarcare-enquiries' AND (public.has_role(auth.uid(), 'admin') OR public.has_role(auth.uid(), 'manager')));
