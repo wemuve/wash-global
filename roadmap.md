@@ -1,6 +1,8 @@
 # Roadmap
 
 ## SolarCare
+- [ ] Addendum: extend estimator with SolarCare inputs and approval-controlled admin pricing
+- [ ] Addendum: test independent calculations, regression and live sitemap/indexing; deliver verified report
 - [x] Add SolarCare page, five packages, enquiry form and private optional photo
 - [x] Add navigation, contextual service links, metadata and sitemap entry
 - [x] Prepare eight-topic editorial plan and implementation report

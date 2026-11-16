@@ -1,5 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { generateChatCompletion } from 'npm:@lovable.dev/ai-gateway@0.1.11';
+import { ASSESSMENT_MESSAGE } from '../_shared/solarcare-pricing.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -120,16 +122,15 @@ serve(async (req) => {
     }
 
     const { jobDescription, location, serviceType } = await req.json();
+    // Do not pass SolarCare to the unrelated master-price prompt or its monetary fallback.
+    // Approved SolarCare calculations are handled by solarcare-pricing with structured inputs.
+    if (/solarcare|solar\s*(panel|farm|clean)|photovoltaic|\bpv\b/i.test(`${serviceType || ''} ${jobDescription || ''}`)) {
+      return new Response(JSON.stringify({ serviceType: 'SolarCare', estimatedPrice: null, priceRange: null, breakdown: [], needsQuote: true, notes: ASSESSMENT_MESSAGE, followUp: ['Which SolarCare package and installation type?', 'What panel count, surface area or capacity is known?', 'What safe access, water quality, equipment and schedule are required?'] }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
     if (typeof jobDescription !== 'string' || jobDescription.length < 3 || jobDescription.length > 2000) {
       return new Response(JSON.stringify({ error: 'Invalid job description' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
-    }
-
     const userPrompt = `Calculate price for this cleaning job:
 
 Service Type: ${serviceType || 'Not specified'}
@@ -140,39 +141,14 @@ Analyze carefully using the master price structure. Include transport and condit
 
     console.log("AI Price Estimator: Processing request");
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+    const data = await generateChatCompletion({
+        model: "google/gemini-3.8-flash",
         messages: [
           { role: "system", content: PRICING_CONTEXT },
           { role: "user", content: userPrompt },
         ],
         temperature: 0.2,
-      }),
     });
-
-    if (!response.ok) {
-      if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded" }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Service temporarily unavailable" }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      throw new Error(`AI service error: ${response.status}`);
-    }
-
-    const data = await response.json();
     const aiResponse = data.choices?.[0]?.message?.content || '';
 
     console.log("AI Response:", aiResponse);

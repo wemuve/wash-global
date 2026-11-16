@@ -1,0 +1,21 @@
+import { describe, it, expect } from 'bun:test';
+import { emptySolarPricing, solarPricingConfigSchema, solarScopeSchema, calculateSolarEstimate, ASSESSMENT_MESSAGE } from '../src/lib/solarcarePricing';
+import { SERVICES, calculatePrice } from '../src/lib/pricing';
+
+const input = { ...solarScopeSchema.parse({}), package: 'home' as const, panelCount: '10', capacity: '', installationType: 'Residential', frequency: 'One-off cleaning', access: 'Straightforward' as const, mounting: 'Ground-mounted' as const, contamination: 'Light' as const, waterAvailable: 'Yes' as const, waterTreatment: 'Not required' as const, transportRequired: 'No' as const, equipment: 'Ground-access soft brush' };
+// Synthetic test rates only; never saved as customer rates.
+function approved() { const c = emptySolarPricing(); c.packages.home = { ...c.packages.home, status: 'approved', evidence: 'Synthetic QA pilot approval', methods: { ...c.packages.home.methods, panel: { active: true, rate: 10 }, sqm: { active: true, rate: 20 } }, charges: Object.fromEntries(Object.keys(c.packages.home.charges).map(k => [k, 0])) as typeof c.packages.home.charges, minimum: 0, taxPercent: 0, taxTreatment: 'not-applicable' }; return c; }
+describe('SolarCare approved pricing', () => {
+  it('never invents a monetary estimate for pending rates', () => { const r = calculateSolarEstimate(input, emptySolarPricing()); expect(r.total).toBeNull(); expect(r.message).toBe(ASSESSMENT_MESSAGE); });
+  it('requires pilot evidence before approval', () => { const c = approved(); c.packages.home.evidence = ''; expect(solarPricingConfigSchema.safeParse(c).success).toBe(false); });
+  it('uses one primary method, not panels plus area', () => { expect(calculateSolarEstimate({ ...input, surfaceArea: '10' }, approved()).total).toBe(100); expect(calculateSolarEstimate({ ...input, surfaceArea: '10', primaryMethod: 'sqm' }, approved()).total).toBe(200); });
+  it('does not leak Home rates into Business', () => { expect(calculateSolarEstimate({ ...input, package: 'business' }, approved()).total).toBeNull(); });
+  it('asks for missing measurements instead of guessing', () => { const r = calculateSolarEstimate({ ...input, panelCount: '' }, approved()); expect(r.total).toBeNull(); expect(r.followUp.length).toBeGreaterThan(0); });
+  it('rejects invalid measurement input', () => { expect(solarScopeSchema.safeParse({ surfaceArea: '-12' }).success).toBe(false); });
+  it('escalates utility-scale and high-risk work', () => { expect(calculateSolarEstimate({ ...input, installationType: 'Solar farm' }, approved()).total).toBeNull(); expect(calculateSolarEstimate({ ...input, access: 'High-risk' }, approved()).total).toBeNull(); });
+  it('requires real savings evidence for recurring discounts', () => { const c = approved(); c.packages.home.recurringDiscount = 10; expect(solarPricingConfigSchema.safeParse(c).success).toBe(false); });
+  it('only discounts a genuine recurring contract', () => { const c = approved(); c.packages.home.recurringDiscount = 10; c.packages.home.savingsEvidence = 'Shared mobilisation'; expect(calculateSolarEstimate(input, c).total).toBe(100); expect(calculateSolarEstimate({ ...input, frequency: 'Monthly agreement', contractMonths: '12' }, c).total).toBe(90); });
+  it('reflects changed admin rates and rounds ZMW to cents', () => { const c = approved(); c.packages.home.methods.panel.rate = 10.125; expect(calculateSolarEstimate(input, c).total).toBe(101.25); });
+  it('applies minimum and tax after approved discounts', () => { const c = approved(); c.packages.home.minimum = 200; c.packages.home.taxTreatment = 'exclusive'; c.packages.home.taxPercent = 16; expect(calculateSolarEstimate(input, c).total).toBe(232); });
+  it('keeps every existing service size and price unchanged', () => { const bases = [[550,700,900,1100],[850,1200,1800,2500],[1500,2000,2800,3500],[450,550],[650,850],[400,800,1200],[200,800,2800],[150,2500],[800,1500],[2500],[550]]; expect(SERVICES.map(s => s.sizes.map(size => size.base))).toEqual(bases); SERVICES.forEach(s => s.sizes.forEach(size => expect(calculatePrice({ serviceId:s.id,sizeId:size.id,conditionId:'light',serviceMode:'dropoff' }).total).toBe(size.base))); });
+});

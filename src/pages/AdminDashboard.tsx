@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
+import SolarCarePricingAdmin from '@/components/solarcare/SolarCarePricingAdmin';
 import { 
   LayoutDashboard, 
   Calendar, 
@@ -252,6 +253,7 @@ const AdminDashboard = () => {
     { id: 'payments', name: 'Payments', icon: CreditCard },
     { id: 'leads', name: 'Leads', icon: UserPlus },
     { id: 'vendors', name: 'Vendors', icon: Users },
+    { id: 'solarcare-pricing', name: 'SolarCare Pricing', icon: DollarSign },
   ];
 
   const statusColors: Record<string, string> = {
@@ -578,6 +580,7 @@ const AdminDashboard = () => {
             </div>
           )}
 
+          {activeTab === 'solarcare-pricing' && <SolarCarePricingAdmin />}
           {/* Vendors Tab */}
           {activeTab === 'vendors' && (
             <div className="bg-background rounded-xl shadow-card overflow-hidden">
