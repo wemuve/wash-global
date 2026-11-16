@@ -23,7 +23,7 @@ const Index = () => {
         <meta name="description" content="Zambia's premium cleaning company. Deep cleaning from K550, sofa & carpet cleaning, mobile car detailing from K450, pool servicing from K800, fumigation & trained maids. Serving Lusaka — book online or WhatsApp +260768671420." />
         <link rel="canonical" href="https://wewashglobal.com/" />
         <meta property="og:url" content="https://wewashglobal.com/" />
-        <meta property="og:title" content="WeWash Zambia | Premium Cleaning & Property Services" />
+        <meta property="og:title" content="WeWash Zambia | Premium Cleaning, Car Detailing & Pools in Lusaka" />
         <meta property="og:description" content="Deep cleaning, car detailing, pool services, fumigation & trained maids across Lusaka. Real crew, real results. Book online — pay after the job." />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org',

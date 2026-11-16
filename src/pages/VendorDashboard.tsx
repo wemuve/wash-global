@@ -103,10 +103,18 @@ const VendorDashboard = () => {
     }
   };
 
+  const pageMetadata = (
+    <Helmet>
+      <title>Worker Dashboard | WeWash Zambia</title>
+      <meta name="description" content="WeWash Zambia worker dashboard: review job offers, manage cleaning assignments and check your performance and earnings." />
+    </Helmet>
+  );
+
   // Check onboarding status
   if (vendor && vendor.onboarding_status !== 'active') {
     return (
       <Layout>
+        {pageMetadata}
         <section className="bg-wewash-navy py-8">
           <div className="container-wewash">
             <h1 className="text-2xl font-bold text-white">Worker Dashboard</h1>
@@ -130,9 +138,7 @@ const VendorDashboard = () => {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Worker Dashboard | WeWash Zambia</title>
-      </Helmet>
+      {pageMetadata}
       <section className="bg-wewash-navy py-8">
         <div className="container-wewash">
           <div className="flex items-center justify-between">
