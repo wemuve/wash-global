@@ -10,8 +10,8 @@ import { solarPackages, SOLARCARE_PATH, SolarEnquiry, serviceFrequencies } from 
 import { trackSolarCare } from '@/lib/solarcareAnalytics';
 import facilityWindows from '@/assets/services/facility-windows.jpeg.asset.json';
 
-const title = 'Solar Panel Cleaning in Zambia | WeWash SolarCare';
-const description = 'Professional solar panel cleaning in Lusaka and across Zambia. WeWash SolarCare supports homes, businesses, industries and solar farms with scheduled panel cleaning and documented site care.';
+const title = 'Solar Panel Cleaning Lusaka, Zambia | WeWash SolarCare';
+const description = 'Solar panel cleaning in Lusaka for homes and businesses. Scheduled cleaning and visual site reports from WeWash SolarCare. Request a site-specific quotation.';
 const url = `https://wewashglobal.com${SOLARCARE_PATH}`;
 const industries = [
   { name: 'Residential solar', icon: Home, package: 'home', detail: 'Care for home rooftop installations, with access and roof safety checked before a visit.' },
@@ -58,7 +58,17 @@ export default function SolarCare() {
         <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={url} /><meta property="og:type" content="website" />
         <meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:url" content={url} />
         <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@graph': [
-          { '@type': 'Service', '@id': `${url}#service`, name: 'WeWash SolarCare', serviceType: 'Solar Panel Cleaning & Maintenance Support', description, url, provider: { '@id': 'https://wewashglobal.com/#organization' }, areaServed: { '@type': 'City', name: 'Lusaka' }, hasOfferCatalog: { '@type': 'OfferCatalog', name: 'SolarCare site-specific quotation packages', itemListElement: solarPackages.map(p => ({ '@type': 'Offer', url: `${url}#solar-assessment`, itemOffered: { '@type': 'Service', name: p.name, description: `${p.audience}. ${p.features.join('; ')}. Subject to assessment and confirmed availability.` } })) } },
+          {
+            '@type': 'Service', '@id': `${url}#service`,
+            name: 'WeWash SolarCare — Solar Panel Cleaning in Lusaka',
+            serviceType: 'Solar Panel Cleaning & Maintenance Support',
+            description: 'Solar panel cleaning, scheduled cleaning programmes and visual site reporting in Lusaka. Industrial and solar farm projects elsewhere in Zambia require assessment, mobilisation and confirmed availability. No electrical repairs or diagnostics.',
+            url,
+            provider: { '@type': 'Organization', '@id': 'https://wewashglobal.com/#organization', name: 'WeWash Zambia', url: 'https://wewashglobal.com/', telephone: '+260768671420' },
+            areaServed: { '@type': 'City', name: 'Lusaka', containedInPlace: { '@type': 'Country', name: 'Zambia' } },
+            availableChannel: { '@type': 'ServiceChannel', serviceUrl: `${url}#solar-assessment`, servicePhone: { '@type': 'ContactPoint', telephone: '+260768671420', contactType: 'SolarCare enquiries' } },
+            hasOfferCatalog: { '@type': 'OfferCatalog', name: 'SolarCare site-specific quotation packages', itemListElement: solarPackages.map(p => ({ '@type': 'Offer', url: `${url}#solar-assessment`, itemOffered: { '@type': 'Service', name: p.name, description: `${p.audience}. ${p.features.join('; ')}. Subject to assessment and confirmed availability.` } })) },
+          },
           { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wewashglobal.com/' }, { '@type': 'ListItem', position: 2, name: 'SolarCare', item: url }] },
         ] })}</script>
       </Helmet>

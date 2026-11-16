@@ -9,6 +9,7 @@
 - [ ] Prepare social and search growth recommendations (awaiting existing accounts and audience details)
 
 ## SolarCare
+- [x] Update dedicated SolarCare title, description and Service schema; preview verified, Google reports Submitted and indexed (metadata publish pending)
 - [x] Addendum: extend estimator with SolarCare inputs and approval-controlled admin pricing
 - [x] Addendum: test independent calculations, regression and live sitemap/indexing; deliver verified report
 - [x] Add SolarCare page, five packages, enquiry form and private optional photo
